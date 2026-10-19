@@ -1,0 +1,48 @@
+.ss-deduction { margin: 0 0 30px; padding: 29px; border: 1px solid var(--line, #dce3d8); border-radius: 11px; background: #fdfdfa; min-width: 0; }
+.sd-heading h2 { margin: 11px 0 15px; font-family: "Lab Serif", Georgia, serif; font-size: 31px; font-weight: 400; color: var(--ink, #243c43); line-height: 1.2; }
+.sd-heading > p, .sd-definitions > p, .sd-derivation p { margin: 14px 0; color: #62776c; font-size: 12px; line-height: 1.9; }
+.sd-network-figure { margin: 26px 0 25px; padding: 20px 18px 17px; background: #f5f7f0; border: 1px solid #e1e7da; border-radius: 8px; }
+.sd-network-figure > .transmission-line-diagram { max-width: 650px; margin: 0 auto; }
+.sd-network-figure > figcaption { color: #7c8c78; font-size: 11px; line-height: 1.8; margin: 12px 0 0; }
+.sd-definitions { padding: 5px 0 20px; }
+.sd-definitions > .formula--display { color: #486d58; font-size: 13px; margin: 17px 0 21px; }
+.sd-definitions dl { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; margin: 0; }
+.sd-definitions dl > div { min-width: 0; }
+.sd-definitions dt { color: #a95c3f; font-size: 17px; margin-bottom: 8px; }
+.sd-definitions dd { color: #7b8b76; font-size: 11px; line-height: 1.8; margin: 0; }
+.sd-definitions dl > div:first-child dt { color: #3e806a; }
+.sd-definitions dl > div:last-child dt { color: #547eb1; }
+.sd-derivation { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0; }
+.sd-derivation > section { border-top: 1px solid #e1e7db; padding: 26px 0 20px; position: relative; }
+.sd-step-number { color: #97a48d; font-size: 10px; letter-spacing: 1px; }
+.sd-derivation h3 { margin: 10px 0 21px; font-family: "Lab Serif", Georgia, serif; font-size: 24px; font-weight: 400; color: #345c4b; line-height: 1.25; }
+.sd-derivation .formula--display { margin: 20px 0; font-size: 14px; color: #3d6655; }
+.sd-matching-condition { margin: 22px 0 10px; padding: 5px 18px; background: #edf3e9; border-left: 2px solid #7b9c70; border-radius: 0 5px 5px 0; }
+.sd-termination-toggle { display: flex; gap: 8px; flex-wrap: wrap; margin: 22px 0; }
+.sd-termination-toggle button { padding: 9px 12px; border: 1px solid #d4dfd2; background: transparent; border-radius: 5px; color: #607b66; font-size: 11px; line-height: 1.5; }
+.sd-termination-toggle button[aria-pressed="true"] { background: #e7f0e6; border-color: #8aaa82; color: #345e43; }
+.ss-deduction button:focus-visible, .ss-deduction input:focus-visible { outline: 2px solid #3e806a; outline-offset: 3px; }
+@media (max-width: 600px) {
+  .ss-deduction { padding: 21px 16px; }
+  .sd-heading h2 { font-size: 27px; }
+  .sd-network-figure { padding: 13px 2px; }
+  .sd-definitions dl { grid-template-columns: minmax(0, 1fr); gap: 13px; }
+  .sd-definitions dl > div { display: grid; grid-template-columns: 45px minmax(0, 1fr); gap: 7px; align-items: baseline; }
+  .sd-definitions dt { margin: 0; font-size: 15px; }
+  .sd-definitions > .formula--display, .sd-derivation .formula--display { font-size: 12px; }
+  .sd-matching-condition { padding: 3px 12px; }
+}
+
+/* In a guide, the deduction belongs to the same continuous article. */
+.ss-guide .ss-deduction { width: 100%; max-width: 900px; margin: 0 auto 38px; padding: 0; border: 0; border-radius: 0; background: transparent; color: inherit; font-size: var(--ss-guide-prose-size, 14px); line-height: 1.9; }
+.ss-guide .sd-heading, .ss-guide .sd-definitions, .ss-guide .sd-derivation { width: 100%; max-width: 720px; margin-left: auto; margin-right: auto; }
+.ss-guide .sd-heading h2 { margin: 30px 0 12px; font-size: var(--ss-guide-heading-size, 25px); line-height: 1.25; letter-spacing: -.35px; }
+.ss-guide .sd-heading > p, .ss-guide .sd-definitions > p, .ss-guide .sd-derivation p { margin: 15px 0; color: inherit; font-size: var(--ss-guide-prose-size, 14px); line-height: 1.9; }
+.ss-guide .sd-network-figure { width: 100%; max-width: 900px; margin: 26px auto 25px; padding: 0; border: 0; border-radius: 0; background: transparent; }
+.ss-guide .sd-network-figure > figcaption { max-width: 720px; margin-left: auto; margin-right: auto; }
+.ss-guide .sd-network-figure > figcaption { color: #607368; font-size: 12px; line-height: 1.8; }
+.ss-guide .sd-definitions > .formula--display, .ss-guide .sd-derivation .formula--display { color: #466054; font-size: var(--ss-guide-prose-size, 14px); margin: 20px 0; }
+.ss-guide .sd-definitions dd { color: inherit; font-size: var(--ss-guide-prose-size, 14px); line-height: 1.9; }
+.ss-guide .sd-derivation > section { padding: 25px 0 15px; }
+.ss-guide .sd-derivation h3 { margin: 10px 0 12px; color: var(--ink, #243c43); font-family: inherit; font-size: 15px; font-weight: 550; line-height: 1.5; }
+.ss-guide .sd-matching-condition { margin: 20px 0; padding: 0; border: 0; border-radius: 0; background: transparent; }

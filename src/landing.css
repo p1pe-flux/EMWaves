@@ -1,0 +1,129 @@
+.landing-page {
+  padding: 12px 0 40px;
+  color: var(--ink);
+}
+
+.landing-page > h1 {
+  margin: 0 0 30px;
+  font-size: clamp(32px, 3.3vw, 44px);
+}
+
+.landing-labs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.landing-lab-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 24px 30px 28px;
+  border: 1px solid #e0e4db;
+  border-radius: 11px;
+  background: #f8f8f3;
+  color: #61756a;
+  text-decoration: none;
+}
+
+.landing-lab-card--available {
+  border-color: #c5d6c9;
+  background: var(--paper);
+  color: var(--ink);
+  transition: border-color .2s, box-shadow .2s;
+}
+
+.landing-lab-card--available:hover {
+  border-color: #7f9f8b;
+  box-shadow: 0 5px 20px #324d3c08;
+}
+
+.landing-card-status {
+  display: flex;
+  justify-content: flex-end;
+  min-height: 22px;
+}
+
+.landing-coming-soon {
+  color: #607368;
+  font-size: 10px;
+  border: 1px solid #dce2d6;
+  border-radius: 4px;
+  padding: 4px 7px;
+}
+
+.landing-lab-illustration {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 170px;
+  margin: 8px 0 16px;
+}
+
+.landing-lab-card h2 {
+  margin: 0;
+  color: inherit;
+  font-size: clamp(23px, 2.3vw, 29px);
+  line-height: 1.2;
+}
+
+.landing-lab-link { display: block; color: inherit; text-decoration: none; }
+.landing-card-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 24px; margin-top: 18px; }
+.landing-read-guide { color: #607368; font-size: 12px; text-underline-offset: 4px; }
+.landing-read-guide:hover { color: var(--teal); }
+
+.landing-open {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  align-self: flex-start;
+  color: var(--teal);
+  font-size: 12px;
+  font-weight: 550;
+  text-decoration: none;
+}
+
+.landing-open svg { width: 18px; height: 18px; stroke: currentColor; stroke-width: 1.5; }
+.landing-smith { display: block; height: 100%; width: 100%; max-width: 300px; }
+.landing-smith__outer { stroke: #c7d3c2; stroke-width: .65; stroke-dasharray: 2 5; }
+.landing-smith__grid { stroke: #c4d3c4; stroke-width: .75; }
+.landing-smith__axis { stroke: #b3c6b5; stroke-width: .75; }
+.landing-smith__boundary { stroke: #96af9b; stroke-width: 1; }
+.landing-smith__swr { stroke: #ab9c79; stroke-width: .9; stroke-dasharray: 3 5; }
+.landing-smith__trajectory { stroke: var(--teal); stroke-width: 2.6; stroke-linecap: round; }
+.landing-smith__vector { stroke: #b58564; stroke-width: 1; }
+.landing-smith__center { fill: #9db29c; }
+.landing-smith__halo { fill: #c5634210; }
+.landing-smith__load { fill: var(--coral); stroke: var(--paper); stroke-width: 2; }
+.landing-smith__input { fill: var(--teal); stroke: var(--paper); stroke-width: 2; }
+.landing-smith__label { fill: var(--teal); font-family: "Lab Serif", Georgia, serif; font-size: 13px; font-style: italic; }
+.landing-smith__label--load { fill: #b56f4b; }
+.landing-schematic { display: block; width: 100%; max-width: 300px; max-height: 100%; }
+.landing-schematic__guide { stroke: #e1e6dd; stroke-width: .8; stroke-dasharray: 3 5; }
+.landing-schematic__line, .landing-schematic__terminal { stroke: #aabcb0; stroke-width: 1.2; }
+.landing-schematic__ground { stroke: #90a796; stroke-width: 1.1; }
+.landing-schematic__load { stroke: #b39178; fill: #f5f0e8; stroke-width: 1.2; }
+.landing-schematic__stub { stroke: #7f9e90; stroke-width: 1.4; }
+.landing-schematic__junction { fill: #7f9e90; }
+.landing-schematic__section { stroke: #7f9e90; stroke-width: 3; }
+.landing-schematic__measure { stroke: #afbeb0; stroke-width: .8; }
+.landing-schematic__math { fill: #7f9686; font-family: "Lab Serif", Georgia, serif; font-size: 14px; }
+.landing-schematic__label { fill: #a0ad9b; font-family: "Inter", "Aptos", "Segoe UI", system-ui, sans-serif; font-size: 7px; letter-spacing: 1.3px; }
+
+@media (max-width: 760px) {
+  .landing-page { padding-top: 3px; }
+  .landing-page > h1 { margin-bottom: 24px; }
+  .landing-labs { gap: 16px; }
+  .landing-lab-card { padding: 20px 22px 24px; }
+  .landing-lab-card h2 { font-size: 25px; }
+}
+
+@media (max-width: 540px) {
+  .landing-labs { grid-template-columns: 1fr; }
+  .landing-lab-illustration { height: 145px; }
+  .landing-lab-card h2 { font-size: 26px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .landing-lab-card--available { transition: none; }
+}

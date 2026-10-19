@@ -1,0 +1,20 @@
+@import './single-stub.css';
+@import './transmission-line-diagram.css';
+
+.series-stub-construction .ss-construction__toolbar { margin-top:0; }
+.series-stub-diagram { aspect-ratio:600 / 335; margin:0; }
+.series-stub-diagram .series-stub__return { fill:none; stroke:#537f6c; stroke-width:1.8; }
+.series-stub-diagram .series-stub__input { fill:#fdfdfa; stroke:#547eb1; stroke-width:1.5; }
+.series-stub-diagram .series-stub__plane { fill:none; stroke:#a95c3f; stroke-width:1; stroke-dasharray:3 4; opacity:.7; }
+.series-stub-diagram .series-stub__port { font-family:"Lab Serif",Georgia,serif; font-size:25px; font-style:italic; }
+.series-stub-diagram .series-stub__port tspan { font-size:16px; }
+.series-stub-diagram .series-stub__port--line { fill:#a95c3f; }
+.series-stub-diagram .series-stub__port--stub { fill:#547eb1; }
+.series-stub-diagram .series-stub__port--input { fill:#3e806a; }
+.series-stub-construction .ss-construction__lesson .formula--inline { display:inline-block; position:relative; vertical-align:baseline; }
+@media(min-width:1001px) {
+  .series-stub-construction:not(.ss-construction--compact) .ss-construction__body { grid-template-columns:minmax(0,1.12fr) minmax(0,1fr); }
+}
+@media(min-width:760px) and (max-width:1000px) {
+  .series-guide:not(.ss-guide--compact) .ss-construction__body { grid-template-columns:minmax(0,1.08fr) minmax(0,1fr); gap:20px; }
+}

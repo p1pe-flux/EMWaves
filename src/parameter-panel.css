@@ -1,0 +1,22 @@
+.parameters-panel.parameters-panel--compact { padding: 18px; height: auto; min-height: 0; max-height: none; overflow: visible; }
+.parameters-panel--compact .panel-heading { gap: 12px; margin-bottom: 12px; }
+.parameters-panel--compact .panel-heading h2 { min-width: 0; }
+.parameters-panel--compact .parameter-reset { flex: 0 0 32px; }
+.parameter-grid, .parameter-stub-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 10px; }
+.parameter-field { display: block; min-width: 0; margin: 0; }
+.parameter-field--wide, .parameter-stub--wide { grid-column: 1 / -1; }
+.parameter-field > span { display: block; margin-bottom: 4px; font-size: 11.5px; font-weight: 550; }
+.parameter-field .formula--inline { position: relative; display: inline-block; font-size: 12px; }
+.parameters-panel--compact .number-field input { padding: 8px; font-size: 15px; }
+.parameters-panel--compact .number-field > span { padding-right: 8px; font-size: 12px; }
+.parameter-stub-grid { margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--line); }
+.parameter-stub { min-width: 0; }
+.parameter-stub--wide + .parameter-stub--wide { margin-top: 4px; padding-top: 12px; border-top: 1px solid var(--line); }
+.parameter-stub h3 { margin: 0 0 8px; color: var(--ink); font-size: 14px; line-height: 1.3; }
+.parameter-check { display: flex; align-items: center; gap: 4px; margin: 0 0 8px; font-size: 10px; line-height: 1.5; }
+.parameter-check .formula--inline { display: inline-block; position: relative; font-size: 10px; }
+.parameter-stub input[type="checkbox"], .parameter-stub input[type="radio"] { width: 13px; height: 13px; margin: 0; flex-shrink: 0; accent-color: var(--teal); }
+.parameter-termination { display: grid; gap: 3px; min-width: 0; margin: 8px 0 0; padding: 0; border: 0; }
+.parameter-termination label { display: flex; align-items: center; min-height: 28px; gap: 5px; margin: 0; font-size: 11px; cursor: pointer; }
+.parameter-stub--wide .parameter-termination { display: flex; flex-wrap: wrap; gap: 3px 18px; }
+.parameter-visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }

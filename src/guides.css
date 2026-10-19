@@ -1,0 +1,186 @@
+.guide-index {
+  padding: 12px 0 40px;
+  color: var(--ink, #243c43);
+}
+
+.guide-index > h1 {
+  margin: 0 0 30px;
+  font-size: clamp(32px, 3.3vw, 44px);
+}
+
+.guide-entry {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  max-width: 940px;
+  padding: 27px 0;
+  border-top: 1px solid #d8e1d6;
+}
+
+.guide-entry h2 {
+  margin: 0;
+  font-family: "Lab Serif", Georgia, serif;
+  font-size: clamp(23px, 2.3vw, 29px);
+  font-weight: 400;
+  line-height: 1.25;
+  letter-spacing: -.5px;
+}
+
+.guide-entry__links {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px 22px;
+  flex-shrink: 0;
+}
+
+.guide-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: var(--teal, #1c666b);
+  font-size: 11px;
+  font-weight: 550;
+  line-height: 1.4;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.guide-link svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  stroke: currentColor;
+  stroke-width: 1.3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.guide-link:hover { text-decoration: underline; text-underline-offset: 4px; }
+
+.guide-link--primary {
+  padding: 10px 13px;
+  border: 1px solid #cedbd0;
+  border-radius: 6px;
+  background: #eff4ec;
+  transition: background .16s, border-color .16s;
+}
+
+.guide-link--primary:hover { border-color: #8eae99; background: #e6efe3; text-decoration: none; }
+
+.guide-page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 7px 0 44px;
+}
+
+.guide-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: #607368;
+  font-size: 11px;
+  line-height: 1.6;
+  text-decoration: none;
+}
+
+.guide-back:hover { color: var(--teal, #1c666b); text-decoration: underline; text-underline-offset: 4px; }
+
+.guide-page__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin: 23px 0 27px;
+}
+
+.guide-page__header h1 {
+  margin: 0;
+  font-family: "Lab Serif", Georgia, serif;
+  font-size: clamp(32px, 3.6vw, 44px);
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -.9px;
+}
+
+.guide-article {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0;
+}
+
+.smith-projection + .guide-article { margin-top: 34px; }
+.guide-reflection-explorer { min-width: 0; max-width: 720px; margin: 0 auto; }
+.guide-line-theory { margin-top: 38px; }
+.guide-line-theory__diagram { width: 100%; max-width: 640px; margin: 18px auto 20px; }
+.guide-line-theory--compact { margin-top: 28px; }
+
+.guide-document {
+  min-width: 0;
+  color: #607368;
+  font-size: 14px;
+  line-height: 1.9;
+}
+
+.guide-document h3 {
+  margin: 30px 0 12px;
+  color: var(--ink, #243c43);
+  font-family: "Lab Serif", Georgia, serif;
+  font-size: 25px;
+  font-weight: 400;
+  line-height: 1.25;
+  letter-spacing: -.35px;
+}
+
+.guide-document h4 {
+  margin: 25px 0 12px;
+  color: var(--ink, #243c43);
+  font-size: 15px;
+  font-weight: 550;
+  line-height: 1.5;
+}
+
+.guide-document p { margin: 15px 0; }
+.guide-document ul { margin: 17px 0; padding-left: 22px; }
+.guide-document li + li { margin-top: 6px; }
+.guide-document strong { color: #466054; font-weight: 600; }
+.guide-document a { color: var(--teal, #1c666b); text-underline-offset: 3px; }
+.guide-document .katex-display { margin: 20px 0; padding: 6px 0; font-size: .98em; }
+.guide-document > :first-child { margin-top: 0; }
+.guide-document > :last-child { margin-bottom: 0; }
+
+.guide-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (max-width: 760px) {
+  .guide-index { padding-top: 7px; }
+  .guide-entry { align-items: flex-start; flex-direction: column; gap: 21px; padding: 25px 0; }
+  .guide-entry h2 { font-size: 27px; }
+  .guide-page { padding-top: 4px; }
+  .guide-page__header { align-items: flex-start; flex-direction: column; gap: 17px; margin: 21px 0 23px; }
+  .guide-page__header h1 { max-width: 540px; font-size: clamp(32px, 6vw, 40px); }
+  .guide-document { font-size: 13px; }
+  .guide-document h3 { font-size: 23px; }
+}
+
+@media (max-width: 420px) {
+  .guide-index > h1 { margin-bottom: 24px; }
+  .guide-entry { padding: 23px 0; }
+  .guide-entry h2 { font-size: 25px; }
+  .guide-document .katex-display { font-size: .9em; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .guide-link--primary { transition: none; }
+}

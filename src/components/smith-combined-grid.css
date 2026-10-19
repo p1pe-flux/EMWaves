@@ -1,0 +1,19 @@
+.smith-chart__svg[data-grid="both"] .smith-combined-grid--impedance .smith-grid {
+  stroke: #d9c6b8;
+  stroke-width: .6;
+}
+
+.smith-chart__svg[data-grid="both"] .smith-combined-grid--impedance .smith-grid--major {
+  stroke: #c8ac96;
+  stroke-width: .85;
+}
+
+.smith-chart__svg[data-grid="both"] .smith-combined-grid--admittance .smith-grid {
+  stroke: #c4d4e0;
+  stroke-width: .6;
+}
+
+.smith-chart__svg[data-grid="both"] .smith-combined-grid--admittance .smith-grid--major {
+  stroke: #a5bdcf;
+  stroke-width: .85;
+}

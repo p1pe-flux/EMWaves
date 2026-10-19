@@ -1,0 +1,9 @@
+.lc-network-options { display: grid; gap: 12px; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--line); }
+.lc-network-options__section { min-width: 0; margin: 0; padding: 0; border: 0; }
+.lc-network-options__section + .lc-network-options__section { padding-top: 10px; border-top: 1px solid var(--line); }
+.lc-network-options__section legend { padding: 0; color: var(--ink); font-size: 13px; font-weight: 600; }
+.lc-network-options__position { display: block; margin-top: 2px; color: var(--muted); font-size: 11px; font-weight: 400; }
+.lc-network-options__choices { display: flex; flex-wrap: wrap; gap: 4px 18px; margin-top: 5px; }
+.lc-network-options__choices label { display: inline-flex; align-items: center; min-height: 28px; gap: 5px; margin: 0; font-size: 12px; cursor: pointer; }
+.lc-network-options__choices input { width: 13px; height: 13px; margin: 0; accent-color: var(--teal); }
+.lc-network-options__symbol { font-family: "Lab Serif", Georgia, serif; font-style: italic; }

@@ -1,0 +1,131 @@
+{
+  "name": "emwaves",
+  "version": "1.0.0",
+  "private": true,
+  "license": "GPL-3.0-only",
+  "description": "Interactive electromagnetic-wave and transmission-line laboratories and guides in English and Spanish",
+  "author": "EMWaves",
+  "type": "module",
+  "main": "electron/main.cjs",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview --host 127.0.0.1",
+    "test": "vitest run",
+    "test:models": "node scripts/audit-matching-models.mjs",
+    "test:watch": "vitest",
+    "docs:media": "node scripts/generate-readme-media.mjs",
+    "desktop": "npm run icons:desktop && npm run build && electron .",
+    "package:linux": "npm run icons:desktop && npm run build && node scripts/package-desktop.mjs linux x64",
+    "package:win": "npm run icons:desktop && npm run build && node scripts/package-windows.mjs x64 && node scripts/verify-windows-artifact.mjs x64",
+    "icons:desktop": "node scripts/generate-desktop-icons.mjs",
+    "package:win:arm64": "npm run icons:desktop && npm run build && node scripts/package-windows.mjs arm64 && node scripts/verify-windows-artifact.mjs arm64",
+    "package:mac": "npm run icons:desktop && npm run build && node scripts/package-desktop.mjs mac universal && node scripts/verify-macos-artifact.mjs",
+    "test:windows-artifacts": "node --test scripts/windows-artifact-integrity.test.mjs",
+    "test:desktop": "node --test scripts/external-navigation.test.cjs scripts/desktop-packaging.test.mjs scripts/desktop-proxy.test.mjs scripts/proxy-log-redaction.test.cjs scripts/electron-smoke-capture.test.cjs",
+    "test:desktop:smoke": "electron scripts/electron-navigation-smoke.cjs",
+    "test:browser": "npm run build && playwright test"
+  },
+  "build": {
+    "appId": "org.emwaves.lab",
+    "productName": "EMWaves",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "electron/**/*",
+      "LICENSE",
+      "package.json",
+      "THIRD-PARTY-NOTICES.md",
+      "!node_modules/**/*"
+    ],
+    "asar": true,
+    "linux": {
+      "icon": "electron/assets/icon.png",
+      "category": "Education",
+      "target": [
+        "AppImage"
+      ]
+    },
+    "win": {
+      "icon": "electron/assets/icon.ico",
+      "target": [
+        "nsis"
+      ]
+    },
+    "mac": {
+      "category": "public.app-category.education",
+      "icon": "electron/assets/icon.icns",
+      "target": [
+        "dmg"
+      ],
+      "artifactName": "EMWaves-${version}-macOS-${arch}.${ext}",
+      "identity": "-",
+      "hardenedRuntime": true,
+      "entitlements": "electron/entitlements.mac.plist",
+      "entitlementsInherit": "electron/entitlements.mac.plist",
+      "notarize": false
+    },
+    "dmg": {
+      "icon": "electron/assets/icon.icns",
+      "sign": false
+    },
+    "nsis": {
+      "artifactName": "EMWaves-${version}-Windows-${arch}-Setup.${ext}",
+      "installerIcon": "electron/assets/icon.ico",
+      "uninstallerIcon": "electron/assets/icon.ico",
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "include": "electron/installer.nsh"
+    },
+    "toolsets": {
+      "nsis": "1.2.1"
+    }
+  },
+  "dependencies": {
+    "complex.js": "2.4.3",
+    "katex": "0.19.0",
+    "react": "19.3.0",
+    "react-dom": "19.3.0"
+  },
+  "overrides": {
+    "katex": "$katex",
+    "app-builder-lib": {
+      "@electron/get": {
+        "global-agent": {
+          "roarr": "6.0.0"
+        }
+      }
+    },
+    "mathjax-full": {
+      "speech-rule-engine": {
+        "@xmldom/xmldom": "0.9.12"
+      }
+    }
+  },
+  "devDependencies": {
+    "@electron/asar": "3.4.1",
+    "@playwright/test": "1.64.1",
+    "@types/katex": "0.16.8",
+    "@types/node": "26.6.5",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@vitejs/plugin-react": "6.1.2",
+    "app-builder-lib": "26.15.3",
+    "electron": "44.7.1",
+    "electron-builder": "26.15.3",
+    "mathjax-full": "3.2.2",
+    "rehype-katex": "7.0.1",
+    "rehype-sanitize": "6.0.0",
+    "rehype-stringify": "10.0.1",
+    "remark-math": "6.0.0",
+    "remark-parse": "11.0.0",
+    "remark-rehype": "11.1.2",
+    "sharp": "0.35.5",
+    "typescript": "7.0.2",
+    "unified": "11.0.5",
+    "vite": "8.3.4",
+    "vitest": "5.0.4"
+  }
+}

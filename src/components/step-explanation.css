@@ -1,0 +1,3 @@
+.step-explanation { position: relative; min-width: 0; }
+.step-explanation__active, .step-explanation__sample { display: flow-root; min-width: 0; }
+.step-explanation__measurements { position: absolute; inset: 0 0 auto; visibility: hidden; pointer-events: none; }
