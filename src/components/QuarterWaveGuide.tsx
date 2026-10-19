@@ -63,15 +63,6 @@ export function QuarterWaveGuideContent() {
       <QuarterWaveConstruction input={QUARTER_WAVE_EXAMPLE} />
 
       <div className="qw-guide__article">
-        <h2>{t("Changing the reference is different from moving along a line", "Cambiar la referencia es distinto de avanzar por una línea")}</h2>
-        <p>{t("At a real-axis intersection, the physical impedance is ", "En una intersección con el eje real, la impedancia física es ")}<Formula tex={'R'} />{t(". To construct the transformer, read this same resistance using ", ". Para construir el transformador, lee esta misma resistencia usando ")}<Formula tex={'Z_t'} />{t(" as the reference:", " como referencia:")}</p>
-        <Formula display tex={'z_t(0)=R/Z_t,\\qquad\\Gamma_t(0)=\\frac{R-Z_t}{R+Z_t}'} />
-        <p>{t("Changing the chart reference changes the normalization and the plotted reflection coefficient. It changes neither the physical impedance nor the selected lengths ", "Cambiar la referencia del diagrama modifica la normalización y el coeficiente de reflexión representado. No cambia la impedancia física ni las longitudes seleccionadas ")}<Formula tex={'d'} />{t(" and ", " y ")}<Formula tex={'\\ell_t'} />.</p>
-        <p>{t("Now move along the transformer. A quarter wavelength rotates its reflection coefficient through half a turn:", "Ahora avanza por el transformador. Un cuarto de longitud de onda gira su coeficiente de reflexión media vuelta:")}</p>
-        <Formula display tex={'\\Gamma_t(\\ell_t)=\\Gamma_t(0)e^{-\\iu\\,2\\beta_t\\ell_t}=-\\Gamma_t(0),\\qquad\\beta_t\\ell_t=\\pi/2'} />
-        <p>{t("The endpoint generally remains away from the center in the transformer reference. Convert the resulting impedance back to the main-line reference to see the match:", "El punto final generalmente queda fuera del centro en la referencia del transformador. Convierte la impedancia resultante a la referencia de la línea principal para ver la adaptación:")}</p>
-        <Formula display tex={'Z_v=Z_t z_t(\\ell_t)=Z_0,\\qquad\\Gamma_v=\\frac{Z_v-Z_0}{Z_v+Z_0}=0,\\qquad\\mathrm{VSWR}=1'} />
-
         <h2>{t("Independent solutions and longer equivalents", "Soluciones independientes y equivalentes más largos")}</h2>
         <p>{t("The two real-axis intersections give the two distinct placement branches. Adding a half wavelength to either line section repeats its input impedance, so each branch also represents the family", "Las dos intersecciones con el eje real dan las dos ramas distintas de ubicación. Agregar media longitud de onda a cualquiera de los tramos repite su impedancia de entrada, de modo que cada rama también representa la familia")}</p>
         <Formula display tex={'d=d_i+n\\lambda/2,\\qquad\\ell_t=(1/4+m/2)\\lambda_t,\\qquad n,m\\in\\{0,1,2,\\ldots\\}'} />

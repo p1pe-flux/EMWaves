@@ -216,7 +216,6 @@ export function TransmissionLineDiagram({ lengthInWavelengths, distanceInWavelen
           <circle className="transmission-line-diagram__port-anchor" cx={markerX} cy={lineY} r="2.5" />
           <text x={stubPortLabelX} y={stubPortLabelY}>y<tspan baselineShift="sub">stub</tspan></text>
         </g>}
-        <text className="transmission-line-diagram__ports-caption" x="295" y={height - 7} textAnchor="middle">{t('Colored dashed planes identify the input ports at the junction.', 'Los planos discontinuos de colores identifican los puertos de entrada en la unión.')}</text>
       </g>}
       <g className="transmission-line-diagram__distance-measure" data-origin={LINE_END} data-position={markerX} data-y={measureY}>
         <path className="transmission-line-diagram__load-origin" d={'M480 ' + (lowerRail + 14) + 'V' + (measureY + (matchingLayout ? 4 : 11))} />

@@ -100,7 +100,7 @@ describe('single-stub lesson and schematic', () => {
     expect(body).toContain(details);
   });
 
-  it('renders the complete derivation and periodic families with valid formulas', () => {
+  it('renders the deduction, worked example and periodic families with valid formulas', () => {
     const html = renderToStaticMarkup(<SingleStubGuideContent />);
     const deduction = html.indexOf('class="ss-deduction');
     const example = html.indexOf('Start with a concrete load');
@@ -111,12 +111,11 @@ describe('single-stub lesson and schematic', () => {
     expect(html).toContain('data-stage-name="z_load"');
     expect(html).toContain('y_\\ell(d)');
     expect(html).not.toContain('y_{\\mathrm{total}}');
-    expect(html).toContain('0.198791809');
-    expect(html).toContain('0.375');
-    expect(html).toContain('0.125');
-    expect(html).toContain('Four canonical matching networks');
+    expect(html).toContain('Z_0=Z_{0s}=50');
+    expect(html).toContain('z_L=\\frac{Z_L}{Z_0}=2+\\iu');
     expect(html).toContain('All independent solutions and periodic equivalents');
-    expect(html).toContain('quarter wavelength');
+    expect(html).toContain('d=d_i+n\\lambda/2');
+    expect(html).toContain('\\ell_s=\\ell_{s,i}+m\\lambda_s/2');
     expect(html).not.toContain('formula--error');
     expect(html).not.toContain('NaN');
   });

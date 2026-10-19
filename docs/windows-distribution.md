@@ -1,5 +1,7 @@
 # Windows installers and trust
 
+**EMWaves 1.0.0** includes all six laboratories and all six guides in English and Spanish.
+
 Build separate installers for Intel/AMD x64 and native Windows ARM64:
 
 ```sh
@@ -8,7 +10,7 @@ npm run package:win
 npm run package:win:arm64
 ```
 
-The installers are written to `release/`. Copy the installer matching the PC's architecture; the destination PC does not need Node.js. Desktop and setup icons are generated from the site's Smith-diagram logo. Packaging commands do not upload artifacts. A successful cross-build on macOS checks packaging, not installation or runtime behavior on Windows. Test installation, all six laboratories, the guides available on the packaged branch, shortcuts, and uninstallation on each Windows architecture before broad distribution.
+The installers are written to `release/`. Copy the installer matching the PC's architecture; the destination PC does not need Node.js. Desktop and setup icons are generated from the site's Smith-diagram logo. Packaging commands do not upload artifacts. A successful cross-build on macOS checks packaging, not installation or runtime behavior on Windows. Test installation, all six laboratories and guides in both languages, shortcuts, and uninstallation on each Windows architecture before broad distribution.
 
 The shared packaging wrapper stages a dependency-free Electron app under ignored `.desktop/app`. The built frontend and third-party notices are included; frontend `node_modules` are excluded. Archive verification checks every frontend/runtime file against the current build and rejects stale content, extra dependencies, and missing notices. The ARM64-compatible BCJ compression setting remains in force.
 
@@ -31,7 +33,7 @@ Inspection of the installed electron-builder 26 NSIS templates also found a sepa
 Start with **Settings → System → About → System type** and **Windows Security → Virus & threat protection → Protection history**. Keep protections enabled. To gather the relevant local facts, run the read-only report from this repository in PowerShell:
 
 ```powershell
-.\scripts\diagnose-windows.ps1 -InstallerPath 'C:\Users\me\Downloads\EMWaves-0.1.0-Windows-arm64-Setup.exe'
+.\scripts\diagnose-windows.ps1 -InstallerPath 'C:\Users\me\Downloads\EMWaves-1.0.0-Windows-arm64-Setup.exe'
 ```
 
 For a custom installation folder, add `-InstallDirectory 'D:\Apps\EMWaves'`. The report reads native processor architecture, registered EMWaves installation paths, matching Desktop/Start menu shortcut targets, executable presence/architecture/hash/signature, and EMWaves-related Defender detections. It does not execute EMWaves, write shortcuts, restore quarantined files, or change security settings. Missing Defender records do not rule out other security products or expired history. Paths may contain the Windows user name; review before sharing. If PowerShell policy prevents script execution, use the manual checks above rather than changing policy.

@@ -55,16 +55,6 @@ describe('quarter-wave matching guide', () => {
     expect(html).not.toContain('unit-conductance');
   });
 
-  it('distinguishes chart-reference changes from propagation and verifies in the main-line reference', () => {
-    const html = renderToStaticMarkup(<QuarterWaveGuideContent />);
-    const tex = formulas(html);
-    expect(tex).toContain('z_t(0)=R/Z_t,\\qquad\\Gamma_t(0)=\\frac{R-Z_t}{R+Z_t}');
-    expect(tex).toContain('\\Gamma_t(\\ell_t)=\\Gamma_t(0)e^{-\\iu\\,2\\beta_t\\ell_t}=-\\Gamma_t(0),\\qquad\\beta_t\\ell_t=\\pi/2');
-    expect(html).toContain('generally remains away from the center in the transformer reference');
-    expect(html).toContain('neither the physical impedance nor the selected lengths');
-    expect(tex).toContain('Z_v=Z_tz_t(\\ell_t)=Z_0,\\qquad\\Gamma_v=\\frac{Z_v-Z_0}{Z_v+Z_0}=0,\\qquad\\mathrm{VSWR}=1');
-  });
-
   it('preserves independent wavelength families in the full guide', () => {
     const html = renderToStaticMarkup(<QuarterWaveGuideContent />);
     expect(formulas(html)).toContain('d=d_i+n\\lambda/2,\\qquad\\ell_t=(1/4+m/2)\\lambda_t,\\qquadn,m\\in\\{0,1,2,\\ldots\\}');

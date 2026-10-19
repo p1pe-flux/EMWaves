@@ -1,6 +1,6 @@
 {
   "name": "emwaves",
-  "version": "0.1.2",
+  "version": "1.0.0",
   "private": true,
   "license": "GPL-3.0-only",
   "description": "Interactive electromagnetic-wave and transmission-line laboratories and guides in English and Spanish",

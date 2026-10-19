@@ -40,7 +40,7 @@ export function DoubleStubGuideContent() {
       <p>{t('Before the left stub is added, the line admittance must lie somewhere on the unity-conductance circle. We do not yet know its imaginary part; draw the complete circle of possibilities.', 'Antes de conectar el stub izquierdo, la admitancia de la línea debe estar en el círculo de conductancia unitaria. Todavía no conocemos su parte imaginaria: dibujamos el círculo completo de posibilidades.')}</p>
       <p>{t('Use the same fixed Smith grid and traditional admittance reading as in the single-stub guide:', 'Usamos el mismo diagrama de Smith fijo y la lectura tradicional de admitancia de la guía de un stub:')}</p>
       <Formula display tex={String.raw`p(y)=\frac{y-1}{y+1}=-\Gamma,\qquad\operatorname{Re}y=1\;\Longleftrightarrow\;\left|p-\frac12\right|=\frac12`} />
-      <p>{t('The circle has center ', 'El círculo tiene centro ')}<Formula tex="(1/2,0)" />{t(' and radius ', ' y radio ')}<Formula tex="1/2" />{t('. This is a locus of admissible input admittances, not a constant-SWR circle centered at the origin.', '. Es un lugar geométrico de admitancias de entrada admisibles; no es un círculo de ROE centrado en el origen.')}</p>
+      <p>{t('The circle has center ', 'El círculo tiene centro ')}<Formula tex="(1/2,0)" />{t(' and radius ', ' y radio ')}<Formula tex="1/2" />{t('. This is a locus of admissible input admittances.', '. Es un lugar geométrico de admitancias de entrada admisibles.')}</p>
 
       <h2>{t('Carry that circle to the right-hand stub', 'Trasladamos ese círculo al stub derecho')}</h2>
       <p>{t('Now work backward through the separation ', 'Ahora recorremos hacia atrás la separación ')}<Formula tex="d_2" />{t(', from stub 1 toward stub 2 and the load. Each point rotates counterclockwise around the Smith-chart origin through ', ', desde el stub 1 hacia el stub 2 y la carga. Cada punto gira en sentido antihorario alrededor del origen del diagrama un ángulo ')}<Formula tex="2\beta d_2" />{t('. Rotate the whole circle, including its center; do not translate it horizontally.', '. Debe girar el círculo completo, incluido su centro; no se trata de desplazarlo horizontalmente.')}</p>
@@ -72,42 +72,6 @@ export function DoubleStubGuideContent() {
     <DoubleStubConstruction input={DOUBLE_STUB_EXAMPLE} termination1={termination1} termination2={termination2} />
 
     <div className="ss-guide__article">
-      <h2>{t('Derive all intersections without a tangent pole', 'Deducimos todas las intersecciones sin un polo de tangente')}</h2>
-      <p>{t('Set ', 'Definimos ')}<Formula tex="\theta=\beta\,d_2,\ C=\cos\theta,\ S=\sin\theta" />{t('. Propagating ', '. Al propagar ')}<Formula tex="y_2=g+\iu B" />{t(' gives', ' obtenemos')}</p>
-      <Formula display tex={String.raw`\operatorname{Re}y_1=\frac{g}{(C-BS)^2+g^2S^2}`} />
-      <p>{t('Require this real part to equal one:', 'Exigimos que esta parte real sea uno:')}</p>
-      <Formula display tex={String.raw`(C-BS)^2=g-g^2S^2`} />
-      <Formula display tex={String.raw`B_\pm=\frac{C\pm\sqrt{g-g^2S^2}}{S},\qquad S\ne0`} />
-      <p>{t('Compute both roots, remove a duplicated root at tangency, and verify each resulting network with the sine–cosine transmission-line model. This retains valid quarter-wave separations without dividing by a tangent that may be infinite.', 'Calculamos las dos raíces, eliminamos la raíz duplicada en la tangencia y verificamos cada red con el modelo de línea seno–coseno. Así se conservan las separaciones válidas de cuarto de onda sin dividir por una tangente que pueda ser infinita.')}</p>
-
-      <h2>{t('The forbidden region and degenerate spacing', 'La región prohibida y las separaciones degeneradas')}</h2>
-      <p>{t('For positive conductance and ', 'Para conductancia positiva y ')}<Formula tex="S\ne0" />{t(', a real intersection requires', ', una intersección real requiere')}</p>
-      <Formula display tex={String.raw`0<g\le g_{\max}=\frac{1}{\sin^2(\beta d_2)}`} />
-      <p>{t('Below the limit there are two intersections. At the limit there is one tangent solution. Above it, the chosen positions cannot match the load: the two circles do not meet. Changing either the separation or the load-to-right-stub distance can move the design out of that forbidden region.', 'Por debajo del límite hay dos intersecciones. En el límite hay una solución tangente. Por encima, las posiciones elegidas no permiten adaptar la carga: los círculos no se cruzan. Cambiar la separación o la distancia entre la carga y el stub derecho puede sacar al diseño de esa región prohibida.')}</p>
-      <p>{t('For a zero or half-wavelength separation, ', 'Si la separación es cero o un múltiplo de media longitud de onda, ')}<Formula tex="S=0" />{t('. Both stubs are electrically at the same plane. If ', '. Ambos stubs están eléctricamente en el mismo plano. Si ')}<Formula tex="g\ne1" />{t(', no solution exists. If ', ', no hay solución. Si ')}<Formula tex="g=1" />{t(', there is a continuous family rather than two isolated solutions:', ', existe una familia continua en lugar de dos soluciones aisladas:')}</p>
-      <Formula display tex={String.raw`b_{s2}=t,\qquad b_{s1}=-b_R-t,\qquad t\in\mathbb{R}`} />
-      <p>{t('An ideal open, short, or purely reactive load absorbs no real power, so these lossless reactive networks cannot match it to a positive real reference impedance.', 'Una carga ideal abierta, en cortocircuito o puramente reactiva no absorbe potencia real, por lo que estas redes reactivas sin pérdidas no pueden adaptarla a una impedancia real positiva.')}</p>
-
-      <h2>{t('Choose the termination of each stub independently', 'Elegimos por separado la terminación de cada stub')}</h2>
-      <p>{t('For stub ', 'Para el stub ')}<Formula tex="k\in\{1,2\}" />{t(', normalize its susceptance to the main line, including its own characteristic impedance:', ', normalizamos su susceptancia a la línea principal, incluyendo su propia impedancia característica:')}</p>
-      <Formula display tex={String.raw`b_{sk,\mathrm{open}}=\frac{Z_0}{Z_{0sk}}\tan(\beta_{sk}\ell_k),\qquad b_{sk,\mathrm{short}}=-\frac{Z_0}{Z_{0sk}}\cot(\beta_{sk}\ell_k)`} />
-      <Formula display tex={String.raw`q_k=b_{sk}\frac{Z_{0sk}}{Z_0},\qquad\beta_{sk}\ell_{k,\mathrm{open}}=\operatorname{atan2}(q_k,1)\bmod\pi`} />
-      <Formula display tex={String.raw`\beta_{sk}\ell_{k,\mathrm{short}}=\operatorname{atan2}(1,-q_k)`} />
-      <p>{t('Each geometric branch therefore has an open or short realization for each stub: four termination combinations per branch. Choosing the terminations selects the corresponding pair of lengths, without changing the locus or removing a geometric solution.', 'Cada rama geométrica admite una realización abierta o cortocircuitada para cada stub: cuatro combinaciones de terminaciones por rama. La elección de terminaciones selecciona el par de longitudes correspondiente, sin cambiar el lugar geométrico ni eliminar una solución geométrica.')}</p>
-      <Formula display tex={String.raw`\ell_k=\ell_{k,i}+m_k\lambda_{sk}/2,\qquad m_1,m_2\in\{0,1,2,\ldots\}`} />
-      <p>{t('The two integers are independent. Main-line distances can also include independent half-wavelength repetitions. All displayed electrical results remain unchanged under those periodic equivalents.', 'Los dos enteros son independientes. Las distancias sobre la línea principal también pueden incluir repeticiones independientes de media longitud de onda. Esos equivalentes periódicos conservan todos los resultados eléctricos.')}</p>
-
-      <h2>{t('Worked example: two branches for the same positions', 'Ejemplo: dos ramas para las mismas posiciones')}</h2>
-      <Formula display tex={String.raw`Z_0=Z_{0s1}=Z_{0s2}=50\;\Omega,\quad Z_L=100+\iu50\;\Omega,\quad d_1=d_2=\lambda/8`} />
-      <Formula display tex={String.raw`y_R=\frac12+\iu\frac12,\qquad B_\pm=1\pm\frac{\sqrt3}{2}`} />
-      <Formula display tex={String.raw`b_{s2}=\frac{1\pm\sqrt3}{2},\qquad b_{s1}=1\pm\sqrt3`} />
-      <div className="ss-guide__table-wrap"><table className="ss-guide__table">
-        <caption>{t('Stub 1 is on the left; stub 2 is on the right. Lengths use each stub’s own wavelength.', 'El stub 1 está a la izquierda y el stub 2 a la derecha. Cada longitud utiliza la longitud de onda de su stub.')}</caption>
-        <thead><tr><th>{t('Branch', 'Rama')}</th><th><Formula tex="\ell_{1,\mathrm{short}}/\lambda_{s1}" /></th><th><Formula tex="\ell_{2,\mathrm{short}}/\lambda_{s2}" /></th><th><Formula tex="\ell_{1,\mathrm{open}}/\lambda_{s1}" /></th><th><Formula tex="\ell_{2,\mathrm{open}}/\lambda_{s2}" /></th></tr></thead>
-        <tbody><tr><th>1</th><td>0.149427714</td><td>0.194155807</td><td>0.399427714</td><td>0.444155807</td></tr><tr><th>2</th><td>0.444155807</td><td>0.399427714</td><td>0.194155807</td><td>0.149427714</td></tr></tbody>
-      </table></div>
-      <Formula display tex={String.raw`y_v=1,\qquad Z_v=50\;\Omega,\qquad |\Gamma_v|\approx0,\qquad\mathrm{VSWR}=1`} />
-      <p>{t('The backward construction of the rotated conductance locus is also described in the ', 'La construcción hacia atrás del lugar geométrico de conductancia girado también se describe en la ')}<a href="https://www.waves.utoronto.ca/prof/mojahedi/ECE320/Lab%202%20Description%20and%20Procedure.pdf" target="_blank" rel="noreferrer">{t('University of Toronto transmission-line laboratory', 'práctica de líneas de transmisión de la Universidad de Toronto')}</a>{t('. Its stub numbering starts at the load; this guide explicitly numbers from the generator.', '. Allí los stubs se numeran desde la carga; esta guía los numera explícitamente desde el generador.')}</p>
       <a className="guide-link guide-link--primary" href="#/labs/double-stub-matching">{t('Open the double-stub laboratory', 'Abrir el laboratorio de doble stub')} <span aria-hidden="true">→</span></a>
     </div>
   </div>;

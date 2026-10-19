@@ -2,7 +2,7 @@
 // Add a host deliberately when adding a new source in either language.
 const CITATION_HOSTS = new Set([
   'ethw.org', 'maths.dur.ac.uk', 'arxiv.org', 'ximera.osu.edu',
-  'www.mathworks.com', 'web.ece.ucsb.edu', 'courses.ece.vt.edu', 'www.waves.utoronto.ca',
+  'www.mathworks.com', 'web.ece.ucsb.edu', 'courses.ece.vt.edu',
 ]);
 
 function externalCitationUrl(value) {

@@ -6,10 +6,11 @@ const { test } = require('node:test');
 const { externalCitationUrl, installExternalNavigation } = require('../electron/external-navigation.cjs');
 
 test('external navigation accepts only the guide citation HTTPS hosts', () => {
-  for (const url of ['https://ethw.org/Smith_Chart', 'https://maths.dur.ac.uk/users/sabine.boegli/CA2.html#definition', 'https://arxiv.org/pdf/1201.4068#page=2', 'https://ximera.osu.edu/em/electromagnetics/waves/digInReflectionCoeff', 'https://www.mathworks.com/help/rf/ug/designing-matching-networks-part-2-single-stub-transmission-lines.html', 'https://web.ece.ucsb.edu/~long/ece145a/Notes5_Matching_networks.pdf', 'https://courses.ece.vt.edu/ece3105/chp2_lssn6.html', 'https://www.waves.utoronto.ca/prof/mojahedi/ECE320/Lab%202%20Description%20and%20Procedure.pdf']) {
+  for (const url of ['https://ethw.org/Smith_Chart', 'https://maths.dur.ac.uk/users/sabine.boegli/CA2.html#definition', 'https://arxiv.org/pdf/1201.4068#page=2', 'https://ximera.osu.edu/em/electromagnetics/waves/digInReflectionCoeff', 'https://www.mathworks.com/help/rf/ug/designing-matching-networks-part-2-single-stub-transmission-lines.html', 'https://web.ece.ucsb.edu/~long/ece145a/Notes5_Matching_networks.pdf', 'https://courses.ece.vt.edu/ece3105/chp2_lssn6.html']) {
     assert.equal(externalCitationUrl(url), url);
   }
   assert.equal(externalCitationUrl('https://ETHW.ORG:443/Smith_Chart'), 'https://ethw.org/Smith_Chart');
+  assert.equal(externalCitationUrl('https://www.waves.utoronto.ca/prof/mojahedi/ECE320/Lab%202%20Description%20and%20Procedure.pdf'), null, 'A removed guide citation must not retain external navigation permission');
 });
 
 test('every external citation in all English and Spanish guides is covered by the desktop policy', () => {

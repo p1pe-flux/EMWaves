@@ -1,5 +1,7 @@
 # Animation performance and Windows validation
 
+This is a historical validation record from before 1.0.0. Branch scopes, version numbers, and test counts below describe those checkpoints; see the [README](../README.md) for the current release.
+
 This follow-up preserves the full `development` application: six laboratories, six guides, and both interface languages. The public README remains in English. The initial [test audit](test-audit-2026-10-17.md) remains the record of legacy-code removal and numerical fixes.
 
 ## Windows ARM64 extraction failure

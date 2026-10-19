@@ -8,17 +8,13 @@ describe('double-stub backward guide', () => {
   it.each(['en', 'es'] as const)('explains the backward locus with valid formulas in %s', (locale) => {
     const html = renderToStaticMarkup(<I18nProvider initialLocale={locale}><DoubleStubGuideContent /></I18nProvider>);
     expect(html).toContain(locale === 'es' ? 'Comenzamos por la izquierda' : 'Start at the left');
-    expect(html).toContain(locale === 'es' ? 'región prohibida' : 'forbidden region');
     expect(html).toContain(locale === 'es' ? 'sentido antihorario' : 'counterclockwise');
     expect(html).toContain('data-stage-name="matched"');
     expect(html).toContain('href="#/labs/double-stub-matching"');
     expect(html).toContain('sin');
     expect(html).toContain('frac');
-    expect(html).toContain('atan2');
     expect(html).toContain('T_{d_1}(y_L)');
     expect(html).toContain('T_{d_2}(y_2)');
-    expect(html).toContain(String.raw`\theta=\beta\,d_2`);
-    expect(html).toContain(String.raw`d_1=d_2=\lambda/8`);
     const loadConstruction = locale === 'es' ? 'Construimos la admitancia del lado de la carga' : 'Construct the load-side admittance';
     const intersections = locale === 'es' ? 'Cruzamos el lugar geométrico' : 'Intersect the locus';
     expect(html.indexOf(loadConstruction)).toBeLessThan(html.indexOf(intersections));

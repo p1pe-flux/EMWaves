@@ -49,7 +49,6 @@
 .transmission-line-diagram__port-anchor { fill: #fdfdfa; stroke: currentColor; stroke-width: 1; vector-effect: non-scaling-stroke; }
 .transmission-line-diagram__port text { fill: currentColor; font-family: "Lab Serif", Georgia, serif; font-style: italic; font-size: 27px; }
 .transmission-line-diagram__port tspan { font-size: 16px; }
-.transmission-line-diagram__ports-caption { fill: #8a9b87; font-family: "Inter", "Aptos", "Segoe UI", system-ui, sans-serif; font-size: 13px; }
 @container (max-width: 300px) {
   .transmission-line-diagram__circuit-label { font-size: 26px; }
   .transmission-line-diagram__generator-label, .transmission-line-diagram__load-value { font-size: 28px; }

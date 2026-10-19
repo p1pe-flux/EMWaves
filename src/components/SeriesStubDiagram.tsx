@@ -70,7 +70,7 @@ export function SeriesStubDiagram({ input, termination = 'short', distance = 0.1
       <text className="transmission-line-diagram__stub-impedance" x={(firstEndX + secondEndX) / 2} y={endY - 16} textAnchor="middle">Z<tspan baselineShift="sub" fontSize="14">0s</tspan>{!abstractLabels && ' = ' + formatNumber(input.stubZ0, 3) + ' Ω'}</text>
       {abstractLabels && <text className="series-stub__port series-stub__port--stub" x={right + 10} y={stubY - depthY / 2}>z<tspan baselineShift="sub">stub</tspan></text>}
     </g>}
-    {abstractLabels && <><text className="series-stub__port series-stub__port--input" x={left - 12} y="137" textAnchor="end">z<tspan baselineShift="sub">v</tspan></text><text className="series-stub__port series-stub__port--line" x={right + 12} y="182">z<tspan baselineShift="sub">ℓ</tspan></text></>}
+    {abstractLabels && <><text className="series-stub__port series-stub__port--input" x={left - 12} y="182" textAnchor="end">z<tspan baselineShift="sub">v</tspan></text><text className="series-stub__port series-stub__port--line" x={right + 12} y="182">z<tspan baselineShift="sub">ℓ</tspan></text></>}
     <g className="transmission-line-diagram__distance-measure" data-origin="480" data-position={right}>
       <path className="transmission-line-diagram__load-origin" d="M480 240V304" />
       <path className="transmission-line-diagram__section-tick" d={'M' + right + ' 288V304'} />
