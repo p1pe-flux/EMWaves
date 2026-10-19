@@ -22,7 +22,7 @@
     "package:win:arm64": "npm run icons:desktop && npm run build && node scripts/package-windows.mjs arm64 && node scripts/verify-windows-artifact.mjs arm64",
     "package:mac": "npm run icons:desktop && npm run build && node scripts/package-desktop.mjs mac universal && node scripts/verify-macos-artifact.mjs",
     "test:windows-artifacts": "node --test scripts/windows-artifact-integrity.test.mjs",
-    "test:desktop": "node --test scripts/external-navigation.test.cjs scripts/desktop-packaging.test.mjs scripts/desktop-proxy.test.mjs scripts/proxy-log-redaction.test.cjs",
+    "test:desktop": "node --test scripts/external-navigation.test.cjs scripts/desktop-packaging.test.mjs scripts/desktop-proxy.test.mjs scripts/proxy-log-redaction.test.cjs scripts/electron-smoke-capture.test.cjs",
     "test:desktop:smoke": "electron scripts/electron-navigation-smoke.cjs",
     "test:browser": "npm run build && playwright test"
   },
