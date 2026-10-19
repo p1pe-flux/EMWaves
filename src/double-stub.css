@@ -1,0 +1,42 @@
+.ds-diagram { width: 100%; height: auto; max-height: 240px; overflow: visible; }
+.ds-diagram__main-label, .ds-diagram__dimension-label { fill: #526f60; font: 18px Arial, sans-serif; }
+.ds-diagram__load-value { fill: #a95c3f; font: 20px Arial, sans-serif; }
+.ds-diagram__dimensions { stroke: #55706d; stroke-width: 1; }
+.ds-diagram__port-label { fill: #a95c3f; font: 600 18px Arial, sans-serif; }
+.ds-diagram__stub { fill: #547eb1; }
+.ds-diagram__face { fill: #547eb1; fill-opacity: .045; stroke: none; }
+.ds-diagram__occlusion { fill: none; stroke: var(--paper, #fdfdfa); stroke-width: 6; }
+.ds-diagram__stub-wire { fill: none; stroke: #547eb1; stroke-width: 1.7; stroke-linecap: round; }
+.ds-diagram__stub--detached .ds-diagram__stub-wire { stroke-dasharray: 4 3; }
+.ds-diagram__open { fill: var(--paper, #fdfdfa); stroke: #547eb1; stroke-width: 1.5; }
+.ds-diagram__stub-label { fill: #547eb1; font: 18px Arial, sans-serif; }
+.ds-diagram__impedance { font-size: 15px; }
+.ds-diagram__reading { fill: #3e806a; }
+.ds-diagram__reading path { fill: none; stroke: #3e806a; stroke-width: 1.1; stroke-dasharray: 4 4; }
+.ds-diagram__stub-plane { fill: none; stroke: #547eb1; stroke-width: 1.5; stroke-dasharray: 4 4; }
+.ds-diagram__admittance-port { color: #a95c3f; fill: currentColor; }
+.ds-diagram__admittance-port--input { color: #3e806a; }
+.ds-diagram__port-plane { fill: none; stroke: currentColor; stroke-width: .8; stroke-dasharray: 3 4; opacity: .45; }
+.ds-diagram__admittance-label { fill: currentColor; font: italic 20px "Lab Serif", Georgia, serif; }
+.ds-construction .ss-construction__circuit { min-height: 0; }
+.ds-construction .ss-construction__lesson .formula--display { font-size: 14px; }
+.ds-construction .ss-construction__lesson .formula--inline { display: inline-block; position: relative; white-space: nowrap; vertical-align: baseline; }
+.ds-construction__legend { display: flex; flex-wrap: wrap; gap: 6px 16px; color: var(--muted); font-size: 11px; margin: 15px 0 0; }
+.ds-construction__legend span::before { content: ''; display: inline-block; width: 15px; height: 2px; margin: 0 5px 3px 0; background: var(--legend-color); }
+.ds-construction__status { color: var(--muted); font-size: 13px; line-height: 1.7; }
+.ds-guide__circuit { width: 100%; max-width: 900px; margin: 26px auto; }
+.ds-guide__circuit .ds-diagram { max-height: 330px; }
+.ds-guide__terminations { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; max-width: 720px; margin: 24px auto; }
+.ds-guide__terminations fieldset { min-width: 0; padding: 0; border: 0; }
+.ds-guide__terminations legend { margin-bottom: 8px; color: var(--ink); font-size: 13px; font-weight: 600; }
+.ds-guide__terminations .ssl-termination { display: flex; flex-wrap: wrap; gap: 8px; }
+.ds-guide__terminations label { display: flex; align-items: center; gap: 6px; color: var(--muted); font-size: 13px; line-height: 1.6; cursor: pointer; }
+.ds-guide__terminations input { accent-color: var(--teal); }
+@media (min-width: 1000px) {
+  .dsm-layout .control-column { position: sticky; top: 20px; align-self: start; min-height: 0; }
+  .dsm-layout .ds-construction .ss-construction__chart { max-width: min(650px, calc(100dvh - 310px)); }
+}
+@media (max-width: 600px) { .ds-diagram { max-height: none; } .ds-construction .ss-construction__lesson .formula--display { font-size: 12px; } .ds-guide__terminations { grid-template-columns: 1fr; gap: 16px; } }
+@media (min-width: 760px) and (max-width: 999px) {
+  .ds-guide:not(.ss-guide--compact) .ss-construction__body { grid-template-columns: minmax(0, 1.08fr) minmax(0, 1fr); gap: 20px; }
+}

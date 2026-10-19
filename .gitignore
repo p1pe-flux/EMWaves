@@ -1,0 +1,23 @@
+node_modules/
+dist/
+release/
+.desktop/
+*.tsbuildinfo
+*.log
+.DS_Store
+test-results/
+playwright-report/
+.venv/
+
+# Local environment files; keep only shareable example templates.
+.env
+.env.*
+!.env.example
+!.env.*.example
+
+# Generated test coverage and Playwright blob reports.
+/coverage/
+/blob-report/
+
+# Local project context for future AI sessions; keep out of the repository.
+/AGENTS.md

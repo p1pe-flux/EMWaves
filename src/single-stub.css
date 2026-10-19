@@ -1,0 +1,108 @@
+@import './lab-controls.css';
+
+.ss-construction { margin: 24px 0; padding: 25px; border: 1px solid var(--line, #dce3d8); border-radius: 11px; background: #fdfdfa; min-width: 0; }
+.ss-construction__heading { display: flex; align-items: center; justify-content: space-between; gap: 18px; }
+.ss-construction__heading h3 { margin: 8px 0 0; font-family: "Lab Serif", Georgia, serif; font-weight: 400; font-size: 25px; letter-spacing: -.35px; }
+.ss-step-count { padding: 7px 10px; border-radius: 5px; background: #edf1eb; color: #657d70; font-size: 11px; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.ss-construction__toolbar { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px 24px; flex-wrap: wrap; margin-top: 22px; padding-bottom: 19px; border-bottom: 1px solid #e2e7de; }
+.ss-construction__selectors { display: flex; align-items: center; justify-content: flex-start; gap: 12px; flex-wrap: wrap; padding: 0; min-width: 0; }
+.ss-construction__selectors > div, .ss-grid-control { display: flex; gap: 6px; flex-wrap: wrap; }
+.ss-construction button:focus-visible, .ss-construction input:focus-visible { outline: 2px solid var(--teal, #1c666b); outline-offset: 3px; }
+.ss-construction__body { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(220px, .8fr); align-items: start; gap: 25px; margin: 24px 0 0; }
+.ss-construction__visual, .ss-construction__details, .ss-construction__lesson { min-width: 0; }
+.ss-construction__details { display: flex; flex-direction: column; gap: 14px; }
+.ss-construction__circuit { width: 100%; max-width: 400px; margin: 0 auto; }
+.ss-construction__circuit .ss-diagram { width: 100%; max-width: 400px; margin: 0 auto; }
+.ss-construction__chart { width: 100%; max-width: 650px; margin: -6px auto -12px; }
+.ss-construction .smith-chart { width: 100%; max-width: none; margin: 0; }
+.ss-construction .smith-paper { fill: transparent; }
+.ss-reference { width: fit-content; max-width: 100%; margin: 0 auto; padding: 7px 10px; background: #eff3ed; border: 1px solid #dce5d8; border-radius: 5px; color: #607866; font-size: 10px; text-align: center; line-height: 1.5; }
+.ss-reference--stub { background: #edf2f9; border-color: #cbd7e7; color: #4d6e9a; }
+.ss-reading-caption { margin: 2px 0 6px; color: #7a8d7c; font-size: 10px; line-height: 1.6; text-align: center; }
+.ss-reading-caption .formula { font-size: 11px; color: #456e58; }
+.ss-grid-control { justify-content: center; margin: 3px auto 2px; }
+.ss-grid-control button { padding: 6px 8px; font-size: 10px; }
+.ss-construction__lesson { padding: 20px 0 10px; }
+.ss-construction__lesson h4 { margin: 10px 0 18px; font-family: "Lab Serif", Georgia, serif; font-weight: 400; font-size: 24px; letter-spacing: -.3px; color: var(--ink, #243c43); line-height: 1.25; }
+.ss-construction__lesson p { margin: 14px 0; color: #62776c; font-size: 12px; line-height: 1.9; }
+.ss-construction__lesson .formula--inline { display: inline-block; position: relative; vertical-align: baseline; white-space: nowrap; }
+.ss-construction__lesson .formula--display { font-size: 13px; margin: 20px 0; color: #355e51; }
+.ss-construction__lesson .ss-note { font-size: 11px; color: #829182; padding-top: 13px; border-top: 1px solid #e1e7dd; }
+.ss-legend { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px; color: #6c8072; font-size: 10px; }
+.ss-legend > span { display: inline-flex; align-items: center; gap: 6px; }
+.ss-legend i { width: 14px; height: 2px; display: inline-block; }
+.ss-playback { display: flex; flex-direction: column; flex: 0 1 280px; align-items: stretch; gap: 10px; min-width: 0; max-width: 100%; margin-left: auto; padding: 0; border: 0; }
+.ss-playback__buttons { display: flex; align-items: center; justify-content: flex-end; gap: 6px; flex-wrap: wrap; }
+.ss-playback__buttons .ss-step-count { padding:7px 6px; font-size:10px; text-align:center; }
+@media (min-width:601px) {
+  .ss-construction:lang(es) .ss-playback { flex-basis:310px; }
+}
+.ss-speed { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 5px 12px; width: 100%; color: #7a8d7d; font-size: 9px; line-height: 1.6; }
+.ss-speed output { justify-self: end; min-width: 34px; color: #5d7d67; text-align: right; font-size: 10px; font-variant-numeric: tabular-nums; }
+.ss-speed input[type="range"] { grid-column: 1 / -1; width: 100%; min-width: 0; margin: 6px 0 4px; }
+.ss-stub-speed-row { display:grid; grid-template-columns:auto minmax(0,1fr); align-items:center; gap:10px; }
+.ss-stub-speed-row .ss-construction__selectors button { min-height:30px; padding:6px 7px; font-size:10px; }
+.ss-motion-note { margin: 14px 0 0; color: #869580; font-size: 10px; line-height: 1.7; }
+.ss-empty { padding: 26px; color: #62776c; border: 1px solid #dce3d8; border-radius: 9px; background: #f4f6f0; font-size: 12px; line-height: 1.9; }
+.ss-empty h3 { color: #365e4c; font-family: "Lab Serif", Georgia, serif; font-size: 23px; font-weight: 400; margin: 0; }
+.ss-empty p { margin-bottom: 0; }
+.ss-diagram { max-width: 650px; margin: 12px auto 0; }
+.ss-guide { --ss-guide-prose-size: 14px; --ss-guide-heading-size: 25px; min-width: 0; color: #607368; font-size: var(--ss-guide-prose-size); line-height: 1.9; }
+.ss-guide .ss-guide__article { width: 100%; max-width: 720px; margin: 0 auto; color: inherit; font-size: inherit; line-height: inherit; }
+.ss-guide .ss-guide__article > p { margin: 15px 0; }
+.ss-guide .ss-guide__article .ss-guide__lead { font-size: inherit; color: inherit; line-height: inherit; margin-top: 0; }
+.ss-guide .ss-guide__article h2, .ss-guide .ss-guide__article h3 { font-family: "Lab Serif", Georgia, serif; font-size: var(--ss-guide-heading-size); font-weight: 400; letter-spacing: -.35px; margin: 30px 0 12px; line-height: 1.25; color: var(--ink, #243c43); }
+.ss-guide .ss-guide__article > .formula--display { font-size: var(--ss-guide-prose-size); margin: 20px 0; color: #466054; }
+.ss-guide .ss-guide__article .ss-guide__callout { padding: 0; background: transparent; border: 0; border-radius: 0; color: inherit; font-size: inherit; }
+.ss-guide .ss-construction { max-width: 1100px; margin: 38px auto; padding: 0; border: 0; border-radius: 0; background: transparent; scroll-margin-top: 20px; }
+.ss-guide .ss-construction__heading h3 { font-size: var(--ss-guide-heading-size); line-height: 1.25; color: var(--ink, #243c43); }
+.ss-guide .ss-construction__lesson { width: 100%; max-width: 720px; margin: 0 auto; padding-top: 0; }
+.ss-guide .ss-construction__lesson h4 { margin: 10px 0 8px; font-family: inherit; font-size: 15px; font-weight: 550; letter-spacing: normal; line-height: 1.5; }
+.ss-guide .ss-construction__lesson p { margin: 10px 0; color: inherit; font-size: var(--ss-guide-prose-size); line-height: 1.9; }
+.ss-guide .ss-construction__lesson .formula--display { font-size: var(--ss-guide-prose-size); margin: 12px 0; color: #466054; }
+.ss-guide .ss-construction__lesson .ss-note { padding: 0; border: 0; color: inherit; font-size: var(--ss-guide-prose-size); }
+.ss-guide .ss-reference { padding: 0; border: 0; background: transparent; font-size: 11px; line-height: 1.8; }
+.ss-guide .ss-reading-caption, .ss-guide .ss-motion-note { font-size: 12px; line-height: 1.8; }
+.ss-guide .smith-point-label, .ss-guide .smith-gamma-label { background: #f5f4efe8; }
+.ss-guide .ss-empty { max-width: 720px; margin: 28px auto; padding: 0; border: 0; border-radius: 0; background: transparent; color: inherit; font-size: inherit; }
+.ss-guide .ss-guide__table-wrap { overflow-x: auto; margin: 27px 0; }
+.ss-guide .ss-guide__table { width: 100%; border-collapse: collapse; font-size: 13px; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.ss-guide .ss-guide__table caption { text-align: left; padding-bottom: 12px; color: #607368; font-size: 12px; }
+.ss-guide .ss-guide__table th, .ss-guide .ss-guide__table td { padding: 12px 10px; text-align: left; border-bottom: 1px solid #dae2d6; }
+.ss-guide .ss-guide__table thead th { background: transparent; color: #466054; font-weight: 550; }
+.ss-guide .ss-guide__table tbody th { color: #345e4b; font-weight: 550; }
+.ss-guide .ss-guide__lab-link { margin-top: 10px; }
+@media (max-width: 1000px) {
+  .ss-construction__body { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+  .ss-construction__lesson { padding-top: 4px; }
+  .ss-construction__chart { max-width: 570px; }
+  .ss-construction__details { gap: 20px; }
+  .ss-construction__circuit, .ss-construction__circuit .ss-diagram { max-width: 460px; }
+}
+@media (min-width: 1001px) {
+  .ss-guide:not(.ss-guide--compact) .ss-construction { --ss-guide-workspace-height: max(360px, calc(100dvh - 230px)); }
+  .ss-guide:not(.ss-guide--compact) .ss-construction__toolbar { margin-top: 14px; padding-bottom: 12px; }
+  .ss-guide:not(.ss-guide--compact) .ss-construction__body { grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr); gap: 30px; margin-top: 18px; }
+  .ss-guide:not(.ss-guide--compact) .ss-construction__chart { max-width: min(540px, calc(var(--ss-guide-workspace-height) - 48px)); }
+  .ss-guide:not(.ss-guide--compact) .ss-construction__details { gap: 12px; }
+  .ss-guide:not(.ss-guide--compact) .ss-construction__circuit .ss-diagram { max-height: clamp(240px, calc(var(--ss-guide-workspace-height) * 0.5), 300px); }
+  .ss-guide:not(.ss-guide--compact) .ss-construction__lesson > :last-child { margin-bottom: 0; }
+}
+@media (min-width: 1100px) {
+  .ss-guide:not(.ss-guide--compact) .ss-construction { --ss-guide-construction-width: min(1100px, calc(100vw - 108px)); width: var(--ss-guide-construction-width); max-width: none; margin-inline: calc((100% - var(--ss-guide-construction-width)) / 2); }
+}
+@media (max-width: 600px) {
+  .ss-construction { padding: 18px 15px; }
+  .ss-construction__heading h3 { font-size: 23px; }
+  .ss-construction__toolbar { gap: 14px; }
+  .ss-playback { flex-basis: 100%; width: 100%; margin-left: 0; gap: 10px; }
+  .ss-playback__buttons { justify-content: space-between; }
+  .ss-playback__buttons button { padding: 8px 10px; }
+  .ss-construction__selectors { justify-content: flex-start; gap: 10px; }
+  .ss-construction:lang(es) .ss-playback__buttons button { padding:8px; font-size:10px; }
+  .ss-construction:lang(es) .ss-playback__buttons .ss-playback__next { padding:8px 10px; }
+}
+@media (max-width: 760px) {
+  .ss-guide { --ss-guide-prose-size: 13px; --ss-guide-heading-size: 23px; }
+  .ss-guide .ss-guide__table { font-size: 12px; }
+}

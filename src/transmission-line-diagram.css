@@ -1,0 +1,56 @@
+.transmission-line-diagram { display: block; width: 100%; height: auto; aspect-ratio: 600 / 320; container-type: inline-size; overflow: visible; touch-action: pan-y; }
+.transmission-line-diagram--compact { aspect-ratio: 600 / 228; }
+.transmission-line-diagram path, .transmission-line-diagram__source, .transmission-line-diagram__load, .transmission-line-diagram__position-dot { vector-effect: non-scaling-stroke; }
+.transmission-line-diagram__wire { fill: none; stroke: #8da596; stroke-width: 1.25; }
+.transmission-line-diagram__source { fill: none; stroke: #527b67; stroke-width: 1.6; }
+.transmission-line-diagram__sine { fill: none; stroke: var(--teal, #1c666b); stroke-width: 1.8; stroke-linecap: round; }
+.transmission-line-diagram__line { fill: none; stroke: #537f6c; stroke-width: 1.8; stroke-linecap: round; }
+.transmission-line-diagram__circuit-label, .transmission-line-diagram__generator-label { fill: #526f60; font-family: "Inter", "Aptos", "Segoe UI", system-ui, sans-serif; font-size: 24px; }
+.transmission-line-diagram__load-connection { fill: none; stroke: #537f6c; stroke-width: 1.8; }
+.transmission-line-diagram__load { fill: #c563420b; stroke: var(--coral, #c56342); stroke-width: 1.5; }
+.transmission-line-diagram__load-symbol { fill: #a95c3f; font-family: "Lab Serif", Georgia, serif; font-size: 28px; font-style: italic; }
+.transmission-line-diagram__load-symbol tspan { font-size: 18px; }
+.transmission-line-diagram__load-value { fill: #a95c3f; font-family: "Inter", "Aptos", "Segoe UI", system-ui, sans-serif; font-size: 23px; }
+.transmission-line-diagram__length { stroke: #b2c1ae; stroke-width: .8; }
+.transmission-line-diagram__length-label { fill: #607368; font-family: "Lab Serif", Georgia, serif; font-size: 24px; font-style: italic; }
+.transmission-line-diagram__position-marker { cursor: ew-resize; }
+.transmission-line-diagram__position-marker:focus { outline: none; }
+.transmission-line-diagram__position-marker:focus-visible .transmission-line-diagram__position-dot { r: 6.5px; fill: #f5f4ef; stroke: var(--teal, #1c666b); stroke-width: 2.2; }
+.transmission-line-diagram__position { stroke: var(--teal, #1c666b); stroke-width: 1.5; stroke-dasharray: 3 3; }
+.transmission-line-diagram__position-dot { fill: var(--teal, #1c666b); stroke: #f5f4ef; stroke-width: 1.4; }
+.transmission-line-diagram__section-tick { stroke: var(--teal, #1c666b); stroke-width: 1; }
+.transmission-line-diagram__distance-arrow { fill: none; stroke: var(--teal, #1c666b); stroke-width: 1.4; }
+.transmission-line-diagram__distance-head, .transmission-line-diagram__origin-dot { fill: var(--teal, #1c666b); }
+.transmission-line-diagram__load-origin { stroke: #9eb5a4; stroke-width: .8; stroke-dasharray: 3 4; }
+.transmission-line-diagram__distance-label { fill: var(--teal, #1c666b); font-family: "Lab Serif", Georgia, serif; font-size: 25px; font-style: italic; }
+.transmission-line-diagram[data-disabled="true"] .transmission-line-diagram__position-marker { cursor: default; }
+.transmission-line-diagram--compact .transmission-line-diagram__circuit-label { font-size: 28px; }
+.transmission-line-diagram--compact .transmission-line-diagram__load-symbol { font-size: 30px; }
+.transmission-line-diagram__distance-value { font-size: 20px; }
+.transmission-line-diagram__stub-face { fill: #547eb10a; stroke: none; }
+.transmission-line-diagram__stub-depth-cue { fill: none; stroke: #547eb1; stroke-width: .8; stroke-dasharray: 4 5; opacity: .35; }
+.transmission-line-diagram__stub-wire { fill: none; stroke: #547eb1; stroke-width: 1.8; }
+.transmission-line-diagram__stub-crossover { fill: none; stroke: #fdfdfa; stroke-width: 6; stroke-linecap: round; }
+.transmission-line-diagram__stub-node { fill: #547eb1; stroke: #f5f4ef; stroke-width: 1; }
+.transmission-line-diagram__stub-open { fill: #fdfdfa; stroke: #547eb1; stroke-width: 1.5; }
+.transmission-line-diagram__stub--detached .transmission-line-diagram__stub-wire { stroke-dasharray: 5 4; opacity: .45; }
+.transmission-line-diagram__stub--detached .transmission-line-diagram__stub-node, .transmission-line-diagram__stub--detached .transmission-line-diagram__stub-open { opacity: .45; }
+.transmission-line-diagram__stub-impedance, .transmission-line-diagram__stub-termination-label { fill: #547eb1; font-family: "Inter", "Aptos", "Segoe UI", system-ui, sans-serif; font-size: 20px; }
+.transmission-line-diagram__stub-length-label { fill: #547eb1; font-family: "Lab Serif", Georgia, serif; font-size: 23px; font-style: italic; }
+.transmission-line-diagram__stub-termination-label { font-size: 16px; }
+.transmission-line-diagram__stub-node, .transmission-line-diagram__stub-open { vector-effect: non-scaling-stroke; }
+.transmission-line-diagram__port { color: #527f69; }
+.transmission-line-diagram__port--total { color: #3e806a; }
+.transmission-line-diagram__port--line { color: #a95c3f; }
+.transmission-line-diagram__port--stub { color: #547eb1; }
+.transmission-line-diagram__port path { fill: none; stroke: currentColor; stroke-width: 1.4; }
+.transmission-line-diagram__port .transmission-line-diagram__port-plane { stroke-width: 1; stroke-dasharray: 3 4; opacity: .75; }
+.transmission-line-diagram__port-node { fill: currentColor; stroke: #fdfdfa; stroke-width: 1; vector-effect: non-scaling-stroke; }
+.transmission-line-diagram__port-anchor { fill: #fdfdfa; stroke: currentColor; stroke-width: 1; vector-effect: non-scaling-stroke; }
+.transmission-line-diagram__port text { fill: currentColor; font-family: "Lab Serif", Georgia, serif; font-style: italic; font-size: 27px; }
+.transmission-line-diagram__port tspan { font-size: 16px; }
+.transmission-line-diagram__ports-caption { fill: #8a9b87; font-family: "Inter", "Aptos", "Segoe UI", system-ui, sans-serif; font-size: 13px; }
+@container (max-width: 300px) {
+  .transmission-line-diagram__circuit-label { font-size: 26px; }
+  .transmission-line-diagram__generator-label, .transmission-line-diagram__load-value { font-size: 28px; }
+}

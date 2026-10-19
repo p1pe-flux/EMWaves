@@ -1,0 +1,51 @@
+@import './single-stub.css';
+@import './transmission-line-diagram.css';
+
+.lc-matching-construction .ss-construction__toolbar { margin-top:0; }
+.lc-matching-construction .matching-branch-summary { max-width:360px; }
+.lc-feasibility { margin:0 12px 10px; color:#62776c; font-size:11px; line-height:1.6; }
+.lc-grid-legend { display:flex; flex-wrap:wrap; gap:5px 16px; margin-bottom:7px; }
+.lc-grid-legend > span { display:inline-flex; align-items:center; gap:5px; }
+.lc-grid-legend i { width:17px; height:0; border-top:2px solid currentColor; }
+.lc-grid-legend__impedance { color:#a95c3f; }
+.lc-grid-legend__admittance { color:#547eb1; }
+.lc-grid-legend .formula { color:inherit; }
+.lc-feasibility__legend { display:flex; flex-wrap:wrap; gap:5px 16px; color:#426b58; }
+.lc-feasibility__legend > span { display:inline-flex; align-items:center; gap:7px; }
+.lc-feasibility__swatch { width:17px; height:10px; flex-shrink:0; box-sizing:border-box; }
+.lc-feasibility__swatch--area { background:#3e806a33; border:1px solid #3e806a80; border-radius:2px; }
+.lc-feasibility__swatch--curve { height:0; border-top:3px solid #3e806a; }
+.lc-feasibility__swatch--boundary { height:0; border-top:2px dashed #3e806a; }
+.lc-feasibility__status { margin:8px 0 3px; }
+.lc-feasibility__status[data-load-feasibility="matchable"],
+.lc-feasibility__status[data-load-feasibility="continuous"] { color:#365e4c; }
+.lc-feasibility__status[data-load-feasibility="outside"],
+.lc-feasibility__status[data-load-feasibility="boundary"],
+.lc-feasibility__status[data-load-feasibility="unmatchable"] { color:#a95c3f; }
+.lc-matching-construction .ss-construction__visual,
+.lc-matching-construction .ss-construction__details { border:0; }
+.lc-matching-diagram { aspect-ratio:2; margin:0; }
+.lc-matching-diagram__component { color:#547eb1; }
+.lc-matching-diagram__component path { fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+.lc-matching-diagram__component circle { fill:currentColor; }
+.lc-matching-diagram__symbol { fill:currentColor; font-family:"Lab Serif",Georgia,serif; font-size:26px; font-style:italic; }
+.lc-matching-diagram__value { fill:currentColor; font-family:"Inter","Aptos","Segoe UI",system-ui,sans-serif; font-size:21px; }
+.lc-matching-diagram__port { fill:#3e806a; font-family:"Lab Serif",Georgia,serif; font-size:25px; font-style:italic; }
+.lc-matching-diagram__open { fill:#fdfdfa; stroke:#a95c3f; stroke-width:1.5; }
+.lc-matching-construction .ss-construction__lesson .formula--inline { display:inline-block; position:relative; vertical-align:baseline; }
+.lc-matching-construction .lc-matching__case { color:#62776c; font-size:12px; line-height:1.9; }
+.lc-matching-construction .lc-matching__case h5 { margin:0; color:#365e4c; font-size:14px; font-weight:550; }
+.lc-matching-construction .ss-construction__circuit { max-width:460px; }
+.lc-matching-construction .ss-construction__circuit .lc-matching-diagram { max-width:460px; }
+@media(min-width:1001px) {
+  .lc-matching-construction:not(.ss-construction--compact) .ss-construction__body { grid-template-columns:minmax(0,1.12fr) minmax(0,1fr); }
+}
+@media(min-width:760px) and (max-width:1000px) {
+  .lc-guide:not(.ss-guide--compact) .lc-matching-construction .ss-construction__body { grid-template-columns:minmax(0,1.08fr) minmax(0,1fr); gap:20px; }
+}
+@media(max-width:600px) {
+  .lc-matching-construction .ss-construction__body { display:flex; flex-direction:column; }
+  .lc-matching-construction .ss-construction__visual,
+  .lc-matching-construction .ss-construction__details { width:100%; }
+  .lc-matching-construction .ss-construction__lesson .formula--display { max-width:100%; overflow-x:auto; }
+}
