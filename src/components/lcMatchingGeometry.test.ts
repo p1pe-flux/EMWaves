@@ -1,13 +1,13 @@
 import { describe, expect, it } from 'vitest';
-import { evaluateLCMatching, solveLCMatching, type LCMatchingInput } from '../domain/lcMatching';
+import { evaluateLumpedMatching, solveLumpedMatching, type LumpedMatchingInput } from '../domain/lumpedMatching';
 import { lcConstantRealLocus, lcGridFocus, lcMatchingReadings, lcReadingValue, lcStagePath, type LCReading } from './lcMatchingGeometry';
 
-const example: LCMatchingInput = { z0: 50, frequencyHz: 1e9, load: { kind: 'impedance', resistance: 100, reactance: 50 }, order: 'LC', inductorConnection: 'series', capacitorConnection: 'parallel' };
-const mixedExamples: LCMatchingInput[] = [
+const example: LumpedMatchingInput = { z0: 50, frequencyHz: 1e9, load: { kind: 'impedance', resistance: 100, reactance: 50 }, elements: [{ component: 'L', connection: 'series' }, { component: 'C', connection: 'parallel' }] };
+const mixedExamples: LumpedMatchingInput[] = [
   example,
-  { ...example, order: 'CL', inductorConnection: 'parallel', capacitorConnection: 'series' },
-  { ...example, order: 'CL', load: { kind: 'impedance', resistance: 25, reactance: 10 } },
-  { ...example, inductorConnection: 'parallel', capacitorConnection: 'series', load: { kind: 'impedance', resistance: 25, reactance: 10 } },
+  { ...example, elements: [{ component: 'C', connection: 'series' }, { component: 'L', connection: 'parallel' }] },
+  { ...example, elements: [{ component: 'C', connection: 'parallel' }, { component: 'L', connection: 'series' }], load: { kind: 'impedance', resistance: 25, reactance: 10 } },
+  { ...example, elements: [{ component: 'L', connection: 'parallel' }, { component: 'C', connection: 'series' }], load: { kind: 'impedance', resistance: 25, reactance: 10 } },
 ];
 
 describe('L–C construction geometry on the combined Z/Y chart', () => {
@@ -16,8 +16,8 @@ describe('L–C construction geometry on the combined Z/Y chart', () => {
     expect(lcConstantRealLocus(1, 'admittance')).toEqual({ center: { re: -0.5, im: 0 }, radius: 0.5 });
   });
 
-  it.each(mixedExamples)('preserves physical paths and the correct two loci for $order, L $inductorConnection / C $capacitorConnection', input => {
-    const result = solveLCMatching(input);
+  it.each(mixedExamples)('preserves physical paths and the correct two loci for %j', input => {
+    const result = solveLumpedMatching(input);
     const [first, second] = result.branches[0].stages;
     const firstReading: LCReading = first.connection === 'series' ? 'impedance' : 'admittance';
     const secondReading: LCReading = second.connection === 'series' ? 'impedance' : 'admittance';
@@ -41,8 +41,8 @@ describe('L–C construction geometry on the combined Z/Y chart', () => {
   });
 
   it.each((['series', 'parallel'] as const).flatMap(connection => (['LC', 'CL'] as const).map(order => ({ connection, order }))))('keeps both loci coincident for the $connection family in $order order', ({ connection, order }) => {
-    const input: LCMatchingInput = { ...example, order, inductorConnection: connection, capacitorConnection: connection, load: connection === 'series' ? { kind: 'impedance', resistance: 50, reactance: 20 } : { kind: 'impedance', resistance: 25, reactance: 25 } };
-    const result = solveLCMatching(input);
+    const input: LumpedMatchingInput = { ...example, elements: [...order].map(component => ({ component: component as 'L' | 'C', connection })) as LumpedMatchingInput['elements'], load: connection === 'series' ? { kind: 'impedance', resistance: 50, reactance: 20 } : { kind: 'impedance', resistance: 25, reactance: 25 } };
+    const result = solveLumpedMatching(input);
     expect(result.status).toBe('continuous');
     const { first, second } = lcMatchingReadings(input);
     expect(first).toBe(connection === 'series' ? 'impedance' : 'admittance');
@@ -56,7 +56,7 @@ describe('L–C construction geometry on the combined Z/Y chart', () => {
     const omega = 2 * Math.PI * input.frequencyHz;
     const inductance = connection === 'series' ? q * input.z0 / omega : input.z0 / (omega * q);
     const capacitance = connection === 'series' ? 1 / (omega * input.z0 * (q + load.im)) : (q - load.im) / (omega * input.z0);
-    const evaluated = evaluateLCMatching({ ...input, inductance, capacitance });
+    const evaluated = evaluateLumpedMatching({ ...input, values: order === 'LC' ? [inductance, capacitance] : [capacitance, inductance] });
     expect(evaluated.reflectionMagnitude).toBeLessThan(1e-14);
     for (let index = 0; index < evaluated.stages.length; index += 1) {
       const stage = evaluated.stages[index];

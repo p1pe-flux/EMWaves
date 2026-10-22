@@ -9,8 +9,8 @@ import { advanceLinePosition, clampLinePosition, parseLineLength } from '../doma
 import type { ComplexValue, Load } from '../domain/transmission';
 import { complexTex, formatNumber, reflectionPhaseRadians, reflectionPolarTex, texNumber } from '../math/format';
 import { useI18n, translateMessage } from '../i18n';
-import '../lab-controls.css';
-import '../line-traversal.css';
+import '../styles/lab-controls.css';
+import '../styles/line-traversal.css';
 
 function Icon({ name, size = 18 }: { name: 'reset' | 'play' | 'pause' | 'arrow'; size?: number }) {
   const paths = {

@@ -1,6 +1,6 @@
 import { useI18n } from '../i18n';
 import { Formula } from './Formula';
-import '../matching-branch-summary.css';
+import '../styles/matching-branch-summary.css';
 
 export interface MatchingBranchSummaryBranch {
   index: number;

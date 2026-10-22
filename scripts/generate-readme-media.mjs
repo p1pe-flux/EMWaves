@@ -74,7 +74,7 @@ try {
   const { SingleStubDiagram } = await vite.ssrLoadModule('/src/components/SingleStubDiagram.tsx');
   const { QuarterWaveDiagram } = await vite.ssrLoadModule('/src/components/QuarterWaveDiagram.tsx');
   const projection = await vite.ssrLoadModule('/src/domain/smithProjection.ts');
-  const sources = await Promise.all(['src/styles.css', 'src/transmission-line-diagram.css', 'src/quarter-wave.css'].map(file => fs.readFile(path.join(root, file), 'utf8')));
+  const sources = await Promise.all(['src/styles/global.css', 'src/styles/transmission-line-diagram.css', 'src/styles/quarter-wave.css'].map(file => fs.readFile(path.join(root, file), 'utf8')));
   const paletteVars = { '--ink': C.ink, '--muted': C.muted, '--teal': C.teal, '--coral': C.coral, '--line': C.line, '--paper': C.paper };
   const css = sources.map(modelStyles).join('\n').replace(/var\((--[\w-]+)(?:,[^)]*)?\)/g, (_, name) => paletteVars[name] ?? C.ink);
 

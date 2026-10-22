@@ -180,7 +180,7 @@ export function SmithChart({ solution: legacySolution, length, showCurves, showG
   }) : null;
 
   function selectPointer(event: PointerEvent<SVGSVGElement>, start: boolean) {
-    if (!interactive || (start && (event.button !== 0 || !event.isPrimary))) return;
+    if (!interactive || (start && (event.button !== 0 || !event.isPrimary || draggingPointer.current !== null))) return;
     if (!start && draggingPointer.current !== event.pointerId) return;
     const matrix = event.currentTarget.getScreenCTM();
     if (!matrix) return;

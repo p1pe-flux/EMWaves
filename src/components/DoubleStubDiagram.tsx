@@ -2,8 +2,8 @@ import { useId } from 'react';
 import type { DoubleStubInput } from '../domain/doubleStub';
 import { formatNumber } from '../math/format';
 import { useI18n } from '../i18n';
-import '../transmission-line-diagram.css';
-import '../double-stub.css';
+import '../styles/transmission-line-diagram.css';
+import '../styles/double-stub.css';
 
 export interface DoubleStubDiagramProps {
   input: DoubleStubInput;

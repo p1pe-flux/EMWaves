@@ -1,6 +1,5 @@
 import { renderToStaticMarkup } from 'react-dom/server';
 import { describe, expect, it } from 'vitest';
-import { solveLCMatching, type LCMatchingInput } from '../domain/lcMatching';
 import { solveLumpedMatching, type LumpedMatchingInput } from '../domain/lumpedMatching';
 import { I18nProvider } from '../i18n';
 import { LCMatchingConstruction } from './LCMatchingConstruction';
@@ -8,7 +7,7 @@ import { LCMatchingDiagram } from './LCMatchingDiagram';
 import { LCMatchingBranchSummary } from './LCMatchingBranchSummary';
 import { getLCMatchingConstructionSteps } from './lcMatchingPlayback';
 
-const input: LCMatchingInput = { z0: 50, frequencyHz: 1e9, load: { kind: 'impedance', resistance: 100, reactance: 50 }, order: 'LC', inductorConnection: 'series', capacitorConnection: 'parallel' };
+const input: LumpedMatchingInput = { z0: 50, frequencyHz: 1e9, load: { kind: 'impedance', resistance: 100, reactance: 50 }, elements: [{ component: 'L', connection: 'series' }, { component: 'C', connection: 'parallel' }] };
 
 describe('L–C construction and circuit', () => {
   it('starts paused at zL with one physical branch and no component-value spoilers', () => {
@@ -35,7 +34,7 @@ describe('L–C construction and circuit', () => {
   });
 
   it.each(['LC', 'CL'] as const)('keeps source-to-load order %s fixed and the lower rail continuous', order => {
-    const html = renderToStaticMarkup(<LCMatchingDiagram input={{ ...input, order }} inductorProgress={1} capacitorProgress={1} />);
+    const html = renderToStaticMarkup(<LCMatchingDiagram input={{ ...input, elements: order === 'LC' ? input.elements : [input.elements[1], input.elements[0]] }} progress={[1, 1]} />);
     expect(html).toContain('data-component-order="' + order + '"');
     expect(html).toContain('data-main-conductor="lower" data-continuous="true" d="M110 220H515"');
     expect(html).toContain('data-inductor-symbol="coil"');
@@ -48,7 +47,7 @@ describe('L–C construction and circuit', () => {
   });
 
   it('discloses C first and L second for the default network, and removes future values on rewind', () => {
-    const solution = solveLCMatching(input);
+    const solution = solveLumpedMatching(input);
     const steps = getLCMatchingConstructionSteps(true);
     const render = (stepIndex: number, completed = true) => renderToStaticMarkup(<LCMatchingBranchSummary solution={solution} steps={steps} position={{ stepIndex, completed }} />);
     expect(render(3, false).match(/data-found="false"/g)).toHaveLength(2);
@@ -63,9 +62,9 @@ describe('L–C construction and circuit', () => {
   });
 
   it('keeps the solution card for families and unavailable loads without manufacturing component values', () => {
-    const cases: { input: LCMatchingInput; status: string; message: string }[] = [
-      { input: { ...input, inductorConnection: 'series', capacitorConnection: 'series', load: { kind: 'impedance', resistance: 50, reactance: 20 } }, status: 'continuous', message: 'Continuous family of solutions' },
-      { input: { ...input, inductorConnection: 'series', capacitorConnection: 'series' }, status: 'no-solution', message: 'No positive, finite pair for this topology' },
+    const cases: { input: LumpedMatchingInput; status: string; message: string }[] = [
+      { input: { ...input, elements: [{ component: 'L', connection: 'series' }, { component: 'C', connection: 'series' }], load: { kind: 'impedance', resistance: 50, reactance: 20 } }, status: 'continuous', message: 'Continuous family of solutions' },
+      { input: { ...input, elements: [{ component: 'L', connection: 'series' }, { component: 'C', connection: 'series' }] }, status: 'no-solution', message: 'No positive, finite pair for this topology' },
       { input: { ...input, load: { kind: 'open' } }, status: 'unmatchable', message: 'No positive, finite pair for this topology' },
       { input: { ...input, load: { kind: 'short' } }, status: 'unmatchable', message: 'No positive, finite pair for this topology' },
       { input: { ...input, load: { kind: 'impedance', resistance: 0, reactance: 50 } }, status: 'unmatchable', message: 'No positive, finite pair for this topology' },
@@ -93,7 +92,7 @@ describe('L–C construction and circuit', () => {
     ['en', 'Solution', 'No positive, finite pair for this topology'],
     ['es', 'Solución', 'No existe un par positivo y finito para esta topología'],
   ] as const)('places the unavailable-topology message only in the persistent solution card in %s', (locale, title, message) => {
-    const html = renderToStaticMarkup(<I18nProvider initialLocale={locale}><LCMatchingConstruction input={{ ...input, order: 'CL' }} /></I18nProvider>);
+    const html = renderToStaticMarkup(<I18nProvider initialLocale={locale}><LCMatchingConstruction input={{ ...input, elements: [input.elements[1], input.elements[0]] }} /></I18nProvider>);
     const summary = html.match(/<section class="matching-branch-summary__branch"[^>]*>[\s\S]*?<\/section>/)?.[0];
     const lesson = html.slice(html.indexOf('ss-construction__lesson'));
     expect(summary).toContain('<h4>' + title + '</h4>');
@@ -120,7 +119,7 @@ describe('L–C construction and circuit', () => {
   });
 
   it('shows the selected topology’s zone even for outside loads, but uses only a curve for equal connections', () => {
-    const outside = renderToStaticMarkup(<LCMatchingConstruction input={{ ...input, order: 'CL' }} />);
+    const outside = renderToStaticMarkup(<LCMatchingConstruction input={{ ...input, elements: [input.elements[1], input.elements[0]] }} />);
     expect(outside).toContain('data-chart-region="lc-matchable-loads"');
     expect(outside).toContain('data-load-feasibility="outside"');
     expect(outside).toContain('lies outside the matching region.');
@@ -128,7 +127,7 @@ describe('L–C construction and circuit', () => {
     expect(boundary).toContain('data-load-feasibility="boundary"');
     expect(boundary.match(/data-summary-branch=/g)).toHaveLength(1);
     expect(boundary).not.toMatch(/data-summary-field=|data-component-value=/);
-    const curve = renderToStaticMarkup(<LCMatchingConstruction input={{ ...input, capacitorConnection: 'series', load: { kind: 'impedance', resistance: 50, reactance: 50 } }} />);
+    const curve = renderToStaticMarkup(<LCMatchingConstruction input={{ ...input, elements: [{ component: 'L', connection: 'series' }, { component: 'C', connection: 'series' }], load: { kind: 'impedance', resistance: 50, reactance: 50 } }} />);
     expect(curve).toContain('data-chart-path="lc-feasibility-curve"');
     expect(curve).toContain('data-load-feasibility="continuous"');
     expect(curve).not.toContain('data-chart-region');

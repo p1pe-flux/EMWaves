@@ -22,7 +22,7 @@ Both Windows packaging commands use a cross-platform Node wrapper that pins the 
 
 A “Missing Shortcut” dialog means Windows cannot resolve the shortcut target at that moment. It does not establish whether antivirus removed the file, extraction failed, or the wrong installer was used.
 
-`scripts/package-windows.mjs` now forces `ELECTRON_BUILDER_7Z_FILTER=BCJ` for the pinned electron-builder version, matching the maintainer's supported-filter fix without changing the dependency tree. The verifier rejects `ARM64`, `BCJ2`, and unknown payload filters. New installers must pass that check before the packaging command succeeds. Installation, launch, all laboratories/guides, shortcuts, and uninstallation still require a smoke test on Windows.
+`scripts/package-windows.mjs` forces `ELECTRON_BUILDER_7Z_FILTER=BCJ` for the pinned electron-builder version. This keeps its compressed payload compatible with the installer decoder; the artifact verifier rejects `ARM64`, `BCJ2`, and unknown payload filters. Extracting an archive successfully with a newer desktop 7-Zip does not establish compatibility with the installer's decoder. The upstream compatibility fix is documented in [electron-builder's implementation](https://github.com/electron-userland/electron-builder/pull/9988).
 
 `electron/installer.nsh` rejects an ARM64-only installer on a different processor architecture and checks that extraction produced `EMWaves.exe` before registry entries or shortcuts are created. Installation, launch, all laboratories/guides, shortcuts, and uninstallation still require testing on Windows.
 

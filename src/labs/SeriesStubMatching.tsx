@@ -5,7 +5,7 @@ import { StubParameters } from '../components/StubParameters';
 import { ParameterField } from '../components/ParameterField';
 import { ResetParametersButton } from '../components/ResetParametersButton';
 import { solveSeriesStub, type SeriesStubInput, type StubTermination } from '../domain/seriesStub';
-import '../single-stub-lab.css';
+import '../styles/single-stub-lab.css';
 
 export default function SeriesStubMatching() {
   const { locale, t } = useI18n();

@@ -1,8 +1,8 @@
 import { useId } from 'react';
 import { formatNumber } from '../math/format';
 import { useI18n } from '../i18n';
-import '../transmission-line-diagram.css';
-import '../quarter-wave.css';
+import '../styles/transmission-line-diagram.css';
+import '../styles/quarter-wave.css';
 
 export interface QuarterWaveDiagramProps {
   z0: number;

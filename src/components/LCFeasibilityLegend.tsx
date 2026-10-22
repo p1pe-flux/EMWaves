@@ -1,10 +1,10 @@
-import type { LCFeasibilityClassification } from '../domain/lcFeasibility';
+import type { LumpedFeasibilityClassification } from '../domain/lumpedFeasibility';
 import { useI18n } from '../i18n';
 import { Formula } from './Formula';
 
 export function LCFeasibilityLegend({ kind, classification, alreadyMatched = false }: {
   kind: 'area' | 'curve';
-  classification: LCFeasibilityClassification;
+  classification: LumpedFeasibilityClassification;
   alreadyMatched?: boolean;
 }) {
   const { t } = useI18n();

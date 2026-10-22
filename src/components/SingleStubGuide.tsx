@@ -3,7 +3,7 @@ import type { SingleStubInput } from '../domain/singleStub';
 import { Formula } from './Formula';
 import { SingleStubConstruction } from './SingleStubConstruction';
 import { SingleStubDeduction } from './SingleStubDeduction';
-import '../single-stub.css';
+import '../styles/single-stub.css';
 
 export const SINGLE_STUB_EXAMPLE: SingleStubInput = {
   z0: 50,

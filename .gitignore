@@ -1,23 +1,60 @@
+# Dependencies and generated application/desktop builds.
 node_modules/
-dist/
-release/
-.desktop/
+/dist/
+/release/
+/.desktop/
 *.tsbuildinfo
-*.log
-.DS_Store
+
+# Test, browser, profiling, and local diagnostic output.
 test-results/
 playwright-report/
-.venv/
+blob-report/
+coverage/
+*.log
 
-# Local environment files; keep only shareable example templates.
+# Private working material belongs here, outside the public source tree.
+.local/
+private/
+internal/
+audits/
+audit-*/
+/docs/*audit*.md
+/docs/performance-and-windows-validation.md
+*.private.*
+
+# Assistant instructions, session state, and personal editor settings.
+[Aa][Gg][Ee][Nn][Tt][Ss].md
+[Aa][Gg][Ee][Nn][Tt][Ss].*.md
+CLAUDE.md
+GEMINI.md
+.codex/
+.claude/
+.cursor/
+.idea/
+.vscode/
+
+# Local environment and credentials; example templates must use placeholders.
 .env
 .env.*
 !.env.example
 !.env.*.example
+.npmrc
+*.key
+*.pem
+*.p12
+*.pfx
+*.mobileprovision
+id_rsa*
+id_ed25519*
+credentials.json
+service-account*.json
 
-# Generated test coverage and Playwright blob reports.
-/coverage/
-/blob-report/
-
-# Local project context for future AI sessions; keep out of the repository.
-/AGENTS.md
+# OS, editor backups, and local runtimes.
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.swp
+*.swo
+*~
+*.bak
+.venv/

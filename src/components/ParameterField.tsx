@@ -1,5 +1,5 @@
 import { Formula } from './Formula';
-import '../parameter-panel.css';
+import '../styles/parameter-panel.css';
 
 export interface ParameterFieldProps {
   label: string;

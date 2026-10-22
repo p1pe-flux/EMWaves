@@ -6,7 +6,7 @@ import { Formula } from './Formula';
 import { LCMatchingConstruction } from './LCMatchingConstruction';
 import { LCMatchingDiagram } from './LCMatchingDiagram';
 import { LCNetworkOptions } from './LCNetworkOptions';
-import '../single-stub.css';
+import '../styles/single-stub.css';
 
 export const LC_MATCHING_EXAMPLE: LumpedMatchingInput = {
   z0: 50, frequencyHz: 1e9,

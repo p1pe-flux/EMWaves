@@ -3,7 +3,7 @@ import type { KeyboardEvent, PointerEvent } from 'react';
 import type { Load } from '../domain/transmission';
 import { formatNumber } from '../math/format';
 import { useI18n } from '../i18n';
-import '../transmission-line-diagram.css';
+import '../styles/transmission-line-diagram.css';
 
 export interface TransmissionLineStub {
   z0: number | null;

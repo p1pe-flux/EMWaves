@@ -5,7 +5,7 @@ import type { StubTermination } from '../domain/singleStub';
 import { Formula } from './Formula';
 import { SeriesStubConstruction } from './SeriesStubConstruction';
 import { SeriesStubDiagram } from './SeriesStubDiagram';
-import '../single-stub.css';
+import '../styles/single-stub.css';
 
 export const SERIES_STUB_EXAMPLE: SeriesStubInput = {
   z0: 50, stubZ0: 50,

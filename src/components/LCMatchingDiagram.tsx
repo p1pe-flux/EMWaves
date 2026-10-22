@@ -1,38 +1,30 @@
 import { useId } from 'react';
-import type { LCMatchingInput } from '../domain/lcMatching';
 import { toLumpedMatchingInput, type LumpedMatchingInput } from '../domain/lumpedMatching';
 import { useI18n } from '../i18n';
 import { formatNumber } from '../math/format';
 import { formattedLCValue } from './LCMatchingBranchSummary';
-import '../lc-matching.css';
+import '../styles/lc-matching.css';
 
 export interface LCMatchingDiagramProps {
-  input: LCMatchingInput | LumpedMatchingInput;
+  input: LumpedMatchingInput;
   /** Values in SI units, in physical order from the generator to the load. */
   values?: [number?, number?];
   progress?: [number, number];
   revealed?: [boolean, boolean];
-  /** Legacy one-L/one-C props retained for callers of the original API. */
-  inductance?: number;
-  capacitance?: number;
-  inductorProgress?: number;
-  capacitorProgress?: number;
-  showInductance?: boolean;
-  showCapacitance?: boolean;
   abstractLabels?: boolean;
 }
 
 const clamp = (value: number) => Math.max(0, Math.min(1, value));
 
 /** Fixed topology. A muted symbol is planned; it brightens as its x/b is added. */
-export function LCMatchingDiagram({ input: inputValue, values, progress, revealed, inductance, capacitance, inductorProgress = 0, capacitorProgress = 0, showInductance = false, showCapacitance = false, abstractLabels = false }: LCMatchingDiagramProps) {
+export function LCMatchingDiagram({ input: inputValue, values, progress, revealed, abstractLabels = false }: LCMatchingDiagramProps) {
   const input = toLumpedMatchingInput(inputValue);
   const { t } = useI18n();
   const prefix = 'lc-diagram-' + useId().replaceAll(':', '');
   const slots = [225, 380];
   const top = 120;
   const bottom = 220;
-  const configuration = input.elements.map(({ component, connection }, index) => ({ component, connection, index, x: slots[index], progress: clamp(progress?.[index] ?? (component === 'L' ? inductorProgress : capacitorProgress)) }));
+  const configuration = input.elements.map(({ component, connection }, index) => ({ component, connection, index, x: slots[index], progress: clamp(progress?.[index] ?? 0) }));
   const series = configuration.filter((item) => item.connection === 'series');
   let cursor = 110;
   const upper: string[] = [];
@@ -49,8 +41,8 @@ export function LCMatchingDiagram({ input: inputValue, values, progress, reveale
     <path className="transmission-line-diagram__line" data-main-conductor="upper" d={upper.join('')} />
     <path className="transmission-line-diagram__line" data-main-conductor="lower" data-continuous="true" d="M110 220H515" />
     {configuration.map(({ component, connection, index, x, progress }) => {
-      const value = values?.[index] ?? (component === 'L' ? inductance : capacitance);
-      const reveal = revealed?.[index] ?? (component === 'L' ? showInductance : showCapacitance);
+      const value = values?.[index];
+      const reveal = revealed?.[index] ?? false;
       const symbol = component === 'L' ? <path data-inductor-symbol="coil" d="M-36 0a9 9 0 0 1 18 0a9 9 0 0 1 18 0a9 9 0 0 1 18 0a9 9 0 0 1 18 0" /> : <path data-capacitor-symbol="plates" d="M-36 0H-6M-6 -18V18M6 -18V18M6 0H36" />;
       return <g className="lc-matching-diagram__component" key={index} data-lc-component={component} data-connection={connection} data-component-position={x} data-element-index={index} data-component-progress={progress.toFixed(3)} opacity={0.28 + 0.72 * progress}>
         {connection === 'series' ? <g transform={'translate(' + x + ' ' + top + ')'}>{symbol}</g> : <><path d={'M' + x + ' ' + top + 'V134M' + x + ' 206V' + bottom} /><g transform={'translate(' + x + ' 170) rotate(90)'}>{symbol}</g><circle cx={x} cy={top} r="3" /><circle cx={x} cy={bottom} r="3" /></>}

@@ -33,7 +33,7 @@ The [media documentation](docs/media/README.md) explains how they are generated.
 
 ## Run it locally
 
-With Node.js 22.12 or newer and npm installed, run these commands from the repository root:
+Use Node.js 26 (the CI version), or a supported Node.js 22.12+ or 24 release, with npm. Run these commands from the repository root:
 
 ```sh
 npm ci
@@ -59,6 +59,8 @@ The interface is built with **React and TypeScript**, using **Vite**, **SVG** fo
 
 The electrical models live separately from the interface in `src/domain/`. Guides and laboratories share those calculations, while the components in `src/components/` handle the diagrams, explanations, and animation. This keeps the mathematical reasoning consistent across the different views and languages.
 
+See the [architecture guide](docs/architecture.md) for the project structure and [contributing guide](CONTRIBUTING.md) for development commands, testing, and review conventions.
+
 To run the unit tests and the independent circuit checks:
 
 ```sh
@@ -73,7 +75,7 @@ npx playwright install chromium
 npm run test:browser
 ```
 
-For desktop packaging, see the [Windows](docs/windows-distribution.md) and [macOS](docs/macos-distribution.md) documentation.
+For desktop packaging and platform-specific validation, see the [Windows](docs/windows-distribution.md) and [macOS](docs/macos-distribution.md) documentation.
 
 ## Contact and suggestions
 

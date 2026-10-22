@@ -16,7 +16,7 @@ import { getSeriesStubConstructionSteps, type SeriesStubConstructionStep } from 
 import { StepExplanation } from './StepExplanation';
 import { useStepPlayback } from './useStepPlayback';
 import { clampSeriesProgress as clamp, constantReactancePath, easeProgress, revealSeriesPath, rotateTowardGenerator, rotationPath, seriesCancellationPath, seriesCircleArc, seriesStubPath, seriesStubPoint } from './seriesStubGeometry';
-import '../series-stub.css';
+import '../styles/series-stub.css';
 
 export interface SeriesStubConstructionProps {
   input: SeriesStubInput;

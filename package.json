@@ -5,12 +5,25 @@
   "license": "GPL-3.0-only",
   "description": "Interactive electromagnetic-wave and transmission-line laboratories and guides in English and Spanish",
   "author": "EMWaves",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/p1pe-flux/EMWaves.git"
+  },
+  "bugs": {
+    "url": "https://github.com/p1pe-flux/EMWaves/issues"
+  },
+  "engines": {
+    "node": "^22.12.0 || ^24.0.0 || >=26.0.0"
+  },
   "type": "module",
   "main": "electron/main.cjs",
   "scripts": {
     "dev": "vite --host 127.0.0.1",
     "build": "tsc -b && vite build",
     "preview": "vite preview --host 127.0.0.1",
+    "typecheck": "tsc --noEmit",
+    "check:public": "node scripts/check-public-files.mjs",
+    "test:public": "node --test scripts/check-public-files.test.mjs",
     "test": "vitest run",
     "test:models": "node scripts/audit-matching-models.mjs",
     "test:watch": "vitest",

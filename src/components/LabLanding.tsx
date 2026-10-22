@@ -1,6 +1,6 @@
 import { useId } from 'react';
 import { useI18n } from '../i18n';
-import '../landing.css';
+import '../styles/landing.css';
 
 function SmithIllustration() {
   const clipId = 'landing-smith-' + useId().replaceAll(':', '');

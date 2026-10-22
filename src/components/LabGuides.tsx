@@ -3,7 +3,7 @@ import type { ReactNode } from 'react';
 import { doubleStubGuide, laboratoryGuides, lcMatchingGuide, quarterWaveGuide, seriesStubGuide, singleStubGuide } from '../content/guides';
 import type { GuideMetadata } from '../content/guides';
 import { useI18n } from '../i18n';
-import '../guides.css';
+import '../styles/guides.css';
 
 const SingleStubGuideContent = lazy(() => import('./SingleStubGuide').then(module => ({ default: module.SingleStubGuideContent })));
 const SeriesStubGuideContent = lazy(() => import('./SeriesStubGuide').then(module => ({ default: module.SeriesStubGuideContent })));

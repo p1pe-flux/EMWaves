@@ -1,4 +1,3 @@
-import type { LCMatchingSolution } from '../domain/lcMatching';
 import type { LumpedMatchingSolution } from '../domain/lumpedMatching';
 import { useI18n } from '../i18n';
 import { texNumber } from '../math/format';
@@ -7,7 +6,7 @@ import { lcMatchingResultMilestones } from './lcMatchingPlayback';
 import type { LCMatchingConstructionStep, LCMatchingStepPosition } from './lcMatchingPlayback';
 
 export interface LCMatchingBranchSummaryProps {
-  solution: LCMatchingSolution | LumpedMatchingSolution;
+  solution: LumpedMatchingSolution;
   steps: readonly LCMatchingConstructionStep[];
   position: LCMatchingStepPosition;
 }
@@ -40,9 +39,7 @@ export function LCMatchingBranchSummary({ solution, steps, position }: LCMatchin
   const milestones = lcMatchingResultMilestones(steps, position);
   return <MatchingBranchSummary variant="highlighted" branches={solution.branches.map((branch, index) => {
     const found = milestones.get(index);
-    const elements = 'elements' in branch ? branch.elements : [branch.stages[1], branch.stages[0]].map(stage => ({
-      component: stage.component, value: stage.component === 'L' ? branch.inductance : branch.capacitance,
-    }));
+    const elements = branch.elements;
     return { index, title: t('Solution', 'Solución'), rows: elements.map((element, elementIndex) => ({
       key: 'element-' + (elementIndex + 1),
       tex: (elementIndex === 0 ? found?.source : found?.load) ? formattedLCValue(element.component, element.value, elementIndex + 1).tex : null,

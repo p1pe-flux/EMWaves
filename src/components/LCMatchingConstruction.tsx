@@ -1,6 +1,5 @@
 import { useId, useMemo, useRef } from 'react';
 import type { ReactNode } from 'react';
-import type { LCMatchingInput } from '../domain/lcMatching';
 import { applyLumpedStage, evaluateLumpedMatching, solveLumpedMatching, toLumpedMatchingInput } from '../domain/lumpedMatching';
 import type { LumpedMatchingInput, LumpedMatchingStage, LumpedMatchingSolution, LumpedMatchingEvaluation } from '../domain/lumpedMatching';
 import { classifyLumpedPhysicalLoadFeasibility, describeLumpedFeasibility } from '../domain/lumpedFeasibility';
@@ -20,9 +19,9 @@ import { getLCMatchingConstructionSteps, lcMatchingResultMilestones, type LCMatc
 import { clampLCProgress as clamp, easeLCProgress as ease, lcCirclePath, lcConstantRealLocus, lcGridFocus, lcMatchingReadings, lcReadingValue, lcStagePath } from './lcMatchingGeometry';
 import type { LCReading } from './lcMatchingGeometry';
 import { useStepPlayback } from './useStepPlayback';
-import '../lc-matching.css';
+import '../styles/lc-matching.css';
 
-export interface LCMatchingConstructionProps { input: LCMatchingInput | LumpedMatchingInput; solution?: LumpedMatchingSolution }
+export interface LCMatchingConstructionProps { input: LumpedMatchingInput; solution?: LumpedMatchingSolution }
 const CORAL = '#a95c3f';
 const GREEN = '#3e806a';
 const GOLD = '#a08149';

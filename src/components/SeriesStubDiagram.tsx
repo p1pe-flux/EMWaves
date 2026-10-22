@@ -3,7 +3,7 @@ import type { SeriesStubInput } from '../domain/seriesStub';
 import type { StubTermination } from '../domain/singleStub';
 import { useI18n } from '../i18n';
 import { formatNumber } from '../math/format';
-import '../series-stub.css';
+import '../styles/series-stub.css';
 
 export interface SeriesStubDiagramProps {
   input: SeriesStubInput;

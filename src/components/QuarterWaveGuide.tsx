@@ -3,7 +3,7 @@ import { useI18n } from '../i18n';
 import { Formula } from './Formula';
 import { QuarterWaveConstruction } from './QuarterWaveConstruction';
 import { QuarterWaveDiagram } from './QuarterWaveDiagram';
-import '../quarter-wave.css';
+import '../styles/quarter-wave.css';
 
 export const QUARTER_WAVE_EXAMPLE: QuarterWaveInput = {
   z0: 50,

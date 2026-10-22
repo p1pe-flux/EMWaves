@@ -16,8 +16,8 @@ import { useStepPlayback } from './useStepPlayback';
 import { quarterWaveSteps } from './quarterWavePlayback';
 import type { QuarterWavePosition, QuarterWaveStep } from './quarterWavePlayback';
 import { interpolateReference, quarterWaveCircle, quarterWaveReflection } from './quarterWaveGeometry';
-import '../single-stub.css';
-import '../quarter-wave.css';
+import '../styles/single-stub.css';
+import '../styles/quarter-wave.css';
 
 export interface QuarterWaveConstructionProps {
   input: QuarterWaveInput;

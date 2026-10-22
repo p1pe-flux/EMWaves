@@ -2,7 +2,7 @@ import { useEffect, useId, useMemo, useRef, useState } from 'react';
 import { projectImpedance, projectionGrid } from '../domain/smithProjection';
 import type { ComplexValue } from '../domain/transmission';
 import { useI18n } from '../i18n';
-import '../smith-projection.css';
+import '../styles/smith-projection.css';
 
 const SCALE = 230;
 const BOUNDS = { minRe: -1.45, maxRe: 1.45, minIm: -1.18, maxIm: 1.18 };

@@ -6,7 +6,7 @@ import { ParameterField } from '../components/ParameterField';
 import { ResetParametersButton } from '../components/ResetParametersButton';
 import { solveLumpedMatching, type LumpedMatchingInput, type LumpedMatchingTopology } from '../domain/lumpedMatching';
 import { translateMessage, useI18n } from '../i18n';
-import '../single-stub-lab.css';
+import '../styles/single-stub-lab.css';
 
 const defaultTopology: LumpedMatchingTopology = {
   elements: [

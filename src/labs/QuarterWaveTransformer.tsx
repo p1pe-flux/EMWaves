@@ -5,8 +5,8 @@ import { ResetParametersButton } from '../components/ResetParametersButton';
 import { solveQuarterWave } from '../domain/quarterWave';
 import type { QuarterWaveInput } from '../domain/quarterWave';
 import { translateMessage, useI18n } from '../i18n';
-import '../single-stub-lab.css';
-import '../quarter-wave.css';
+import '../styles/single-stub-lab.css';
+import '../styles/quarter-wave.css';
 
 export default function QuarterWaveTransformer() {
   const { locale, t } = useI18n();

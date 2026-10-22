@@ -1,6 +1,4 @@
-import { applyLCStage } from '../domain/lcMatching';
-import type { LCMatchingTopology } from '../domain/lcMatching';
-import { toLumpedTopology, type LumpedMatchingTopology } from '../domain/lumpedMatching';
+import { applyLumpedStage, toLumpedTopology, type LumpedMatchingTopology } from '../domain/lumpedMatching';
 import type { ComplexValue } from '../domain/transmission';
 import { impedanceToReflection } from '../domain/transmission';
 
@@ -11,7 +9,7 @@ export const clampLCProgress = (value: number) => Math.max(0, Math.min(1, value)
 export const easeLCProgress = (value: number) => { const t = clampLCProgress(value); return t * t * (3 - 2 * t); };
 
 /** Circuit order is source→load; the first calculated element is at the load. */
-export function lcMatchingReadings(topology: LCMatchingTopology | LumpedMatchingTopology): { first: LCReading; second: LCReading } {
+export function lcMatchingReadings(topology: LumpedMatchingTopology): { first: LCReading; second: LCReading } {
   const [source, load] = toLumpedTopology(topology).elements;
   return { first: load.connection === 'series' ? 'impedance' : 'admittance', second: source.connection === 'series' ? 'impedance' : 'admittance' };
 }
@@ -53,7 +51,7 @@ export function lcCirclePath(locus: LCLocus, progress = 1): ComplexValue[] {
 /** Interpolate x or b, never L/C: zero added series-C or shunt-L means ∞. */
 export function lcStagePath(impedance: ComplexValue | null, connection: LCConnection, normalizedValue: number, progress = 1): ComplexValue[] {
   return Array.from({ length: 121 }, (_, index) => {
-    const z = applyLCStage(impedance, connection, normalizedValue * clampLCProgress(progress) * index / 120);
+    const z = applyLumpedStage(impedance, connection, normalizedValue * clampLCProgress(progress) * index / 120);
     return z === null ? { re: 1, im: 0 } : impedanceToReflection(z);
   });
 }

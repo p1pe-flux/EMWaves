@@ -3,7 +3,7 @@ import { useId, useState } from 'react';
 import type { StubTermination } from '../domain/singleStub';
 import { Formula } from './Formula';
 import { TransmissionLineDiagram } from './TransmissionLineDiagram';
-import '../single-stub-deduction.css';
+import '../styles/single-stub-deduction.css';
 
 export function SingleStubDeduction() {
   const { t } = useI18n();

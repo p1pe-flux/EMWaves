@@ -17,8 +17,8 @@ import type { DoubleStubStep, DoubleStubStepPosition } from './doubleStubPlaybac
 import { StepExplanation } from './StepExplanation';
 import { doubleStubAdditionPath, doubleStubChartPoint, doubleStubCirclePath, doubleStubIsolatedPath, doubleStubIsolatedPoint, doubleStubLoadPath, doubleStubPropagationPath, conductanceCircle, transportedUnityCircle, transportedUnityCenterPath } from './doubleStubGeometry';
 import { easeProgress, reflectThroughCenter } from './singleStubConstructionGeometry';
-import '../single-stub.css';
-import '../double-stub.css';
+import '../styles/single-stub.css';
+import '../styles/double-stub.css';
 
 export interface DoubleStubConstructionProps {
   input: DoubleStubInput;

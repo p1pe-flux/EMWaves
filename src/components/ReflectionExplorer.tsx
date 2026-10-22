@@ -6,7 +6,7 @@ import { texNumber } from '../math/format';
 import { Formula } from './Formula';
 import { SmithChart } from './SmithChart';
 import { useI18n } from '../i18n';
-import '../reflection-explorer.css';
+import '../styles/reflection-explorer.css';
 
 export interface ReflectionExplorerProps {
   z?: ComplexValue | null;

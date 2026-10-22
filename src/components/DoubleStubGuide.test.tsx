@@ -13,13 +13,14 @@ describe('double-stub backward guide', () => {
     expect(html).toContain('href="#/labs/double-stub-matching"');
     expect(html).toContain('sin');
     expect(html).toContain('frac');
-    expect(html).toContain('T_{d_1}(y_L)');
-    expect(html).toContain('T_{d_2}(y_2)');
+    expect(html).toContain(String.raw`y_R=\frac{y_L\cos(\beta d_1)+\iu\sin(\beta d_1)}{\cos(\beta d_1)+\iu y_L\sin(\beta d_1)}`);
+    expect(html).toContain(String.raw`y_1=\frac{y_2\cos(\beta d_2)+\iu\sin(\beta d_2)}{\cos(\beta d_2)+\iu y_2\sin(\beta d_2)}`);
+    expect(html).not.toMatch(/T_a|T_\{d_[12]\}/);
     const loadConstruction = locale === 'es' ? 'Construimos la admitancia del lado de la carga' : 'Construct the load-side admittance';
     const intersections = locale === 'es' ? 'Cruzamos el lugar geométrico' : 'Intersect the locus';
     expect(html.indexOf(loadConstruction)).toBeLessThan(html.indexOf(intersections));
     expect(html).toContain(String.raw`p(y_L)=-p_z=-\Gamma_L`);
-    expect(html).toContain(String.raw`y_R=y_\ell(d_1)=T_{d_1}(y_L)=g+\iu b_R`);
+    expect(html).toContain(String.raw`y_R=y_\ell(d_1)=g+\iu b_R`);
     expect(html).not.toMatch(/formula--error|katex-error|NaN/);
     expect(html).not.toContain('>Play</button>');
     expect(html).not.toContain('Manual tuning');

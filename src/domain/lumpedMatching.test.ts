@@ -4,7 +4,6 @@ import {
   toLumpedMatchingInput, toLumpedTopology,
   type LumpedElement, type LumpedMatchingInput, type LumpedMatchingTopology,
 } from './lumpedMatching';
-import { solveLCMatching } from './lcMatching';
 import {
   classifyLumpedFeasibility, classifyLumpedPhysicalLoadFeasibility, describeLumpedFeasibility,
 } from './lumpedFeasibility';
@@ -163,15 +162,15 @@ describe('general two-reactive-element synthesis', () => {
     }
   });
 
-  it('adapts the existing L–C API without duplicating synthesis', () => {
-    const legacy = { ...context, order: 'CL' as const, inductorConnection: 'parallel' as const, capacitorConnection: 'series' as const, load: { kind: 'impedance' as const, resistance: 100, reactance: 50 } };
-    const canonical = solveLumpedMatching(toLumpedMatchingInput(legacy));
-    const original = solveLCMatching(legacy);
-    expect(canonical.branches[0].elements[0].value).toBe(original.branches[0].capacitance);
-    expect(canonical.branches[0].elements[1].value).toBe(original.branches[0].inductance);
-    expect(toLumpedTopology(legacy).elements.map(element => element.component)).toEqual(['C', 'L']);
-    expect(() => toLumpedTopology({ ...legacy, order: 'bad' } as never)).toThrow(RangeError);
+  it('validates and copies the canonical topology without aliasing the caller’s elements', () => {
+    const input = inputFor({ elements: [{ component: 'C', connection: 'series' }, { component: 'L', connection: 'parallel' }] }, 2, 1);
+    const normalized = toLumpedMatchingInput(input);
+    expect(normalized).toEqual(input);
+    expect(normalized.elements).not.toBe(input.elements);
+    expect(normalized.elements[0]).not.toBe(input.elements[0]);
+    expect(toLumpedTopology(input).elements.map(element => element.component)).toEqual(['C', 'L']);
+    expect(() => toLumpedTopology({ elements: [] } as never)).toThrow(RangeError);
     expect(() => describeLumpedFeasibility({ elements: [{ component: 'bad', connection: 'series' }, { component: 'L', connection: 'series' }] } as never)).toThrow(RangeError);
-    expect(() => evaluateLumpedMatching({ ...toLumpedMatchingInput(legacy), values: [0, 1e-9] })).toThrow(RangeError);
+    expect(() => evaluateLumpedMatching({ ...input, values: [0, 1e-9] })).toThrow(RangeError);
   });
 });

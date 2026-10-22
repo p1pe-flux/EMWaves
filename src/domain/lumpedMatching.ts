@@ -1,7 +1,6 @@
 import { DomainError, type DomainParameterLabel } from './errors';
 import { impedanceToReflection, solveLine, type ComplexValue, type Load } from './transmission';
 import { classifyLumpedPhysicalLoadFeasibility } from './lumpedFeasibility';
-import type { LCMatchingInput, LCMatchingTopology } from './lcMatching';
 
 export type LumpedComponent = 'L' | 'C';
 export type LumpedConnection = 'series' | 'parallel';
@@ -50,24 +49,17 @@ export type LumpedMatchingEvaluation = {
   stages: [LumpedMatchingStage, LumpedMatchingStage];
 };
 
-export function toLumpedTopology(topology: LCMatchingTopology | LumpedMatchingTopology): LumpedMatchingTopology {
-  if ('elements' in topology) {
-    if (!Array.isArray(topology.elements) || topology.elements.length !== 2) throw new DomainError('lumped.invalid-element-count');
-    for (const element of topology.elements) {
-      if (element.component !== 'L' && element.component !== 'C') throw new DomainError('lumped.invalid-component');
-      assertConnection(element.connection);
-    }
-    return { elements: topology.elements.map(element => ({ ...element })) as [LumpedElement, LumpedElement] };
+/** Validate and copy the two elements in generator-to-load order. */
+export function toLumpedTopology(topology: LumpedMatchingTopology): LumpedMatchingTopology {
+  if (!Array.isArray(topology.elements) || topology.elements.length !== 2) throw new DomainError('lumped.invalid-element-count');
+  for (const element of topology.elements) {
+    if (element.component !== 'L' && element.component !== 'C') throw new DomainError('lumped.invalid-component');
+    assertConnection(element.connection);
   }
-  if (topology.order !== 'LC' && topology.order !== 'CL') throw new DomainError('lumped.invalid-order');
-  assertConnection(topology.inductorConnection);
-  assertConnection(topology.capacitorConnection);
-  const inductor: LumpedElement = { component: 'L', connection: topology.inductorConnection };
-  const capacitor: LumpedElement = { component: 'C', connection: topology.capacitorConnection };
-  return { elements: topology.order === 'LC' ? [inductor, capacitor] : [capacitor, inductor] };
+  return { elements: topology.elements.map(element => ({ ...element })) as [LumpedElement, LumpedElement] };
 }
 
-export function toLumpedMatchingInput(input: LCMatchingInput | LumpedMatchingInput): LumpedMatchingInput {
+export function toLumpedMatchingInput(input: LumpedMatchingInput): LumpedMatchingInput {
   return { ...toLumpedTopology(input), z0: input.z0, frequencyHz: input.frequencyHz, load: input.load };
 }
 

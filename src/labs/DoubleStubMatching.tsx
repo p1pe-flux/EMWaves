@@ -6,7 +6,7 @@ import { DoubleStubConstruction } from '../components/DoubleStubConstruction';
 import { solveDoubleStub, type DoubleStubInput } from '../domain/doubleStub';
 import type { StubTermination } from '../domain/singleStub';
 import { translateMessage, useI18n } from '../i18n';
-import '../single-stub-lab.css';
+import '../styles/single-stub-lab.css';
 
 interface StubSettings { z0: string; linked: boolean; termination: StubTermination; }
 

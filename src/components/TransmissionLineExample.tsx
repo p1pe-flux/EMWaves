@@ -6,7 +6,7 @@ import { Formula } from './Formula';
 import { SmithChart } from './SmithChart';
 import { TransmissionLineDiagram } from './TransmissionLineDiagram';
 import { useI18n } from '../i18n';
-import '../transmission-line-example.css';
+import '../styles/transmission-line-example.css';
 
 export interface TransmissionLineExampleProps {
   children?: ReactNode;

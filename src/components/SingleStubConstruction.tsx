@@ -15,7 +15,7 @@ import { getSingleStubConstructionSteps, type SingleStubConstructionStep } from 
 import { StepExplanation } from './StepExplanation';
 import { useStepPlayback } from './useStepPlayback';
 import type { SingleStubStepPosition } from './singleStubResultMilestones';
-import '../single-stub.css';
+import '../styles/single-stub.css';
 
 export interface SingleStubConstructionProps {
   input: SingleStubInput;
