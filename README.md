@@ -6,7 +6,7 @@ As a teaching assistant, I started EMWaves to help students visualize transmissi
 
 That is the idea behind this project: give students a way to follow a calculation, see what each step means, and explore how changing the parameters affects the result. I hope it helps make these topics easier to understand and gives students another way to work through them outside the classroom.
 
-**EMWaves 1.0.0** includes six laboratories and six guides in English and Spanish. Desktop downloads are available from [GitHub Releases](https://github.com/p1pe-flux/EMWaves/releases).
+**EMWaves 1.0.1** includes six laboratories and six guides in English and Spanish. Desktop downloads are available from [GitHub Releases](https://github.com/p1pe-flux/EMWaves/releases).
 
 ## How it works
 
@@ -71,11 +71,11 @@ npm run test:models
 Browser checks cover the interactions, layout, and translated guides. To run them locally:
 
 ```sh
-npx playwright install chromium
+npx playwright install chromium firefox webkit
 npm run test:browser
 ```
 
-For desktop packaging and platform-specific validation, see the [Windows](docs/windows-distribution.md) and [macOS](docs/macos-distribution.md) documentation.
+The browser suite covers Chromium, Firefox, and WebKit, including a relocated build and local assets. See the [portability guide](docs/portability.md) for supported targets and validation limits, and the [Windows](docs/windows-distribution.md), [macOS](docs/macos-distribution.md), and [Linux](docs/linux-distribution.md) guides for desktop packaging.
 
 ## Contact and suggestions
 

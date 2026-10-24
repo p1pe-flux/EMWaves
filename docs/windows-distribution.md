@@ -1,6 +1,6 @@
 # Windows installers and trust
 
-**EMWaves 1.0.0** includes all six laboratories and all six guides in English and Spanish.
+**EMWaves 1.0.1** includes all six laboratories and all six guides in English and Spanish.
 
 Build separate installers for Intel/AMD x64 and native Windows ARM64:
 
@@ -29,7 +29,7 @@ A “Missing Shortcut” dialog means Windows cannot resolve the shortcut target
 Start with **Settings → System → About → System type** and **Windows Security → Virus & threat protection → Protection history**. Keep protections enabled. To gather the relevant local facts, run the read-only report from this repository in PowerShell:
 
 ```powershell
-.\scripts\diagnose-windows.ps1 -InstallerPath 'C:\Users\me\Downloads\EMWaves-1.0.0-Windows-arm64-Setup.exe'
+.\scripts\diagnose-windows.ps1 -InstallerPath 'C:\Users\me\Downloads\EMWaves-1.0.1-Windows-arm64-Setup.exe'
 ```
 
 For a custom installation folder, add `-InstallDirectory 'D:\Apps\EMWaves'`. The report reads native processor architecture, registered EMWaves installation paths, matching Desktop/Start menu shortcut targets, executable presence/architecture/hash/signature, and EMWaves-related Defender detections. It does not execute EMWaves, write shortcuts, restore quarantined files, or change security settings. Missing Defender records do not rule out other security products or expired history. Paths may contain the Windows user name; review before sharing. If PowerShell policy prevents script execution, use the manual checks above rather than changing policy.

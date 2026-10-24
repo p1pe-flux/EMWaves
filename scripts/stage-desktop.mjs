@@ -8,7 +8,8 @@ export const desktopIconFiles = ['electron/assets/icon.png', 'electron/assets/ic
 
 export function desktopManifest(config) {
   const { name, version, description, author, license } = config;
-  return { name, version, description, author, license, private: true, main: 'electron/main.cjs' };
+  const productName = config.build?.productName ?? config.productName ?? name;
+  return { name, productName, version, description, author, license, private: true, main: 'electron/main.cjs' };
 }
 
 export async function stageDesktopApp(root = projectRoot) {

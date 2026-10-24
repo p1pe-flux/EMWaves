@@ -3,7 +3,7 @@ Read-only EMWaves installation report. Does not launch executables, repair
 shortcuts, change security settings, or restore quarantined files.
 
 Example, from PowerShell in this repository:
-  .\scripts\diagnose-windows.ps1 -InstallerPath 'C:\Users\me\Downloads\EMWaves-1.0.0-Windows-arm64-Setup.exe'
+  .\scripts\diagnose-windows.ps1 -InstallerPath 'C:\Users\me\Downloads\EMWaves-1.0.1-Windows-arm64-Setup.exe'
 For a custom installation location, also pass -InstallDirectory 'D:\Apps\EMWaves'.
 #>
 [CmdletBinding()]
