@@ -1,6 +1,6 @@
 # macOS package and signing
 
-**EMWaves 1.0.0** includes all six laboratories and all six guides in English and Spanish.
+**EMWaves 1.0.1** includes all six laboratories and all six guides in English and Spanish.
 
 Build on macOS with the repository's Node.js/npm prerequisites:
 
@@ -9,7 +9,7 @@ npm ci
 npm run package:mac
 ```
 
-The command generates the Smith-diagram desktop icons, builds the frontend, packages a universal app for **Apple Silicon (`arm64`) and Intel (`x86_64`)**, and runs the artifact verifier. Output filenames use the current package version, for example `release/EMWaves-1.0.0-macOS-universal.dmg`; packaging does not upload it. The disk image contains `EMWaves.app`. A universal package includes both processor architectures; runtime checks on one architecture do not establish behavior on the other.
+The command generates the Smith-diagram desktop icons, builds the frontend, packages a universal app for **Apple Silicon (`arm64`) and Intel (`x86_64`)**, and runs the artifact verifier. Output filenames use the current package version, for example `release/EMWaves-1.0.1-macOS-universal.dmg`; packaging does not upload it. The disk image contains `EMWaves.app`. A universal package includes both processor architectures; runtime checks on one architecture do not establish behavior on the other.
 
 `npm run icons:desktop` renders the site's SVG logo into desktop assets. On macOS, Apple's `iconutil` compiles the ICNS from the generated icon set. The committed `electron/assets/icon.icns` remains available on other build hosts; PNG and ICO generation also works there.
 

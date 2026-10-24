@@ -16,7 +16,8 @@ export function SmithProjectionAnimation() {
   const { t } = useI18n();
   const id = 'smith-projection-' + useId().replaceAll(':', '');
   const [progress, setProgress] = useState(0);
-  const [playing, setPlaying] = useState(() => typeof window !== 'undefined' && !window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  const [playing, setPlaying] = useState(() => typeof window !== 'undefined'
+    && typeof window.matchMedia === 'function' && !window.matchMedia('(prefers-reduced-motion: reduce)').matches);
   const [width, setWidth] = useState(720);
   const figure = useRef<HTMLDivElement>(null);
   const [inViewport, setInViewport] = useState(false);
@@ -44,10 +45,11 @@ export function SmithProjectionAnimation() {
   }, []);
 
   useEffect(() => {
+    if (typeof window.matchMedia !== 'function') return;
     const media = window.matchMedia('(prefers-reduced-motion: reduce)');
     const respectMotion = () => { if (media.matches) setPlaying(false); };
-    media.addEventListener('change', respectMotion);
-    return () => media.removeEventListener('change', respectMotion);
+    media.addEventListener?.('change', respectMotion);
+    return () => media.removeEventListener?.('change', respectMotion);
   }, []);
 
   useEffect(() => {
@@ -55,6 +57,10 @@ export function SmithProjectionAnimation() {
     if (!element) return;
     const resize = () => setWidth(element.getBoundingClientRect().width);
     resize();
+    if (typeof ResizeObserver === 'undefined') {
+      window.addEventListener('resize', resize);
+      return () => window.removeEventListener('resize', resize);
+    }
     const observer = new ResizeObserver(resize);
     observer.observe(element);
     return () => observer.disconnect();

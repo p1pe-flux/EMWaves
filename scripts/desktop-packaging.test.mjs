@@ -13,13 +13,15 @@ import { getSevenZipExecutable } from './desktop-tooling.mjs';
 const beforeDesktopBuild = createRequire(import.meta.url)('./desktop-before-build.cjs');
 
 async function fixture(run) {
-  const root = await mkdtemp(path.join(tmpdir(), 'emwaves-desktop-test-'));
+  // Check staging and ASAR access in locations with spaces and Unicode, such as
+  // ordinary user profile directories on Windows, macOS and Linux.
+  const root = await mkdtemp(path.join(tmpdir(), 'emwaves desktop tést-'));
   try {
     for (const relative of ['dist/index.html', 'dist/assets/main.js', 'dist/THIRD-PARTY-NOTICES.md', 'LICENSE', ...desktopIconFiles, ...desktopRuntimeFiles]) {
       await mkdir(path.dirname(path.join(root, relative)), { recursive: true });
       await writeFile(path.join(root, relative), `Fixture contents: ${relative}\n`);
     }
-    await writeFile(path.join(root, 'package.json'), JSON.stringify({ name: 'emwaves', version: '0.1.1', license: 'GPL-3.0-only', dependencies: { react: '19.3.0' }, devDependencies: { electron: '44.7.1' }, scripts: { build: 'vite' }, build: { asar: true } }));
+    await writeFile(path.join(root, 'package.json'), JSON.stringify({ name: 'emwaves', version: '0.1.1', license: 'GPL-3.0-only', dependencies: { react: '19.3.0' }, devDependencies: { electron: '44.7.1' }, scripts: { build: 'vite' }, build: { asar: true, productName: 'EMWaves' } }));
     await run(root);
   } finally {
     await rm(root, { recursive: true, force: true });
@@ -31,6 +33,8 @@ test('staged desktop archives contain the compiled frontend, runtime and notices
     const staged = await stageDesktopApp(root);
     const manifest = JSON.parse(await readFile(path.join(staged, 'package.json'), 'utf8'));
     assert.equal(manifest.version, '0.1.1');
+    assert.equal(manifest.name, 'emwaves');
+    assert.equal(manifest.productName, 'EMWaves');
     assert.equal(manifest.main, 'electron/main.cjs');
     assert.equal(manifest.dependencies, undefined);
     assert.equal(manifest.devDependencies, undefined);
@@ -42,6 +46,34 @@ test('staged desktop archives contain the compiled frontend, runtime and notices
     assert.equal(result.frontendFiles, 3);
     assert.equal(result.bundledNodeModules, 0);
     assert.equal(result.compiledFrontendVerified, true);
+  });
+});
+
+test('archive verification rejects an incorrect application display name', async () => {
+  await fixture(async (root) => {
+    const staged = await stageDesktopApp(root);
+    const manifestPath = path.join(staged, 'package.json');
+    const manifest = JSON.parse(await readFile(manifestPath, 'utf8'));
+    await writeFile(manifestPath, JSON.stringify({ ...manifest, productName: 'Another application' }));
+    const archive = path.join(root, 'incorrect-name.asar');
+    await asar.createPackage(staged, archive);
+    await assert.rejects(verifyDesktopArchive(archive, root), /metadata/);
+  });
+});
+
+test('archive verification accepts Windows entry separators and still rejects bundled dependencies', async (context) => {
+  await fixture(async (root) => {
+    const staged = await stageDesktopApp(root);
+    const archive = path.join(root, 'windows-paths.asar');
+    await asar.createPackage(staged, archive);
+    const listPackage = asar.listPackage;
+    context.mock.method(asar, 'listPackage', (...args) => listPackage(...args).map((entry) => entry.replaceAll('/', '\\')));
+    assert.equal((await verifyDesktopArchive(archive, root)).compiledFrontendVerified, true);
+    await mkdir(path.join(staged, 'node_modules/react'), { recursive: true });
+    await writeFile(path.join(staged, 'node_modules/react/index.js'), 'redundant frontend copy');
+    const duplicateArchive = path.join(root, 'windows-dependencies.asar');
+    await asar.createPackage(staged, duplicateArchive);
+    await assert.rejects(verifyDesktopArchive(duplicateArchive, root), /Redundant node_modules/);
   });
 });
 

@@ -43,7 +43,7 @@ npm run build
 For browser behavior and responsive layout:
 
 ```sh
-npx playwright install chromium
+npx playwright install chromium firefox webkit
 npm run test:browser
 ```
 
@@ -56,7 +56,7 @@ npm run test:desktop
 npm run test:windows-artifacts
 ```
 
-`npm run test:desktop:smoke` requires an installed Electron binary and a graphical session. CI runs it in a virtual display on Linux. The [Windows](docs/windows-distribution.md) and [macOS](docs/macos-distribution.md) guides distinguish artifact verification from native platform testing.
+`npm run test:desktop:smoke` requires an installed Electron binary and a graphical session. CI uses a virtual display on Linux and defines native jobs for Windows x64/ARM64, macOS Intel/Apple Silicon, and Linux ARM64, in addition to the Linux x64 application job. Each native job builds and checks the archive for its own architecture. A configured job is not a passing result. The [portability](docs/portability.md), [Windows](docs/windows-distribution.md), [macOS](docs/macos-distribution.md), and [Linux](docs/linux-distribution.md) guides distinguish archive verification from native platform testing.
 
 Before committing, review the changed files and the public-file checks:
 
@@ -67,7 +67,7 @@ npm run test:public
 git status --short
 ```
 
-The public-file guard checks tracked and unignored paths, plus common credential signatures in the Git index and working copy. It also rejects private paths added with `git add --force`. `.gitignore` keeps local configuration, credentials, reports, and generated output out of ordinary staging. These checks do not scan past commits or replace reviewing content for sensitive information. Keep private working notes under the ignored `.local/` directory. Tests and their fixtures belong in source control; logs, screenshots, build output, and coverage reports are generated locally or in CI.
+The public-file guard checks tracked and unignored paths, common credential signatures, and absolute home or mounted-volume paths in the Git index and working copy. It rejects private files, OS metadata, release installers and archives even after `git add --force`, detects case and Unicode path collisions, and rejects absolute or escaping symlinks without reading linked external files. Public academic URLs and documented synthetic Windows account examples remain valid. Keep installers and release archives in GitHub Releases. `.gitignore` keeps local configuration, credentials, reports, and generated output out of ordinary staging. These checks do not scan past commits or replace reviewing content for sensitive information. Keep private working notes under the ignored `.local/` directory. Tests and their fixtures belong in source control; logs, screenshots, build output, and coverage reports are generated locally or in CI.
 
 ## Review expectations
 

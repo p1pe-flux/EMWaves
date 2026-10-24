@@ -28,19 +28,23 @@ export function StepExplanation({ active, measurements }: StepExplanationProps) 
     let width = element.getBoundingClientRect().width;
     let mounted = true;
     const refresh = () => { if (mounted) setRevision(value => value + 1); };
-    const observer = new ResizeObserver(entries => {
-      const nextWidth = entries[0].contentRect.width;
+    const resize = () => {
+      const nextWidth = element.getBoundingClientRect().width;
       if (Math.abs(nextWidth - width) < 0.5) return;
       width = nextWidth;
       refresh();
-    });
-    observer.observe(element);
-    void document.fonts.ready.then(refresh);
-    document.fonts.addEventListener('loadingdone', refresh);
+    };
+    const observer = typeof ResizeObserver === 'undefined' ? null : new ResizeObserver(resize);
+    observer?.observe(element);
+    if (!observer) window.addEventListener('resize', resize);
+    const fonts = document.fonts;
+    void fonts?.ready.then(refresh);
+    fonts?.addEventListener?.('loadingdone', refresh);
     return () => {
       mounted = false;
-      observer.disconnect();
-      document.fonts.removeEventListener('loadingdone', refresh);
+      observer?.disconnect();
+      if (!observer) window.removeEventListener('resize', resize);
+      fonts?.removeEventListener?.('loadingdone', refresh);
     };
   }, []);
 

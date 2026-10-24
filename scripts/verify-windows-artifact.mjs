@@ -4,9 +4,8 @@ import { mkdtemp, readFile, rm } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
-import asar from '@electron/asar'
 import { getSevenZipExecutable } from './desktop-tooling.mjs'
-import { verifyDesktopArchive } from './verify-desktop-archive.mjs'
+import { readDesktopArchiveFile, verifyDesktopArchive } from './verify-desktop-archive.mjs'
 import { verifyNsisCrc, verifyPeArchitecture, verifyNsisPayloadMethods } from './windows-artifact-integrity.mjs'
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
@@ -59,12 +58,12 @@ try {
   const desktopIcon = await readFile(path.join(root, 'electron', 'assets', 'icon.ico'))
   const logoSizes = verifyLogoImages(applicationBytes, desktopIcon)
   const appAsar = path.join(temporary, 'resources', 'app.asar')
-  const packagedConfig = JSON.parse(asar.extractFile(appAsar, 'package.json').toString())
+  const packagedConfig = JSON.parse(readDesktopArchiveFile(appAsar, 'package.json').toString())
   if (packagedConfig.version !== packageJson.version || packagedConfig.main !== 'electron/main.cjs') throw new Error('Unexpected packaged application metadata')
   for (const required of ['dist/index.html', 'electron/main.cjs', 'electron/assets/icon.ico', 'electron/assets/icon.png']) {
-    if (!asar.extractFile(appAsar, required).length) throw new Error(`Empty packaged resource: ${required}`)
+    if (!readDesktopArchiveFile(appAsar, required).length) throw new Error(`Empty packaged resource: ${required}`)
   }
-  const packagedIcon = asar.extractFile(appAsar, 'electron/assets/icon.ico')
+  const packagedIcon = readDesktopArchiveFile(appAsar, 'electron/assets/icon.ico')
   if (!packagedIcon.equals(desktopIcon)) throw new Error('Packaged logo differs from the current desktop icon')
   const archiveVerification = await verifyDesktopArchive(appAsar, root)
   console.log(JSON.stringify({ installer: path.relative(root, installer), architecture, sha256: sha256(installerBytes), installerCrc, uninstallerCrc, payloadMethods, application: 'EMWaves.exe', peMachine, applicationSha256: sha256(applicationBytes), logoSizes, ...archiveVerification, resourcesVerified: true, windowsRuntimeTested: false }, null, 2))
