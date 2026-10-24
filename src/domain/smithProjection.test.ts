@@ -162,27 +162,22 @@ describe('projected impedance grid', () => {
     }
   });
 
-  it('keeps dense paths finite and inside their viewport throughout the animation', () => {
+  it.each([0, 1e-12, 0.01, 0.2, 0.49999, 0.8, 0.99999, 1])('keeps dense paths finite and inside their viewport at progress=%s', (progress) => {
     const bounds = { minRe: -1.45, maxRe: 1.45, minIm: -1.18, maxIm: 1.18 };
-    for (const progress of [0, 1e-12, 0.01, 0.2, 0.49999, 0.8, 0.99999, 1]) {
-      const grid = projectionGrid(progress, { bounds });
-      let count = 0;
-      expect(grid.some((curve) => curve.region === 'active' && curve.paths.length > 0)).toBe(true);
-      expect(grid.some((curve) => curve.region === 'passive' && curve.paths.length > 0)).toBe(true);
-      for (const curve of grid) for (const path of curve.paths) {
-        expect(path.length).toBeGreaterThan(1);
-        count += path.length;
-        for (const point of path) {
-          expect(Number.isFinite(point.re)).toBe(true);
-          expect(Number.isFinite(point.im)).toBe(true);
-          expect(point.re).toBeGreaterThanOrEqual(bounds.minRe);
-          expect(point.re).toBeLessThanOrEqual(bounds.maxRe);
-          expect(point.im).toBeGreaterThanOrEqual(bounds.minIm);
-          expect(point.im).toBeLessThanOrEqual(bounds.maxIm);
-        }
-      }
-      expect(count).toBeLessThan(15000);
+    const grid = projectionGrid(progress, { bounds });
+    let count = 0;
+    expect(grid.some((curve) => curve.region === 'active' && curve.paths.length > 0)).toBe(true);
+    expect(grid.some((curve) => curve.region === 'passive' && curve.paths.length > 0)).toBe(true);
+    for (const curve of grid) for (const path of curve.paths) {
+      expect(path.length).toBeGreaterThan(1);
+      count += path.length;
+      // Check every point with one assertion per path to keep dense coverage inexpensive on CI.
+      const invalidPoint = path.find((point) => !Number.isFinite(point.re) || !Number.isFinite(point.im)
+        || point.re < bounds.minRe || point.re > bounds.maxRe
+        || point.im < bounds.minIm || point.im > bounds.maxIm);
+      expect(invalidPoint, `${curve.region} ${curve.kind}=${curve.value}`).toBeUndefined();
     }
+    expect(count).toBeLessThan(15000);
   });
 
   it('validates viewport, density, and source line values', () => {
