@@ -15,9 +15,9 @@
 .transmission-line-diagram__length-label { fill: #607368; font-family: "Lab Serif", Georgia, serif; font-size: 24px; font-style: italic; }
 .transmission-line-diagram__position-marker { cursor: ew-resize; }
 .transmission-line-diagram__position-marker:focus { outline: none; }
-.transmission-line-diagram__position-marker:focus-visible .transmission-line-diagram__position-dot { r: 6.5px; fill: #f5f4ef; stroke: var(--teal, #1c666b); stroke-width: 2.2; }
+.transmission-line-diagram__position-marker:focus-visible .transmission-line-diagram__position-dot { r: 6.5px; fill: var(--paper, #f7f4ed); stroke: var(--teal, #1c666b); stroke-width: 2.2; }
 .transmission-line-diagram__position { stroke: var(--teal, #1c666b); stroke-width: 1.5; stroke-dasharray: 3 3; }
-.transmission-line-diagram__position-dot { fill: var(--teal, #1c666b); stroke: #f5f4ef; stroke-width: 1.4; }
+.transmission-line-diagram__position-dot { fill: var(--teal, #1c666b); stroke: var(--paper, #f7f4ed); stroke-width: 1.4; }
 .transmission-line-diagram__section-tick { stroke: var(--teal, #1c666b); stroke-width: 1; }
 .transmission-line-diagram__distance-arrow { fill: none; stroke: var(--teal, #1c666b); stroke-width: 1.4; }
 .transmission-line-diagram__distance-head, .transmission-line-diagram__origin-dot { fill: var(--teal, #1c666b); }
@@ -30,9 +30,9 @@
 .transmission-line-diagram__stub-face { fill: #547eb10a; stroke: none; }
 .transmission-line-diagram__stub-depth-cue { fill: none; stroke: #547eb1; stroke-width: .8; stroke-dasharray: 4 5; opacity: .35; }
 .transmission-line-diagram__stub-wire { fill: none; stroke: #547eb1; stroke-width: 1.8; }
-.transmission-line-diagram__stub-crossover { fill: none; stroke: #fdfdfa; stroke-width: 6; stroke-linecap: round; }
-.transmission-line-diagram__stub-node { fill: #547eb1; stroke: #f5f4ef; stroke-width: 1; }
-.transmission-line-diagram__stub-open { fill: #fdfdfa; stroke: #547eb1; stroke-width: 1.5; }
+.transmission-line-diagram__stub-crossover { fill: none; stroke: var(--paper, #f7f4ed); stroke-width: 6; stroke-linecap: round; }
+.transmission-line-diagram__stub-node { fill: #547eb1; stroke: var(--paper, #f7f4ed); stroke-width: 1; }
+.transmission-line-diagram__stub-open { fill: var(--paper, #f7f4ed); stroke: #547eb1; stroke-width: 1.5; }
 .transmission-line-diagram__stub--detached .transmission-line-diagram__stub-wire { stroke-dasharray: 5 4; opacity: .45; }
 .transmission-line-diagram__stub--detached .transmission-line-diagram__stub-node, .transmission-line-diagram__stub--detached .transmission-line-diagram__stub-open { opacity: .45; }
 .transmission-line-diagram__stub-impedance, .transmission-line-diagram__stub-termination-label { fill: #547eb1; font-family: "Inter", "Aptos", "Segoe UI", system-ui, sans-serif; font-size: 20px; }
@@ -45,8 +45,8 @@
 .transmission-line-diagram__port--stub { color: #547eb1; }
 .transmission-line-diagram__port path { fill: none; stroke: currentColor; stroke-width: 1.4; }
 .transmission-line-diagram__port .transmission-line-diagram__port-plane { stroke-width: 1; stroke-dasharray: 3 4; opacity: .75; }
-.transmission-line-diagram__port-node { fill: currentColor; stroke: #fdfdfa; stroke-width: 1; vector-effect: non-scaling-stroke; }
-.transmission-line-diagram__port-anchor { fill: #fdfdfa; stroke: currentColor; stroke-width: 1; vector-effect: non-scaling-stroke; }
+.transmission-line-diagram__port-node { fill: currentColor; stroke: var(--paper, #f7f4ed); stroke-width: 1; vector-effect: non-scaling-stroke; }
+.transmission-line-diagram__port-anchor { fill: var(--paper, #f7f4ed); stroke: currentColor; stroke-width: 1; vector-effect: non-scaling-stroke; }
 .transmission-line-diagram__port text { fill: currentColor; font-family: "Lab Serif", Georgia, serif; font-style: italic; font-size: 27px; }
 .transmission-line-diagram__port tspan { font-size: 16px; }
 @container (max-width: 300px) {

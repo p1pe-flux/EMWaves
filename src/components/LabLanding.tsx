@@ -35,7 +35,7 @@ function SmithIllustration() {
         )))}
         <path className="landing-smith__axis" d="M108 138H302" />
         <circle className="landing-smith__swr" cx={centerX} cy={centerY} r="43.38" />
-        <path className="landing-smith__trajectory" d="M243.8 118.6A43.38 43.38 0 0 1 224.4 176.8" />
+        <path className="landing-smith__trajectory" pathLength="1" d="M243.8 118.6A43.38 43.38 0 0 1 224.4 176.8" />
         <path className="landing-smith__vector" d="M205 138L243.8 118.6" />
       </g>
       <circle className="landing-smith__boundary" cx={centerX} cy={centerY} r={radius} />
@@ -97,76 +97,29 @@ function LineSchematic({ kind }: { kind: SchematicKind }) {
 
 export function LabLanding() {
   const { t } = useI18n();
+  const laboratories: { slug: string; title: string; schematic: SchematicKind | null }[] = [
+    { slug: 'introduction-to-smith-chart', title: t('Introduction to Smith Chart', 'Introducción al diagrama de Smith'), schematic: null },
+    { slug: 'single-stub-matching', title: t('Single-Stub Matching', 'Adaptación con un stub'), schematic: 'single-stub' },
+    { slug: 'series-stub-matching', title: t('Series-Stub Matching', 'Adaptación con un stub en serie'), schematic: 'series-stub' },
+    { slug: 'lc-matching', title: t('LC Matching', 'Adaptación con L y C'), schematic: 'lc-matching' },
+    { slug: 'quarter-wave-transformer', title: t('Quarter-Wave Transformer', 'Transformador de cuarto de onda'), schematic: 'quarter-wave' },
+    { slug: 'double-stub-matching', title: t('Double-Stub Matching', 'Adaptación con dos stubs'), schematic: 'double-stub' },
+  ];
   return (
     <section className="landing-page" aria-labelledby="landing-title">
-      <h1 id="landing-title">{t('Laboratories', 'Laboratorios')}</h1>
+      <div className="landing-hero">
+        <h1 id="landing-title">{t('Laboratories', 'Laboratorios')}</h1>
+        <div className="landing-hero-illustration"><SmithIllustration /></div>
+      </div>
       <div className="landing-labs">
-        <article className="landing-lab-card landing-lab-card--available">
-          <div className="landing-card-status" aria-hidden="true" />
-          <a className="landing-lab-link" href="#/labs/introduction-to-smith-chart">
-            <div className="landing-lab-illustration"><SmithIllustration /></div>
-            <h2>{t('Introduction to Smith Chart', 'Introducción al diagrama de Smith')}</h2>
-          </a>
-          <div className="landing-card-actions">
-            <a className="landing-open" href="#/labs/introduction-to-smith-chart">{t('Open lab', 'Abrir laboratorio')}<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12H19M13 6L19 12L13 18" /></svg></a>
-            <a className="landing-read-guide" href="#/guides/introduction-to-smith-chart">{t('Read guide', 'Leer guía')}</a>
-          </div>
-        </article>
-        <article className="landing-lab-card landing-lab-card--available">
-          <div className="landing-card-status" aria-hidden="true" />
-          <a className="landing-lab-link" href="#/labs/single-stub-matching">
-            <div className="landing-lab-illustration"><LineSchematic kind="single-stub" /></div>
-            <h2>{t('Single-Stub Matching', 'Adaptación con un stub')}</h2>
-          </a>
-          <div className="landing-card-actions">
-            <a className="landing-open" href="#/labs/single-stub-matching">{t('Open lab', 'Abrir laboratorio')}<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12H19M13 6L19 12L13 18" /></svg></a>
-            <a className="landing-read-guide" href="#/guides/single-stub-matching">{t('Read guide', 'Leer guía')}</a>
-          </div>
-        </article>
-        <article className="landing-lab-card landing-lab-card--available">
-          <div className="landing-card-status" aria-hidden="true" />
-          <a className="landing-lab-link" href="#/labs/series-stub-matching">
-            <div className="landing-lab-illustration"><LineSchematic kind="series-stub" /></div>
-            <h2>{t('Series-Stub Matching', 'Adaptación con un stub en serie')}</h2>
-          </a>
-          <div className="landing-card-actions">
-            <a className="landing-open" href="#/labs/series-stub-matching">{t('Open lab', 'Abrir laboratorio')}<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12H19M13 6L19 12L13 18" /></svg></a>
-            <a className="landing-read-guide" href="#/guides/series-stub-matching">{t('Read guide', 'Leer guía')}</a>
-          </div>
-        </article>
-        <article className="landing-lab-card landing-lab-card--available">
-          <div className="landing-card-status" aria-hidden="true" />
-          <a className="landing-lab-link" href="#/labs/lc-matching">
-            <div className="landing-lab-illustration"><LineSchematic kind="lc-matching" /></div>
-            <h2>{t('LC Matching', 'Adaptación con L y C')}</h2>
-          </a>
-          <div className="landing-card-actions">
-            <a className="landing-open" href="#/labs/lc-matching">{t('Open lab', 'Abrir laboratorio')}<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12H19M13 6L19 12L13 18" /></svg></a>
-            <a className="landing-read-guide" href="#/guides/lc-matching">{t('Read guide', 'Leer guía')}</a>
-          </div>
-        </article>
-        <article className="landing-lab-card landing-lab-card--available">
-          <div className="landing-card-status" aria-hidden="true" />
-          <a className="landing-lab-link" href="#/labs/quarter-wave-transformer">
-            <div className="landing-lab-illustration"><LineSchematic kind="quarter-wave" /></div>
-            <h2>{t('Quarter-Wave Transformer', 'Transformador de cuarto de onda')}</h2>
-          </a>
-          <div className="landing-card-actions">
-            <a className="landing-open" href="#/labs/quarter-wave-transformer">{t('Open lab', 'Abrir laboratorio')}<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12H19M13 6L19 12L13 18" /></svg></a>
-            <a className="landing-read-guide" href="#/guides/quarter-wave-transformer">{t('Read guide', 'Leer guía')}</a>
-          </div>
-        </article>
-        <article className="landing-lab-card landing-lab-card--available">
-          <div className="landing-card-status" aria-hidden="true" />
-          <a className="landing-lab-link" href="#/labs/double-stub-matching">
-            <div className="landing-lab-illustration"><LineSchematic kind="double-stub" /></div>
-            <h2>{t('Double-Stub Matching', 'Adaptación con dos stubs')}</h2>
-          </a>
-          <div className="landing-card-actions">
-            <a className="landing-open" href="#/labs/double-stub-matching">{t('Open lab', 'Abrir laboratorio')}<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12H19M13 6L19 12L13 18" /></svg></a>
-            <a className="landing-read-guide" href="#/guides/double-stub-matching">{t('Read guide', 'Leer guía')}</a>
-          </div>
-        </article>
+        {laboratories.map((laboratory, index) => <article className="landing-lab-card landing-lab-card--available" key={laboratory.slug}>
+          <span className="landing-lab-number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+          <h2><a className="landing-lab-link" href={`#/labs/${laboratory.slug}`} title={t('Open lab', 'Abrir laboratorio')}>
+            <span>{laboratory.title}</span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12H19M13 6L19 12L13 18" /></svg>
+          </a></h2>
+          <div className="landing-lab-illustration">{laboratory.schematic ? <LineSchematic kind={laboratory.schematic} /> : <SmithIllustration />}</div>
+          <div className="landing-card-actions"><a className="landing-read-guide" href={`#/guides/${laboratory.slug}`}>{t('Read guide', 'Leer guía')}</a></div>
+        </article>)}
       </div>
     </section>
   );

@@ -4,6 +4,7 @@ import { LCMatchingStatusSummary } from '../components/LCMatchingBranchSummary';
 import { LCNetworkOptions } from '../components/LCNetworkOptions';
 import { ParameterField } from '../components/ParameterField';
 import { ResetParametersButton } from '../components/ResetParametersButton';
+import { LabFrequencyResponse } from '../components/LabFrequencyResponse';
 import { solveLumpedMatching, type LumpedMatchingInput, type LumpedMatchingTopology } from '../domain/lumpedMatching';
 import { translateMessage, useI18n } from '../i18n';
 import '../styles/single-stub-lab.css';
@@ -55,7 +56,7 @@ export default function LCMatching() {
         <div className="panel-heading"><h2 id="lc-matching-parameters">{t('Parameters', 'Parámetros')}</h2><ResetParametersButton onClick={reset} /></div>
         <div className="parameter-grid">
           <ParameterField tex="Z_0" label={t('Reference impedance', 'Impedancia de referencia')} value={z0Text} min={0} onChange={setZ0Text} />
-          <ParameterField tex="f" label={t('Frequency', 'Frecuencia')} unit="MHz" value={frequencyText} min={0} onChange={setFrequencyText} />
+          <ParameterField tex="f_0" label={t('Frequency', 'Frecuencia')} unit="MHz" value={frequencyText} min={0} onChange={setFrequencyText} />
           <ParameterField tex="R_L" label={t('Load resistance', 'Resistencia de la carga')} value={rText} min={0} onChange={setRText} />
           <ParameterField tex="X_L" label={t('Load reactance', 'Reactancia de la carga')} value={xText} onChange={setXText} />
         </div>
@@ -65,6 +66,7 @@ export default function LCMatching() {
     </aside>
     <div className="ssl-workspace">
       {input && solution ? <LCMatchingConstruction key={constructionKey} input={input} solution={solution} /> : <section className="ss-construction lc-matching-construction"><div className="ss-construction__toolbar"><LCMatchingStatusSummary message={t('Enter valid electrical parameters to calculate a solution.', 'Introduce parámetros eléctricos válidos para calcular una solución.')} /></div></section>}
+      <LabFrequencyResponse key={frequencyText + '|' + revision} design={input && solution ? { kind: 'lumped', input, solution } : null} designFrequencyHz={Number(frequencyText) * 1e6} emptyMessage={solution ? translateMessage(solution.message, locale) : undefined} />
     </div>
   </div>;
 }

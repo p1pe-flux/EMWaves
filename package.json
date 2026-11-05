@@ -1,7 +1,7 @@
 {
   "name": "emwaves",
   "productName": "EMWaves",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "private": true,
   "license": "GPL-3.0-only",
   "description": "Interactive electromagnetic-wave and transmission-line laboratories and guides in English and Spanish",
@@ -39,7 +39,8 @@
     "test:windows-artifacts": "node --test scripts/windows-artifact-integrity.test.mjs",
     "test:desktop": "node --test scripts/external-navigation.test.cjs scripts/desktop-packaging.test.mjs scripts/desktop-proxy.test.mjs scripts/proxy-log-redaction.test.cjs scripts/electron-smoke-capture.test.cjs",
     "test:desktop:smoke": "electron scripts/electron-navigation-smoke.cjs",
-    "test:browser": "npm run build && playwright test"
+    "test:browser": "npm run build && playwright test",
+    "test:design": "playwright test --config playwright.design.config.ts"
   },
   "build": {
     "appId": "org.emwaves.lab",
@@ -111,9 +112,13 @@
   "overrides": {
     "katex": "$katex",
     "app-builder-lib": {
+      "minimatch@>=7.0.0 <11.0.1": "11.0.4",
       "@electron/get": {
         "global-agent": {
-          "roarr": "6.0.0"
+          "roarr": {
+            ".": "6.0.0",
+            "fast-json-stringify": "5.16.1"
+          }
         }
       }
     },

@@ -57,17 +57,18 @@ app.whenReady().then(async () => {
     }
     assert.equal(await contents.executeJavaScript('Notification.requestPermission()'), 'denied', 'Permission requests must also stay denied');
     stage = 'guide and language navigation';
-    await contents.executeJavaScript('document.querySelector(".main-nav a[href*=guides]").click()');
-    await waitFor(() => contents.executeJavaScript('Boolean(document.querySelector(\'.guide-index a[href="#/guides/introduction-to-smith-chart"]\'))'), 'guide index');
-    assert.equal(await contents.executeJavaScript('document.querySelectorAll(".guide-index .guide-entry").length'), 6, 'All six guides must remain available');
+    await waitFor(() => contents.executeJavaScript('Boolean(document.querySelector(\'.landing-read-guide[href="#/guides/introduction-to-smith-chart"]\'))'), 'catalogue guide links');
+    assert.equal(await contents.executeJavaScript('document.querySelectorAll(".landing-read-guide").length'), 6, 'All six guides must remain available from their laboratory cards');
+    assert.equal(await contents.executeJavaScript('document.querySelectorAll(".main-nav a").length'), 1, 'The header provides a single laboratory navigation link');
+    assert.equal(await contents.executeJavaScript('Boolean(document.querySelector(\'.main-nav a[href="#/guides"]\'))'), false, 'The removed Guides tab must not return');
     assert.equal(await contents.executeJavaScript('Boolean(document.querySelector("#app-language option[value=en]")) && Boolean(document.querySelector("#app-language option[value=es]"))'), true, 'Both interface languages must remain available');
     assert.equal(await contents.executeJavaScript('document.querySelector("#app-language").value'), 'en', 'A fresh profile defaults to English');
     await contents.executeJavaScript('(() => { const select = document.querySelector("#app-language"); select.value = "es"; select.dispatchEvent(new Event("change", { bubbles: true })); })()');
     await waitFor(() => contents.executeJavaScript('document.documentElement.lang === "es"'), 'Spanish interface');
-    assert.equal(await contents.executeJavaScript('document.querySelectorAll(".guide-index .guide-entry").length'), 6);
+    assert.equal(await contents.executeJavaScript('document.querySelectorAll(".landing-read-guide").length'), 6);
     await contents.executeJavaScript('(() => { const select = document.querySelector("#app-language"); select.value = "en"; select.dispatchEvent(new Event("change", { bubbles: true })); })()');
     await waitFor(() => contents.executeJavaScript('document.documentElement.lang === "en"'), 'English interface');
-    await contents.executeJavaScript('document.querySelector(\'.guide-index a[href="#/guides/introduction-to-smith-chart"]\').click()');
+    await contents.executeJavaScript('document.querySelector(\'.landing-read-guide[href="#/guides/introduction-to-smith-chart"]\').click()');
     await waitFor(() => contents.executeJavaScript('Boolean(document.querySelector("a[href^=\\"https://ethw.org/\\"]"))'), 'guide citation');
     stage = 'citation navigation';
     const guideUrl = contents.getURL();
