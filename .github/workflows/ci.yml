@@ -25,6 +25,7 @@ jobs:
       - run: npm run test:desktop
       - run: npx playwright install --with-deps chromium firefox webkit
       - run: npx playwright test
+      - run: npm run test:design
       - name: Prepare Electron's Linux sandbox
         run: |
           # Electron downloads lazily; install the binary before configuring its helper.

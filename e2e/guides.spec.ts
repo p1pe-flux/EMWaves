@@ -39,8 +39,11 @@ for (const locale of ['en', 'es'] as const) {
       if (slug !== 'introduction-to-smith-chart') {
         await expectGuideLessonsExpanded(page, page.locator('section.ss-construction'), locale);
       }
-      await page.getByRole('link', { name: locale === 'es' ? 'Todas las guías' : 'All guides', exact: true }).click();
-      await expect(page.locator('.guide-entry')).toHaveCount(6);
+      const back = page.getByRole('link', { name: locale === 'es' ? 'Todos los laboratorios' : 'All laboratories', exact: true });
+      await expect(back).toHaveAttribute('href', '#/');
+      await back.click();
+      await expect(page.locator('.landing-lab-card')).toHaveCount(6);
+      await expect(page.locator('.landing-read-guide')).toHaveCount(6);
       expect(errors).toEqual([]);
     });
   }

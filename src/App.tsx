@@ -77,6 +77,7 @@ export default function App() {
   const labTitle = isDoubleStub ? t('Double-Stub Matching', 'Adaptación con dos stubs') : isQuarterWave ? t('Quarter-Wave Transformer', 'Transformador de cuarto de onda') : isLCMatching ? t('LC Matching', 'Adaptación con L y C') : isSeriesStub ? t('Series-Stub Matching', 'Adaptación con un stub en serie') : isSingleStub ? t('Single-Stub Matching', 'Adaptación con un stub') : t('Introduction to Smith Chart', 'Introducción al diagrama de Smith');
   const main = useRef<HTMLElement>(null);
   const previousPage = useRef(page);
+  const pageMotion = useRef<Animation | null>(null);
 
   useEffect(() => {
     const navigate = () => {
@@ -97,6 +98,15 @@ export default function App() {
     if (previousPage.current !== page) {
       main.current?.focus({ preventScroll: true });
       window.scrollTo(0, 0);
+      pageMotion.current?.cancel();
+      if (typeof window.matchMedia === 'function'
+        && !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+        && typeof main.current?.animate === 'function') {
+        pageMotion.current = main.current?.animate([
+          { opacity: .5, transform: 'translateY(8px)' },
+          { opacity: 1, transform: 'translateY(0)' },
+        ], { duration: 280, easing: 'cubic-bezier(.2,.7,.2,1)' }) ?? null;
+      }
       previousPage.current = page;
     }
   }, [page, t]);
@@ -113,8 +123,7 @@ export default function App() {
           <span>EM<span className="brand-light">Waves</span></span>
         </a>
         <nav className="main-nav" aria-label={t('Main navigation', 'Navegación principal')}>
-          <a className={'nav-item nav-link' + (!isGuidesPage ? ' active' : '')} href="#/" aria-current={!isGuidesPage ? 'page' : undefined}>{t('Laboratories', 'Laboratorios')}</a>
-          <a className={'nav-item nav-link' + (isGuidesPage ? ' active' : '')} href="#/guides" aria-current={isGuidesPage ? 'page' : undefined}>{t('Guides', 'Guías')}</a>
+          <a className="nav-item nav-link active" href="#/" aria-current={page === 'laboratories' ? 'page' : undefined}>{t('Laboratories', 'Laboratorios')}</a>
         </nav>
       </header>
 
@@ -129,7 +138,7 @@ export default function App() {
             <div className="lab-page-heading">
               <a className="back-to-labs" href="#/"><span aria-hidden="true">←</span> {t('All laboratories', 'Todos los laboratorios')}</a>
               <div className="lab-page-title">
-                <div><span className="section-kicker">{isLCMatching ? t('Impedance matching', 'Adaptación de impedancias') : t('Transmission lines', 'Líneas de transmisión')}</span><h1>{labTitle}</h1></div>
+                <h1>{labTitle}</h1>
                 <a className="read-guide-button" href={guideHref}>{t('Read guide', 'Leer guía')}</a>
               </div>
             </div>

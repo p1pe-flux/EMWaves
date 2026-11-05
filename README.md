@@ -6,7 +6,7 @@ As a teaching assistant, I started EMWaves to help students visualize transmissi
 
 That is the idea behind this project: give students a way to follow a calculation, see what each step means, and explore how changing the parameters affects the result. I hope it helps make these topics easier to understand and gives students another way to work through them outside the classroom.
 
-**EMWaves 1.0.1** includes six laboratories and six guides in English and Spanish. Desktop downloads are available from [GitHub Releases](https://github.com/p1pe-flux/EMWaves/releases).
+**EMWaves 1.1.0** includes six laboratories and six guides in English and Spanish. Desktop downloads are available from [GitHub Releases](https://github.com/p1pe-flux/EMWaves/releases).
 
 ## How it works
 
@@ -14,9 +14,11 @@ EMWaves brings together a circuit, a Smith chart, and the equations that describ
 
 The matching constructions start paused. **Next** animates one step, **Previous** reverses it, and **Restart** returns to the beginning with the same parameters. You can adjust the movement speed or reset the example. The Smith chart explorer also lets you move the load and follow the impedance freely along a line.
 
-The guides explain the reasoning and include interactive worked examples.
+The guides explain the reasoning and include interactive worked examples. Open each guide from its laboratory card on the home page or through **Read guide** inside the laboratory.
 
 The models use ideal, lossless transmission lines and reactive components. Matching is calculated at a chosen design frequency.
+
+The five matching laboratories automatically show a frequency-response plot for valid matching networks. Set the design frequency and frequency range to compare the input reflection magnitude of the calculated solutions. A numerical readout lets you inspect the reflection at any frequency within the sweep. The sweep keeps the complex load, physical line lengths, characteristic impedances, and L/C values fixed, with nondispersive lines.
 
 <details>
 <summary>A few examples of the visual constructions</summary>

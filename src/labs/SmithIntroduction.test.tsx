@@ -15,5 +15,7 @@ describe('initial Smith chart', () => {
     expect(html).toContain('0.464');
     expect(html).toContain('id="total-line-length"');
     expect(html).toContain('data-distance="0"');
+    expect(html).not.toContain('frequency-response');
+    expect(html).not.toContain('aria-label="Design frequency"');
   });
 });

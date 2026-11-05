@@ -7,7 +7,7 @@ npm ci
 npm run package:linux
 ```
 
-For a native ARM64 machine, use `npm run package:linux:arm64`. Output is written to `release/` with the current package version and target architecture in the filename, for example `EMWaves-1.0.1-Linux-x64.AppImage` or `EMWaves-1.0.1-Linux-arm64.AppImage`. Packaging commands do not upload files. Use a matching Linux build host for release validation; a package for another architecture does not demonstrate that it runs there.
+For a native ARM64 machine, use `npm run package:linux:arm64`. Output is written to `release/` with the current package version and target architecture in the filename, for example `EMWaves-1.1.0-Linux-x64.AppImage` or `EMWaves-1.1.0-Linux-arm64.AppImage`. Packaging commands do not upload files. Use a matching Linux build host for release validation; a package for another architecture does not demonstrate that it runs there.
 
 The AppImage bundles the application and Electron; the destination computer does not need Node.js, npm, this repository, or the build computer's directories. It still requires a graphical Linux environment and the system libraries supported by the pinned Electron version. There is no 32-bit Linux package in this project.
 

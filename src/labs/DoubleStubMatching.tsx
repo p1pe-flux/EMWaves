@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 import { Formula } from '../components/Formula';
 import { ParameterField } from '../components/ParameterField';
 import { ResetParametersButton } from '../components/ResetParametersButton';
+import { LabFrequencyResponse } from '../components/LabFrequencyResponse';
 import { DoubleStubConstruction } from '../components/DoubleStubConstruction';
 import { solveDoubleStub, type DoubleStubInput } from '../domain/doubleStub';
 import type { StubTermination } from '../domain/singleStub';
@@ -28,6 +29,7 @@ function StubControls({ index, mainZ0, settings, onElectricalChange, onTerminati
 export default function DoubleStubMatching() {
   const { locale, t } = useI18n();
   const [z0Text, setZ0Text] = useState('50');
+  const [frequencyText, setFrequencyText] = useState('1000');
   const [rText, setRText] = useState('100');
   const [xText, setXText] = useState('50');
   const [distanceText, setDistanceText] = useState('0.125');
@@ -38,7 +40,9 @@ export default function DoubleStubMatching() {
 
   const { input, solution, error } = useMemo(() => {
     try {
-      if ([z0Text, rText, xText, distanceText, separationText, stub1.linked ? z0Text : stub1.z0, stub2.linked ? z0Text : stub2.z0].some((value) => !value.trim())) throw new RangeError('Enter all electrical parameters to calculate a match.');
+      if ([frequencyText, z0Text, rText, xText, distanceText, separationText, stub1.linked ? z0Text : stub1.z0, stub2.linked ? z0Text : stub2.z0].some((value) => !value.trim())) throw new RangeError('Enter all electrical parameters to calculate a match.');
+      if (!Number.isFinite(Number(frequencyText) * 1e6)) throw new RangeError('Frequency must be a finite number.');
+      if (Number(frequencyText) <= 0) throw new RangeError('Frequency must be greater than zero.');
       const input: DoubleStubInput = {
         z0: Number(z0Text), load: { kind: 'impedance', resistance: Number(rText), reactance: Number(xText) },
         distance: Number(distanceText), separation: Number(separationText),
@@ -48,12 +52,13 @@ export default function DoubleStubMatching() {
     } catch (error) {
       return { input: null, solution: null, error: error instanceof Error ? error : 'Check the electrical parameters.' };
     }
-  }, [z0Text, rText, xText, distanceText, separationText, stub1.linked, stub1.z0, stub2.linked, stub2.z0]);
+  }, [z0Text, frequencyText, rText, xText, distanceText, separationText, stub1.linked, stub1.z0, stub2.linked, stub2.z0]);
 
-  const constructionKey = [z0Text, rText, xText, distanceText, separationText, stub1.linked, stub1.z0, stub1.termination, stub2.linked, stub2.z0, stub2.termination, revision].join('|');
+  const constructionKey = [z0Text, frequencyText, rText, xText, distanceText, separationText, stub1.linked, stub1.z0, stub1.termination, stub2.linked, stub2.z0, stub2.termination, revision].join('|');
 
   function reset() {
     setZ0Text('50'); setRText('100'); setXText('50'); setDistanceText('0.125'); setSeparationText('0.125');
+    setFrequencyText('1000');
     setStub1({ z0: '50', linked: true, termination: 'short' }); setStub2({ z0: '50', linked: true, termination: 'short' });
     setRevision((current) => current + 1);
   }
@@ -62,7 +67,8 @@ export default function DoubleStubMatching() {
     <aside className="control-column"><section className="panel parameters-panel parameters-panel--compact" aria-labelledby="double-stub-parameters">
       <div className="panel-heading"><h2 id="double-stub-parameters">{t('Parameters', 'Parámetros')}</h2><ResetParametersButton onClick={reset} /></div>
       <div className="parameter-grid">
-      <ParameterField wide tex="Z_0" label={t('Main-line impedance', 'Impedancia de la línea principal')} value={z0Text} min={0} onChange={setZ0Text} />
+      <ParameterField tex="Z_0" label={t('Main-line impedance', 'Impedancia de la línea principal')} value={z0Text} min={0} onChange={setZ0Text} />
+      <ParameterField tex="f_0" label={t('Design frequency', 'Frecuencia de diseño')} unit="MHz" value={frequencyText} min={0} onChange={setFrequencyText} />
       <ParameterField tex="R_L" label={t('Load resistance', 'Resistencia de la carga')} value={rText} min={0} onChange={setRText} />
       <ParameterField tex="X_L" label={t('Load reactance', 'Reactancia de la carga')} value={xText} onChange={setXText} />
       <ParameterField tex="d_1" label={t('Load to stub 2 distance d₁', 'Distancia d₁ de la carga al stub 2')} value={distanceText} unit="λ" min={0} onChange={setDistanceText} />
@@ -74,6 +80,9 @@ export default function DoubleStubMatching() {
       </div>
       {error && <p className="input-error" role="alert">{translateMessage(error, locale)}</p>}
     </section></aside>
-    <div className="ssl-workspace">{input && solution && <DoubleStubConstruction key={constructionKey} input={input} solution={solution} termination1={stub1.termination} termination2={stub2.termination} />}</div>
+    <div className="ssl-workspace">
+      {input && solution && <DoubleStubConstruction key={constructionKey} input={input} solution={solution} termination1={stub1.termination} termination2={stub2.termination} />}
+      <LabFrequencyResponse key={frequencyText + '|' + revision} design={input && solution ? { kind: 'double-stub', input, solution, termination1: stub1.termination, termination2: stub2.termination } : null} designFrequencyHz={Number(frequencyText) * 1e6} emptyMessage={solution ? translateMessage(solution.message, locale) : undefined} />
+    </div>
   </div>;
 }

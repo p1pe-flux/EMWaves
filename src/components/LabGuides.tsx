@@ -37,7 +37,7 @@ export function GuidePage({ guide, id, children }: { guide: GuideMetadata; id: s
   const { t } = useI18n();
   return (
     <article className="guide-page" aria-labelledby={id + '-title'}>
-      <a className="guide-back" href="#/guides"><span aria-hidden="true">←</span>{t('All guides', 'Todas las guías')}</a>
+      <a className="guide-back" href="#/"><span aria-hidden="true">←</span>{t('All laboratories', 'Todos los laboratorios')}</a>
       <header className="guide-page__header">
         <h1 id={id + '-title'}>{t(guide.title, guide.titleEs)}</h1>
         <a className="guide-link guide-link--primary" href={guide.labHref}>{t('Open lab', 'Abrir laboratorio')}<LinkArrow /></a>

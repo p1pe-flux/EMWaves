@@ -45,6 +45,17 @@ async function renderComplete(node: ReactNode): Promise<string> {
   return new Response(stream).text();
 }
 
+function expectLaboratoryNavigation(html: string, currentCatalog = false) {
+  const navigation = html.match(/<nav\b[^>]*class="main-nav"[^>]*>([\s\S]*?)<\/nav>/)?.[1];
+  expect(navigation).toBeDefined();
+  expect(navigation!.match(/<a\b/g)).toHaveLength(1);
+  expect(navigation).toContain('class="nav-item nav-link active"');
+  expect(navigation).toContain('href="#/"');
+  if (currentCatalog) expect(navigation).toContain('aria-current="page"');
+  else expect(navigation).not.toContain('aria-current=');
+  expect(html).not.toContain('href="#/guides"');
+}
+
 function expectFullGuideLink(html: string, href: string, label = 'Read guide') {
   const link = html.match(new RegExp('<a\\b[^>]*>' + label + '<\\/a>'))?.[0];
   expect(link).toBeDefined();
@@ -52,6 +63,7 @@ function expectFullGuideLink(html: string, href: string, label = 'Read guide') {
   expect(link).not.toMatch(/aria-(?:expanded|controls)=/);
   expect(html).not.toMatch(new RegExp('<button\\b[^>]*>' + label + '<\\/button>'));
   expect(html).not.toContain('class="guide-panel"');
+  expectLaboratoryNavigation(html);
 }
 
 describe('laboratory landing page', () => {
@@ -59,7 +71,7 @@ describe('laboratory landing page', () => {
     const html = await renderComplete(<App />);
     expect(html).toContain('Introduction to Smith Chart');
     expect(html).toContain('href="#/labs/introduction-to-smith-chart"');
-    expect(html).toContain('href="#/guides"');
+    expectLaboratoryNavigation(html, true);
     expect(html).toContain('href="#/guides/introduction-to-smith-chart"');
     expect(html).toContain('Read guide');
     expect(html).not.toContain('id="line-length"');
@@ -134,6 +146,7 @@ describe('application language selection', () => {
     expect(html).toContain('Abrir laboratorio');
     expect(html).toContain('Leer guía');
     expect(html).toContain('aria-label="Navegación principal"');
+    expectLaboratoryNavigation(html, true);
     expect(html).toContain('>Idioma</span>');
     expect(html).toContain('<option value="es" selected="">Español</option>');
     expect(html).toContain('href="#/labs/single-stub-matching"');
@@ -152,7 +165,6 @@ describe('application language selection', () => {
     const html = await renderComplete(<I18nProvider initialLocale="es"><App /></I18nProvider>);
     expect(html).toContain('<h1>' + title + '</h1>');
     expect(html).toContain('Todos los laboratorios');
-    expect(html).toContain(hash === '#/labs/lc-matching' ? 'Adaptación de impedancias' : 'Líneas de transmisión');
     expectFullGuideLink(html, guideHref, 'Leer guía');
   });
 
@@ -162,7 +174,9 @@ describe('application language selection', () => {
     expect(index).toContain('>Guías</h1>');
     expect(index).toContain('Adaptación con un stub');
     expect(index).toContain('Transformador de cuarto de onda');
-    expect(full).toContain('Todas las guías');
+    expect(full).toContain('Todos los laboratorios');
+    expect(full).toMatch(/<a class="guide-back" href="#\/">/);
+    expect(full).not.toContain('href="#/guides"');
     expect(full).toContain('Abrir laboratorio');
     expect(full).toContain('Contenido de la guía');
     expect(full).not.toContain('class="guide-panel"');
@@ -199,10 +213,10 @@ describe('single-stub navigation and guide', () => {
     expect(html).not.toContain('Coming soon');
   });
 
-  it('recognizes the direct guide route and marks Guides as current', async () => {
+  it('recognizes the direct guide route under laboratory navigation', async () => {
     vi.stubGlobal('window', { location: { hash: '#/guides/single-stub-matching' } });
     const html = await renderComplete(<App />);
-    expect(html).toContain('href="#/guides" aria-current="page"');
+    expectLaboratoryNavigation(html);
     expect(html).not.toContain('Coming soon');
   });
 
@@ -249,7 +263,7 @@ describe('series-stub navigation and guide', () => {
   it.each(['#/guides/series-stub-matching', '#/guides/series-stub-matching/'])('recognizes the complete guide route %s', async (hash) => {
     vi.stubGlobal('window', { location: { hash } });
     const html = await renderComplete(<App />);
-    expect(html).toContain('href="#/guides" aria-current="page"');
+    expectLaboratoryNavigation(html);
     expect(html).not.toContain('id="landing-title"');
   });
 
@@ -277,7 +291,7 @@ describe('LC navigation and guide', () => {
   it.each(['#/guides/lc-matching', '#/guides/lc-matching/'])('recognizes the complete guide route %s', async (hash) => {
     vi.stubGlobal('window', { location: { hash } });
     const html = await renderComplete(<App />);
-    expect(html).toContain('href="#/guides" aria-current="page"');
+    expectLaboratoryNavigation(html);
     expect(html).not.toContain('id="landing-title"');
   });
 
@@ -313,7 +327,7 @@ describe('double-stub navigation and guide', () => {
   it('recognizes the complete guide route', async () => {
     vi.stubGlobal('window', { location: { hash: '#/guides/double-stub-matching' } });
     const html = await renderComplete(<App />);
-    expect(html).toContain('href="#/guides" aria-current="page"');
+    expectLaboratoryNavigation(html);
   });
 });
 
@@ -333,10 +347,10 @@ describe('quarter-wave navigation and guide', () => {
     expect(html).not.toContain('Coming soon');
   });
 
-  it('recognizes the direct guide route and marks Guides as current', async () => {
+  it('recognizes the direct guide route under laboratory navigation', async () => {
     vi.stubGlobal('window', { location: { hash: '#/guides/quarter-wave-transformer' } });
     const html = await renderComplete(<App />);
-    expect(html).toContain('href="#/guides" aria-current="page"');
+    expectLaboratoryNavigation(html);
     expect(html).not.toContain('Coming soon');
   });
 

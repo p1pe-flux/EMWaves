@@ -8,7 +8,7 @@ function createWindow() {
     height: 980,
     minWidth: 860,
     minHeight: 650,
-    backgroundColor: '#f5f4ef',
+    backgroundColor: '#f7f4ed',
     title: `EMWaves ${app.getVersion()}`,
     icon: path.join(__dirname, 'assets', process.platform === 'win32' ? 'icon.ico' : 'icon.png'),
     autoHideMenuBar: true,

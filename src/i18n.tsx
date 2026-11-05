@@ -30,7 +30,7 @@ function storedLocale(): Locale {
   }
 }
 
-export function I18nProvider({ children, initialLocale }: { children: ReactNode; initialLocale?: Locale }) {
+export function I18nProvider({ children, initialLocale, persistLocale = true }: { children: ReactNode; initialLocale?: Locale; persistLocale?: boolean }) {
   const [locale, setLocaleState] = useState<Locale>(() => initialLocale ?? storedLocale());
   const setLocale = useCallback((next: Locale) => {
     if (next === 'en' || next === 'es') setLocaleState(next);
@@ -40,12 +40,13 @@ export function I18nProvider({ children, initialLocale }: { children: ReactNode;
 
   useEffect(() => {
     if (typeof document !== 'undefined') document.documentElement.lang = locale;
+    if (!persistLocale) return;
     try {
       if (typeof window !== 'undefined') window.localStorage.setItem(LOCALE_STORAGE_KEY, locale);
     } catch {
       // Language switching remains available when browser storage is blocked.
     }
-  }, [locale]);
+  }, [locale, persistLocale]);
 
   return <I18nContext.Provider value={value}>{children}</I18nContext.Provider>;
 }

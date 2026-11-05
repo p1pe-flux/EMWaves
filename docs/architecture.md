@@ -6,6 +6,8 @@ EMWaves is a browser application built with React, TypeScript, and Vite. The sam
 
 `src/main.tsx` mounts the application and the translation provider. `src/App.tsx` maps hash routes to lazy-loaded laboratories and guides, with loading and error boundaries. Hash routes let the browser build and the local desktop build use the same navigation without server-side route rewriting.
 
+The main navigation points to the laboratory catalog. Each catalog card and laboratory header link directly to the corresponding guide; guides return to the laboratory catalog. The legacy `#/guides` index route remains supported for existing URLs.
+
 Each laboratory in `src/labs/` owns its parameter state and computes a model result. Shared components render that result as a circuit, a Smith chart, and step explanations. Parameters and construction position are held in memory. Only the interface language is saved in `localStorage`, through `src/i18n.tsx`.
 
 ## Electrical models
@@ -13,6 +15,8 @@ Each laboratory in `src/labs/` owns its parameter state and computes a model res
 `src/domain/` contains pure calculations for transmission lines, single and double stubs, series stubs, quarter-wave transformers, and lumped reactive networks. `src/math/` supplies complex arithmetic, number formatting, and shared notation.
 
 Models distinguish invalid inputs, discrete solutions, continuous families, already-matched loads, and unmatchable loads where those states apply. They describe ideal lossless lines and reactive components at one design frequency. Components consume those states rather than reproducing the solver's calculations in JSX or translation code.
+
+`frequencyResponse.ts` snapshots each calculated network at that design frequency and evaluates its input reflection magnitude across a frequency sweep. Each line's electrical length scales with frequency using its own guided wavelength, while the physical L/C values and complex load remain fixed. Homogeneous voltage/current coordinates preserve exact open and short stub poles. Plot resolution increases with the network's electrical length and frequency span; sweeps exceeding the sample limit ask for a narrower interval. The shared frequency-response panel appears automatically in the five matching laboratories for valid networks, shows one curve per solution, and provides an exact numerical readout at the selected frequency. It is independent of construction playback.
 
 ## Visual construction
 

@@ -6,6 +6,7 @@ import { Formula } from './Formula';
 import { LCMatchingConstruction } from './LCMatchingConstruction';
 import { LCMatchingDiagram } from './LCMatchingDiagram';
 import { LCNetworkOptions } from './LCNetworkOptions';
+import { LCDoubleSmithReading } from './LCDoubleSmithReading';
 import '../styles/single-stub.css';
 
 export const LC_MATCHING_EXAMPLE: LumpedMatchingInput = {
@@ -30,6 +31,8 @@ export function LCMatchingGuideContent() {
       <p>{t('Two reactive elements can transform the input resistance and cancel the remaining reactance. Choose an inductor or capacitor independently at each position, then choose each series or parallel connection. This allows L–C, C–L, L–L and C–C networks. The solver retains that circuit and finds its positive, finite realizations.', 'Dos elementos reactivos pueden transformar la resistencia de entrada y cancelar la reactancia restante. Elegimos un inductor o un capacitor por separado en cada posición y después su conexión en serie o en paralelo. Así se permiten redes L–C, C–L, L–L y C–C. El solver conserva ese circuito y obtiene sus realizaciones positivas y finitas.')}</p>
       <LCMatchingDiagram input={input} abstractLabels progress={[1, 1]} />
       <p>{t('The physical order is generator → element 1 → element 2 → load. The subscripts identify positions: two inductors are ', 'El orden físico es generador → elemento 1 → elemento 2 → carga. Los subíndices identifican las posiciones: dos inductores son ')}<Formula tex="L_1,L_2" />{t(' and two capacitors are ', ' y dos capacitores son ')}<Formula tex="C_1,C_2" />{t('. Calculate from the load toward the generator, adding element 2 first and element 1 second.', '. Calculamos desde la carga hacia el generador: primero añadimos el elemento 2 y después el elemento 1.')}</p>
+
+      <LCDoubleSmithReading />
 
       <h2>{t('Series adds impedance; parallel adds admittance', 'En serie sumamos impedancias; en paralelo, admitancias')}</h2>
       <Formula display tex={String.raw`z=\frac{Z}{Z_0},\qquad y=\frac{1}{z}=Z_0Y,\qquad\omega=2\pi f`} />
