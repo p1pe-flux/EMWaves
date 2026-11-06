@@ -5,6 +5,8 @@ permissions:
 jobs:
   application:
     runs-on: ubuntu-latest
+    env:
+      ELECTRON_BUILDER_CACHE: ${{ runner.temp }}/emwaves-electron-builder
     steps:
       - uses: actions/checkout@v7
         with:
@@ -14,6 +16,14 @@ jobs:
           node-version: '26'
           cache: npm
       - run: npm ci
+      - name: Cache pinned native 7-Zip toolset
+        uses: actions/cache@v5
+        with:
+          path: ${{ env.ELECTRON_BUILDER_CACHE }}/7zip@1.0.0
+          key: desktop-7zip-${{ runner.os }}-${{ runner.arch }}-builder-26.15.3-tool-1.0.0-${{ hashFiles('package-lock.json') }}
+      - name: Download and verify the desktop archiver
+        timeout-minutes: 5
+        run: node scripts/desktop-tooling.mjs
       - run: npm audit --audit-level=moderate
       - run: npm run check:public
       - run: npm run test:public
@@ -66,6 +76,8 @@ jobs:
             platform: linux
             arch: arm64
     runs-on: ${{ matrix.os }}
+    env:
+      ELECTRON_BUILDER_CACHE: ${{ runner.temp }}/emwaves-electron-builder
     steps:
       - uses: actions/checkout@v7
         with:
@@ -75,6 +87,14 @@ jobs:
           node-version: '26'
           cache: npm
       - run: npm ci
+      - name: Cache pinned native 7-Zip toolset
+        uses: actions/cache@v5
+        with:
+          path: ${{ env.ELECTRON_BUILDER_CACHE }}/7zip@1.0.0
+          key: desktop-7zip-${{ runner.os }}-${{ runner.arch }}-builder-26.15.3-tool-1.0.0-${{ hashFiles('package-lock.json') }}
+      - name: Download and verify the desktop archiver
+        timeout-minutes: 5
+        run: node scripts/desktop-tooling.mjs
       - run: npm run check:public
       - run: npm run test:public
       - run: npm test
