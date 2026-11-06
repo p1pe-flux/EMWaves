@@ -6,7 +6,7 @@ jobs:
   application:
     runs-on: ubuntu-latest
     env:
-      ELECTRON_BUILDER_CACHE: ${{ runner.temp }}/emwaves-electron-builder
+      ELECTRON_BUILDER_CACHE: ${{ github.workspace }}/.local/electron-builder-cache
     steps:
       - uses: actions/checkout@v7
         with:
@@ -77,7 +77,7 @@ jobs:
             arch: arm64
     runs-on: ${{ matrix.os }}
     env:
-      ELECTRON_BUILDER_CACHE: ${{ runner.temp }}/emwaves-electron-builder
+      ELECTRON_BUILDER_CACHE: ${{ github.workspace }}/.local/electron-builder-cache
     steps:
       - uses: actions/checkout@v7
         with:
