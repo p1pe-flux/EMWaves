@@ -5,12 +5,14 @@ import { fileURLToPath } from 'node:url';
 import { projectRoot, stageDesktopApp } from './stage-desktop.mjs';
 import { readFile } from 'node:fs/promises';
 import { verifyDesktopArchive } from './verify-desktop-archive.mjs';
+import { getSevenZipExecutable } from './desktop-tooling.mjs';
 
 const require = createRequire(import.meta.url);
 
 export async function packageDesktop(platform, architecture, outputDirectory, unpacked = false) {
   const supported = { win: ['arm64', 'x64'], mac: ['arm64', 'x64', 'universal'], linux: ['arm64', 'x64'] };
   if (!supported[platform]?.includes(architecture)) throw new Error('Expected win|mac|linux and a supported architecture (arm64, x64, or mac universal).');
+  const sevenZip = await getSevenZipExecutable({ retryDownload: true });
   const stagedApp = await stageDesktopApp();
   const target = unpacked ? 'dir' : { win: 'nsis', mac: 'dmg', linux: 'AppImage' }[platform];
   const args = ['--require', path.join(projectRoot, 'scripts/proxy-log-redaction.cjs'), require.resolve('electron-builder/cli.js'), `--${platform}`, target, `--${architecture}`, '--publish', 'never', `--config.directories.app=${stagedApp}`, '--config.npmRebuild=true', `--config.beforeBuild=${path.join(projectRoot, 'scripts/desktop-before-build.cjs')}`];
@@ -20,7 +22,8 @@ export async function packageDesktop(platform, architecture, outputDirectory, un
   const result = spawnSync(process.execPath, args, {
     cwd: projectRoot,
     stdio: 'inherit',
-    env: platform === 'win' ? { ...process.env, ELECTRON_BUILDER_7Z_FILTER: 'BCJ' } : process.env,
+    env: { ...process.env, ELECTRON_BUILDER_7ZIP_PATH: sevenZip,
+      ...(platform === 'win' ? { ELECTRON_BUILDER_7Z_FILTER: 'BCJ' } : {}) },
   });
   if (result.error) throw result.error;
   if (result.signal) throw new Error(`Desktop packaging terminated by ${result.signal}`);
