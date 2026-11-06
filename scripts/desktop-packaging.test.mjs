@@ -8,6 +8,8 @@ import { once } from 'node:events';
 import { createServer } from 'node:http';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
+import { Writable } from 'node:stream';
+import { finished } from 'node:stream/promises';
 import { promisify } from 'node:util';
 import asar from '@electron/asar';
 import { desktopIconFiles, desktopRuntimeFiles, stageDesktopApp } from './stage-desktop.mjs';
@@ -17,6 +19,18 @@ import { getSevenZipExecutable, retryToolDownload } from './desktop-tooling.mjs'
 const require = createRequire(import.meta.url);
 const beforeDesktopBuild = require('./desktop-before-build.cjs');
 const execFileAsync = promisify(execFile);
+
+async function createFixtureArchive(source, destination) {
+  // @electron/asar 3.4.1 resolves with out.end(), before pending writes have
+  // necessarily reached disk. Wait for the real stream to finish and close.
+  await finished(await asar.createPackage(source, destination), { cleanup: true });
+}
+
+function removeFixtureDirectory(directory) {
+  // Windows can briefly retain a just-executed tool's file handle. Node's
+  // bounded filesystem retry still propagates a persistent cleanup failure.
+  return rm(directory, { recursive: true, force: true, maxRetries: 5, retryDelay: 200 });
+}
 
 async function fixture(run) {
   // Check staging and ASAR access in locations with spaces and Unicode, such as
@@ -30,9 +44,30 @@ async function fixture(run) {
     await writeFile(path.join(root, 'package.json'), JSON.stringify({ name: 'emwaves', version: '0.1.1', license: 'GPL-3.0-only', dependencies: { react: '19.3.0' }, devDependencies: { electron: '44.7.1' }, scripts: { build: 'vite' }, build: { asar: true, productName: 'EMWaves' } }));
     await run(root);
   } finally {
-    await rm(root, { recursive: true, force: true });
+    await removeFixtureDirectory(root);
   }
 }
+
+test('archive fixtures wait for pending stream writes and propagate output failures', async (context) => {
+  const order = [];
+  let writeFailure;
+  context.mock.method(asar, 'createPackage', async () => {
+    const output = new Writable({
+      write(_chunk, _encoding, callback) { callback(); },
+      final(callback) {
+        // Hold completion until the next event-loop turn, as an asynchronous
+        // filesystem write can do. The archive promise alone is insufficient.
+        setImmediate(() => { order.push('write finished'); callback(writeFailure); });
+      },
+    });
+    return output.end('archive contents');
+  });
+  await createFixtureArchive('source', 'archive');
+  order.push('verification started');
+  assert.deepEqual(order, ['write finished', 'verification started']);
+  writeFailure = new Error('Archive output failed');
+  await assert.rejects(createFixtureArchive('source', 'archive'), error => error === writeFailure);
+});
 
 test('staged desktop archives contain the compiled frontend, runtime and notices, without frontend installations', async () => {
   await fixture(async (root) => {
@@ -47,7 +82,7 @@ test('staged desktop archives contain the compiled frontend, runtime and notices
     assert.equal(manifest.scripts, undefined);
     assert.equal(manifest.build, undefined);
     const archive = path.join(root, 'app.asar');
-    await asar.createPackage(staged, archive);
+    await createFixtureArchive(staged, archive);
     const result = await verifyDesktopArchive(archive, root);
     assert.equal(result.frontendFiles, 3);
     assert.equal(result.bundledNodeModules, 0);
@@ -62,7 +97,7 @@ test('archive verification rejects an incorrect application display name', async
     const manifest = JSON.parse(await readFile(manifestPath, 'utf8'));
     await writeFile(manifestPath, JSON.stringify({ ...manifest, productName: 'Another application' }));
     const archive = path.join(root, 'incorrect-name.asar');
-    await asar.createPackage(staged, archive);
+    await createFixtureArchive(staged, archive);
     await assert.rejects(verifyDesktopArchive(archive, root), /metadata/);
   });
 });
@@ -71,14 +106,14 @@ test('archive verification accepts Windows entry separators and still rejects bu
   await fixture(async (root) => {
     const staged = await stageDesktopApp(root);
     const archive = path.join(root, 'windows-paths.asar');
-    await asar.createPackage(staged, archive);
+    await createFixtureArchive(staged, archive);
     const listPackage = asar.listPackage;
     context.mock.method(asar, 'listPackage', (...args) => listPackage(...args).map((entry) => entry.replaceAll('/', '\\')));
     assert.equal((await verifyDesktopArchive(archive, root)).compiledFrontendVerified, true);
     await mkdir(path.join(staged, 'node_modules/react'), { recursive: true });
     await writeFile(path.join(staged, 'node_modules/react/index.js'), 'redundant frontend copy');
     const duplicateArchive = path.join(root, 'windows-dependencies.asar');
-    await asar.createPackage(staged, duplicateArchive);
+    await createFixtureArchive(staged, duplicateArchive);
     await assert.rejects(verifyDesktopArchive(duplicateArchive, root), /Redundant node_modules/);
   });
 });
@@ -97,7 +132,7 @@ test('archive verification rejects a stale compiled frontend and runtime', async
   await fixture(async (root) => {
     const staged = await stageDesktopApp(root);
     const archive = path.join(root, 'app.asar');
-    await asar.createPackage(staged, archive);
+    await createFixtureArchive(staged, archive);
     await writeFile(path.join(root, 'dist/assets/main.js'), 'changed frontend');
     await assert.rejects(verifyDesktopArchive(archive, root), /differs.*dist\/assets\/main.js/);
     await writeFile(path.join(root, 'dist/assets/main.js'), 'Fixture contents: dist/assets/main.js\n');
@@ -112,13 +147,13 @@ test('archive verification rejects a runtime dependency manifest and bundled nod
     const archive = path.join(root, 'app.asar');
     const manifest = JSON.parse(await readFile(path.join(staged, 'package.json'), 'utf8'));
     await writeFile(path.join(staged, 'package.json'), JSON.stringify({ ...manifest, dependencies: { react: '19.3.0' } }));
-    await asar.createPackage(staged, archive);
+    await createFixtureArchive(staged, archive);
     await assert.rejects(verifyDesktopArchive(archive, root), /must not install/);
     await writeFile(path.join(staged, 'package.json'), JSON.stringify(manifest));
     await mkdir(path.join(staged, 'node_modules/react'), { recursive: true });
     await writeFile(path.join(staged, 'node_modules/react/index.js'), 'redundant frontend copy');
     const duplicateArchive = path.join(root, 'duplicate.asar');
-    await asar.createPackage(staged, duplicateArchive);
+    await createFixtureArchive(staged, duplicateArchive);
     await assert.rejects(verifyDesktopArchive(duplicateArchive, root), /Redundant node_modules/);
   });
 });
@@ -128,7 +163,7 @@ test('archive verification rejects missing dependency notices', async () => {
     const staged = await stageDesktopApp(root);
     await rm(path.join(staged, 'THIRD-PARTY-NOTICES.md'));
     const archive = path.join(root, 'app.asar');
-    await asar.createPackage(staged, archive);
+    await createFixtureArchive(staged, archive);
     await assert.rejects(verifyDesktopArchive(archive, root), /not found|does not exist/i);
   });
 });
@@ -204,7 +239,7 @@ test('real pinned 7-Zip download recovers after HTTP 504s and verifies the downl
   } finally {
     server.closeAllConnections();
     await new Promise(resolve => server.close(resolve));
-    await rm(temporary, { recursive: true, force: true });
+    await removeFixtureDirectory(temporary);
   }
 });
 
